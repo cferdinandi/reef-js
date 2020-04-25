@@ -10,8 +10,8 @@
 
 	// Variables
 	$secret = getenv('GH_DEPLOY_SECRET');
-	$repo_dir = '/srv/users/serverpilot/apps/vanillajstoolkit/build';
-	$web_root_dir = '/srv/users/serverpilot/apps/vanillajstoolkit/public';
+	$repo_dir = '/srv/users/serverpilot/apps/reefjs/build';
+	$web_root_dir = '/srv/users/serverpilot/apps/reefjs/public';
 	$rendered_dir = '/public';
 	$hugo_path = '/usr/local/bin/hugo';
 
