@@ -1,0 +1,52 @@
+# hostname (and path) to the root
+baseURL: "https://reefjs.com"
+
+# Customer parameters
+params:
+  description: "A lightweight library for creating reactive, state-based components and UI. Reef is a simpler alternative to React, Vue, and other large frameworks."
+  api: "https://gomakethings.com/api/data.json"
+  font: "https://fonts.googleapis.com/css?family=PT+Serif:400,400i,700,700i&display=swap"
+  rssURL: ""
+  rssLimit: 7
+  minify: false
+
+# Caches
+caches:
+  getjson:
+    maxAge: "10m"
+
+# The language code for the site
+languageCode: "en-us"
+
+# Site title
+title: "Reef"
+
+# theme to use (located by default in /themes/THEMENAME/)
+theme: "reef"
+
+# Permalinks
+# See "content-management/permalinks"
+permalinks:
+  articles: /:title/
+
+# Allows you to disable all page types and will render nothing related to 'kind';
+# values = "page", "home", "section", "taxonomy", "taxonomyTerm", "RSS", "sitemap", "robotsTXT", "404"
+disableKinds: ["RSS", "hugoGeneratorInject", "404"]
+
+# Files to ignore while rendering
+ignoreFiles: []
+
+# the length of text to show in a .Summary
+summaryLength: 70
+
+# Pagination
+paginate: 35
+paginatePath: "page"
+
+# Markdown Options
+blackfriday:
+  fractions: false
+
+# Syntax Highlighting
+pygmentsCodefences: true
+pygmentsUseClasses: true

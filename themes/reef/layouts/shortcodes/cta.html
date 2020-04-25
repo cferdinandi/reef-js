@@ -1,0 +1,5 @@
+{{- $data := getJSON $.Site.Params.api -}}
+{{- $ctas := index $data "ctas" -}}
+{{- if isset $ctas (.Get "for") -}}
+{{ index $ctas (.Get "for") | safeHTML }}
+{{- end -}}

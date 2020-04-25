@@ -1,0 +1,21 @@
+{{ partial "header.html" . }}
+
+	{{ partial "content-page.html" . }}
+
+	{{- $.Scratch.Add "index" slice -}}
+	{{- range .Site.Pages -}}
+		{{- if ne .Params.noSearch true -}}
+			{{- $.Scratch.Set "content" (.Content | plainify) -}}
+			{{- if or (eq .Type "boilerplates") (eq .Type "helpers") -}}
+				{{- $.Scratch.Set "content" .Params.description -}}
+			{{- else if eq .Type "polyfills" -}}
+				{{- $.Scratch.Set "content" .Title -}}
+			{{- end -}}
+			{{- $.Scratch.Add "index" (dict "title" .Title "url" .Permalink "content" ($.Scratch.Get "content") "type" .Type ) -}}
+		{{- end -}}
+	{{- end -}}
+	<script>
+		var searchIndex = JSON.parse({{- $.Scratch.Get "index" | jsonify -}});
+	</script>
+
+{{ partial "footer.html" . }}

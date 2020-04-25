@@ -1,0 +1,151 @@
+---
+title: "Getting Started"
+date: 2018-01-24T11:48:20-05:00
+draft: false
+noTitle: false
+noIndex: false
+anchors: true
+---
+
+<div id="table-of-contents"></div>
+
+## 1. Include Reef on your site
+
+**Direct Download**
+
+You can [download the files directly from GitHub](https://github.com/cferdinandi/reef/archive/master.zip).
+
+Compiled and production-ready code can be found in the `dist` directory. The `src` directory contains development code.
+
+```html
+<script src="path/to/reef.min.js"></script>
+```
+
+**CDN**
+
+You can also use the [jsDelivr CDN](https://cdn.jsdelivr.net/npm/reefjs/dist/).
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/reefjs/dist/reef.min.js"></script>
+```
+
+Reef using semantic versioning. You can grab a major, minor, or patch version from the CDN with the `@1.2.3` syntax. You can find all available versions [under releases](https://github.com/cferdinandi/reef/releases).
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/reefjs@5.0.0/dist/reef.min.js"></script>
+```
+
+**ES Modules**
+
+Reef now supports modern browsers and module bundlers (like Rollup, Webpack, Snowpack, and so on) using the ES modules `import` syntax. Use the `.es` version.
+
+```js
+import Reef from 'path/to/reef.es.min.js';
+```
+
+<details>
+<summary class="margin-bottom-small"><strong>More ways to install Reef</strong></summary>
+{{%md%}}
+**CommonJS**
+
+If you use NodeJS, you can import Reef using the `require()` method with the `.cjs` version.
+
+```js
+var Reef = require('path/to/reef.cjs.min.js');
+```
+
+**AMD**
+
+If you use RequireJS, SystemJS, and other AMD formats, you can import Reef with the `.amd` version.
+
+```js
+requirejs(['path/to/reef.amd.min.js'], function (Reef) {
+  //...
+});
+```
+
+**NPM**
+
+You can also use NPM (or your favorite package manager).
+
+```bash
+npm install reefjs --save
+```
+{{%/md%}}
+</details>
+
+## 2. Add an element to render your component/UI into
+
+This is typically an empty `div` with a targetable selector.
+
+```html
+<div id="app"></div>
+```
+
+## 3. Create your component
+
+Create a new `Reef()` instance, passing in two arguments: your selector, and your options.
+
+### Provide a selector
+
+The first argument is the selector for the element you want to render the UI into. Alternatively, you can pass in the element itself.
+
+```js
+// This works
+var app = new Reef('#app');
+
+// This does too
+var elem = document.querySelector('#app');
+var app = new Reef(elem);
+```
+
+### Provide a Template
+
+The second argument is an object of options. It requires a template property, as either a string or a function that returns a string, to render into the DOM.
+
+You can use old-school strings, or if you'd prefer, ES6 template literals.
+
+```js
+// Your template can be a string
+var app = new Reef('#app', {
+	template: '<h1>Hello, world!</h1>'
+});
+
+// It can also be a function that returns a string
+var app = new Reef('#app', {
+	template: function () {
+		return '<h1>Hello, world!</h1>';
+	}
+});
+```
+
+### [Optional] Add State/Data
+
+As an optional property of the options argument, you can include state for your component with the `data` property.
+
+The state data is automatically passed into your template function, so that you can use it to customize your template. Reef also encodes any markup in your data before passing it into your template to reduce your risk of cross-site scripting (XSS) attacks.
+
+```js
+// Some data
+var app = new Reef('#app', {
+	data: {
+		greeting: 'Hello',
+		name: 'world'
+	},
+	template: function (props) {
+		return '<h1>' + props.greeting + ', ' + props.name + '!</h1>';
+	}
+});
+```
+
+## 4. Render your component
+
+You can render your component by calling the `.render()` method on it.
+
+```js
+app.render();
+```
+
+**[Try the demo on CodePen &rarr;](https://codepen.io/cferdinandi/pen/qeJZro)**
+
+{{<mailchimp intro="true">}}
