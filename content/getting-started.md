@@ -7,8 +7,6 @@ noIndex: false
 anchors: true
 ---
 
-<div id="table-of-contents"></div>
-
 ## 1. Include Reef on your site
 
 **Direct Download**
