@@ -18,10 +18,10 @@ Reef is a simpler alternative to React, Vue, and other large frameworks.
 
 ## Features
 
-- Weighs just 2.3kb (minified and gzipped) with zero dependencies.
+- Weighs just 2.4kb (minified and gzipped) with zero dependencies.
 - Simple templating with JavaScript strings or template literals.
-- Load it with a `<script>` element&mdash;no command line or transpiling required.
-- Updates only the parts of the DOM that have changed. Keep those form fields in focus!
+- Load it with a `<script>` element or ES module import&mdash;no command line or transpiling required.
+- Uses DOM diffing to update only the things that have changed.
 - Automatically encodes markup in your data to protect you from cross-site scripting (XSS) attacks.
 - Work with native JavaScript methods and browser APIs instead of custom methods and pseudo-languages.
 - Supported all the way back to IE9.

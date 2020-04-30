@@ -9,15 +9,9 @@ anchors: true
 
 ## 1. Include Reef on your site
 
-**Direct Download**
+Reef comes in two flavors: *standalone* and *polyfilled*.
 
-You can [download the files directly from GitHub](https://github.com/cferdinandi/reef/archive/master.zip).
-
-Compiled and production-ready code can be found in the `dist` directory. The `src` directory contains development code.
-
-```html
-<script src="path/to/reef.min.js"></script>
-```
+The polyfilled build uses the `.polyfill` suffix, and includes polyfills for Proxies and Custom Events, which are required for IE support.
 
 **CDN**
 
@@ -30,7 +24,7 @@ You can also use the [jsDelivr CDN](https://cdn.jsdelivr.net/npm/reefjs/dist/).
 Reef using semantic versioning. You can grab a major, minor, or patch version from the CDN with the `@1.2.3` syntax. You can find all available versions [under releases](https://github.com/cferdinandi/reef/releases).
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/reefjs@5.0.0/dist/reef.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reefjs@6/dist/reef.min.js"></script>
 ```
 
 **ES Modules**
@@ -44,6 +38,16 @@ import Reef from 'path/to/reef.es.min.js';
 <details>
 <summary class="margin-bottom-small"><strong>More ways to install Reef</strong></summary>
 {{%md%}}
+**Direct Download**
+
+You can [download the files directly from GitHub](https://github.com/cferdinandi/reef/archive/master.zip).
+
+Compiled and production-ready code can be found in the `dist` directory. The `src` directory contains development code.
+
+```html
+<script src="path/to/reef.min.js"></script>
+```
+
 **CommonJS**
 
 If you use NodeJS, you can import Reef using the `require()` method with the `.cjs` version.
@@ -121,7 +125,7 @@ var app = new Reef('#app', {
 
 As an optional property of the options argument, you can include state for your component with the `data` property.
 
-The state data is automatically passed into your template function, so that you can use it to customize your template. Reef also encodes any markup in your data before passing it into your template to reduce your risk of cross-site scripting (XSS) attacks.
+The data object is automatically encoded and passed into your template function, so that you can use it to customize your template.
 
 ```js
 // Some data
@@ -131,10 +135,12 @@ var app = new Reef('#app', {
 		name: 'world'
 	},
 	template: function (props) {
-		return '<h1>' + props.greeting + ', ' + props.name + '!</h1>';
+		return `<h1>${props.greeting}, ${props.name}!</h1>`;
 	}
 });
 ```
+
+*Template literals give you a simple, JSX-like templating experience. If you want, you can use old-school concatenated strings for more backwards compatibility.*
 
 ## 4. Render your component
 
@@ -144,6 +150,6 @@ You can render your component by calling the `.render()` method on it.
 app.render();
 ```
 
-**[Try the demo on CodePen &rarr;](https://codepen.io/cferdinandi/pen/qeJZro)**
+**[Try the demo on CodePen &rarr;](https://codepen.io/cferdinandi/pen/KKdXpvw)**
 
 {{<mailchimp intro="true">}}

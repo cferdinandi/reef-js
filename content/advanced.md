@@ -24,13 +24,13 @@ var app = new Reef('#app', {
 		name: 'world'
 	},
 	template: function (props) {
-		return '<h1>' + props.greeting + ', ' + props.name + '!</h1>';
+		return `<h1>${props.greeting}, ${props.name}!</h1>`;
 	},
 	allowHTML: true // Do NOT use with third-party/user-supplied data
 });
 ```
 
-**[Try allowing HTML in your data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/LwgNyr)**
+**[Try allowing HTML in your data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/yLYzYzz)**
 
 
 ## Default and state-based HTML attributes
@@ -45,11 +45,10 @@ var app = new Reef('#app', {
 		agreeToTOS: true
 	},
 	template: function (props) {
-		var html =
-			'<label for="tos">' +
-				'<input type="checkbox" id="tos" ' + (props.agreeToTOS ? 'checked' : '') + '>' +
-			'</label>';
-		return html;
+		return `
+			'<label for="tos">
+				<input type="checkbox" id="tos" ${props.agreeToTOS ? 'checked' : ''}>
+			</label>`;
 	}
 });
 ```
@@ -62,14 +61,13 @@ In this example, `option[value="hermione"]` has the `[selected]` attribute on it
 var app = new Reef('#app', {
 	data: {},
 	template: function () {
-		var html =
-			'<label for="wizards">Who is the best wizard?</label>' +
-			'<select>' +
-				'<option value="harry">Harry</option>' +
-				'<option value="hermione" defaultSelected>Hermione</option>' +
-				'<option value="neville">Neville</option>' +
-			'</select>';
-		return html;
+		return `
+			<label for="wizards">Who is the best wizard?</label>
+			<select>
+				<option value="harry">Harry</option>
+				<option value="hermione" defaultSelected>Hermione</option>
+				<option value="neville">Neville</option>
+			</select>`;
 	}
 });
 ```
@@ -97,10 +95,9 @@ var app = new Reef('#app', {
 		]
 	},
 	template: function (props) {
-		var html =
-			'<h1>' + props.greeting + '</h1>' +
-			'<div id="todos"></div>';
-		return html;
+		return `
+			<h1>${props.greeting}</h1>
+			<div id="todos"></div>`;
 	}
 });
 
@@ -108,25 +105,27 @@ var app = new Reef('#app', {
 var todos = new Reef('#todos', {
 	data: app.data,
 	template: function (props) {
-		var html = '<h2>Todo List</h2><ul>';
-		props.todos.forEach(function (todo) {
-			html += '<li>' + todo + '</li>';
-		});
-		html += '</ul>';
-		return html;
-	},
-	attachTo: [app]
+		return `
+			<h2>Todo List</h2>
+			<ul>
+				${props.todos.map(function (todo) {
+					return `<li>${todo}</li>`;
+				}).join('')}
+			</ul>`;
+	}
 });
 
 app.render();
 ```
 
-**[Try nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/BXqKWX)**
+**[Try nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/abvLvER)**
 
 
 ## Attaching and Detaching Nested Components
 
-You can attach or detach nested components at any time using the `attach()` and `detach()` methods. Both methods accept both individual components or arrays of components as arguments.
+You can attach or detach nested components at any time using the `attach()` and `detach()` methods.
+
+Both methods accept individual components or arrays of components as arguments.
 
 ```js
 // Attach components
@@ -138,7 +137,7 @@ app.detach(todos);
 app.detach([todos]);
 ```
 
-**[Try attaching nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/KOGzmz)**
+**[Try attaching nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/jObGbZw)**
 
 
 
@@ -166,10 +165,9 @@ var sourceOfTruth = {
 var app = new Reef('#app', {
 	data: sourceOfTruth,
 	template: function (props) {
-		var html =
-			'<h1>' + props.greeting + '</h1>' +
-			'<div id="todos"></div>';
-		return html;
+		return `
+			<h1>${props.greeting}</h1>
+			<div id="todos"></div>`;
 	}
 });
 
@@ -177,12 +175,13 @@ var app = new Reef('#app', {
 var todos = new Reef('#todos', {
 	data: sourceOfTruth,
 	template: function (props) {
-		var html = '<h2>Todo List</h2><ul>';
-		props.todos.forEach(function (todo) {
-			html += '<li>' + todo + '</li>';
-		});
-		html += '</ul>';
-		return html;
+		return `
+			<h2>Todo List</h2>
+			<ul>
+				${props.todos.map(function (todo) {
+					return `<li>${todo}</li>`;
+				}).join('')}
+			</ul>`;
 	},
 	attachTo: [app]
 });
@@ -197,15 +196,13 @@ sourceOfTruth.greeting = 'Hi, universe';
 app.render();
 ```
 
-**[Try working with a single source of truth on CodePen &rarr;](https://codepen.io/cferdinandi/pen/pMxyPb)**
+**[Try working with a single source of truth on CodePen &rarr;](https://codepen.io/cferdinandi/pen/MWaEazG)**
 
-### Create a Lagoon
+### A Data Lagoon
 
-A *lagoon* is a Reef instance that's only purpose is to store shared data.
+A *lagoon* is a Reef instance that's only purpose is to reactively store shared data.
 
-It doesn't render any UI in the DOM, but allows you to reactively update state using the `setData()` method. You can automatically trigger renders in other components by attaching them to your lagoon.
-
-Create a lagoon by setting the `lagoon` option to `true` when creating your Reef instance.
+Create a lagoon by setting the `lagoon` option to `true` when creating your Reef instance. A lagoon doesn't have a template of its own, but automatically updates the UI of any attached components when its data is updated.
 
 ```js
 var sourceOfTruth = new Reef(null, {
@@ -224,10 +221,9 @@ var sourceOfTruth = new Reef(null, {
 var app = new Reef('#app', {
 	data: sourceOfTruth.data,
 	template: function (props) {
-		var html =
-			'<h1>' + props.greeting + '</h1>' +
-			'<div id="todos"></div>';
-		return html;
+		return `
+			<h1>${props.greeting}</h1>
+			<div id="todos"></div>`;
 	},
 	attachTo: [sourceOfTruth]
 });
@@ -236,12 +232,13 @@ var app = new Reef('#app', {
 var todos = new Reef('#todos', {
 	data: sourceOfTruth.data,
 	template: function (props) {
-		var html = '<h2>Todo List</h2><ul>';
-		props.todos.forEach(function (todo) {
-			html += '<li>' + todo + '</li>';
-		});
-		html += '</ul>';
-		return html;
+		return `
+			<h2>Todo List</h2>
+			<ul>
+				${props.todos.map(function (todo) {
+					return `<li>${todo}</li>`;
+				}).join('')}
+			</ul>`;
 	},
 	attachTo: [sourceOfTruth, app]
 });
@@ -250,12 +247,10 @@ var todos = new Reef('#todos', {
 app.render();
 
 // Reactively update state
-sourceOfTruth.setData({greeting: 'Hi, universe'});
+sourceOfTruth.data.greeting = 'Hi, universe';
 ```
 
-<p class="codepen" data-height="265" data-theme-id="light" data-default-tab="js,result" data-user="cferdinandi" data-slug-hash="MNPymb" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="Creating a Lagoon with ReefJS v4"></p>
-
-**[Try creating a lagoon on CodePen &rarr;](https://codepen.io/cferdinandi/pen/MNPymb)**
+**[Try creating a lagoon on CodePen &rarr;](https://codepen.io/cferdinandi/pen/dyYVYry)**
 
 
 
@@ -263,7 +258,7 @@ sourceOfTruth.setData({greeting: 'Hi, universe'});
 
 Whenever Reef updates the DOM, it emits a custom `render` event that you can listen for with `addEventListener()`.
 
-The `render` event is emitted on the element that was update, and bubbles, so you can [use event delegation](https://gomakethings.com/checking-event-target-selectors-with-event-bubbling-in-vanilla-javascript/) if you'd prefer.
+The `render` event is emitted on the element that was updated, and bubbles, so you can [use event delegation](https://gomakethings.com/checking-event-target-selectors-with-event-bubbling-in-vanilla-javascript/) if you'd prefer.
 
 The `event.detail` property includes a copy of the `data` at the time that the template was rendered.
 
@@ -279,7 +274,7 @@ document.addEventListener('render', function (event) {
 }, false);
 ```
 
-**[Try the `render` event on CodePen &rarr;](https://codepen.io/cferdinandi/pen/XvxdRa)**
+**[Try the `render` event on CodePen &rarr;](https://codepen.io/cferdinandi/pen/zYvEvXy)**
 
 
 
@@ -292,7 +287,7 @@ Pass in the element to emit the event on and the event name as arguments. You ca
 ```js
 // Emit the 'partyTime' event on the document element
 Reef.emit(document, 'partyTime', {
-	msg: 'It\'s party time!'
+	msg: `It's party time!`
 });
 ```
 
