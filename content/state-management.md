@@ -52,4 +52,11 @@ You can get an *immutable copy* of your data using the `clone()` method. This cr
 var data = app.clone();
 ```
 
+And starting with v6.1.0, you can immutably clone any array or object using the `Reef.clone()` method. Pass in the object to clone as an argument.
+
+```js
+// Changes you make to data won't affect dataClone and vice-versa
+var dataClone = Reef.clone(data);
+```
+
 {{<mailchimp intro="true">}}
