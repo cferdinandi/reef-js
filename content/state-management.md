@@ -41,6 +41,8 @@ app.data = {
 
 **[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/MWarYLP)**
 
+*For better performance, multiple property updates may be batched into a single, asynchronous render. You can detect when a render has been completed using [the `render` event hook](/advanced/#event-hooks).*
+
 
 ## Non-Reactive Data
 
