@@ -198,7 +198,7 @@ app.render();
 
 **[Try working with a single source of truth on CodePen &rarr;](https://codepen.io/cferdinandi/pen/MWaEazG)**
 
-### A Data Lagoon
+### Data Stores (aka Lagoons)
 
 A *lagoon* is a Reef instance that's only purpose is to reactively store shared data.
 
