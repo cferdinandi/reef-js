@@ -42,21 +42,28 @@ app.data = {
 **[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/KKdXdmm)**
 
 
-## Updating data without reactivity
+## Non-Reactive Data
 
 Sometimes, you want to update data *without* updating the UI.
 
-You can get an *immutable copy* of your data using the `clone()` method. This creates a non-reactive copy of your data that won't affect the state of your component.
+You can get an *immutable copy* of your data by passing it into the `Reef.clone()` method. This creates a non-reactive copy of your data that won't affect the state of your component.
 
 ```js
-var data = app.clone();
+// Create an immutable copy of the app.data
+var data = Reef.clone(app.data);
+
+// Update the copy
+// This does NOT update the app.data or render a new UI
+data.name = 'Universe';
 ```
 
-And starting with v6.1.0, you can immutably clone any array or object using the `Reef.clone()` method. Pass in the object to clone as an argument.
+When you're ready to update your component data, you can set the component's `data` property to your cloned copy.
 
 ```js
-// Changes you make to data won't affect dataClone and vice-versa
-var dataClone = Reef.clone(data);
+// Reactively update the component data
+app.data = data;
 ```
+
+_**Note:** You can use the `Reef.clone()` method to create an immutable copy of any array or object, not just your component data._
 
 {{<mailchimp intro="true">}}

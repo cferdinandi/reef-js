@@ -9,31 +9,9 @@ anchors: true
 
 <div id="table-of-contents"></div>
 
-## HTML in your data
+## HTML Templates
 
-Reef automatically encodes any markup in your data before passing it into your template to reduce your risk of cross-site scripting (XSS) attacks.
-
-You can disable this feature by setting the `allowHTML` option to `true`.
-
-*__Important!__ Do NOT do this with third-party or user-provided data. This exposes you to the risk of cross-site scripting (XSS) attacks.*
-
-```js
-var app = new Reef('#app', {
-	data: {
-		greeting: '<strong>Hello</strong>',
-		name: 'world'
-	},
-	template: function (props) {
-		return `<h1>${props.greeting}, ${props.name}!</h1>`;
-	},
-	allowHTML: true // Do NOT use with third-party/user-supplied data
-});
-```
-
-**[Try allowing HTML in your data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/yLYzYzz)**
-
-
-## Default and state-based HTML attributes
+### Default and state-based HTML attributes
 
 You can use component data to conditionally include or change the value of HTML attributes in your template.
 
@@ -46,7 +24,7 @@ var app = new Reef('#app', {
 	},
 	template: function (props) {
 		return `
-			'<label for="tos">
+			<label for="tos">
 				<input type="checkbox" id="tos" ${props.agreeToTOS ? 'checked' : ''}>
 			</label>`;
 	}
@@ -72,27 +50,45 @@ var app = new Reef('#app', {
 });
 ```
 
+### Preventing Cross-Site Scripting (XSS) Attacks
+
+To reduce your risk of cross-site scripting (XSS) attacks, Reef automatically encodes any markup in your data before passing it into your template.
+
+You can disable this feature by setting the `allowHTML` option to `true`.
+
+*__Important!__ Do NOT do this with third-party or user-provided data. This exposes you to the risk of cross-site scripting (XSS) attacks.*
+
+```js
+var app = new Reef('#app', {
+	data: {
+		greeting: '<strong>Hello</strong>',
+		name: 'world'
+	},
+	template: function (props) {
+		return `<h1>${props.greeting}, ${props.name}!</h1>`;
+	},
+	allowHTML: true // Do NOT use with third-party/user-supplied data
+});
+```
+
+**[Try allowing HTML in your data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/yLYzYzz)**
+
 
 ## Nested Components
 
-If you're managing a bigger app, you may have components inside components.
+If you're managing a bigger app, you may have components nested inside other components.
 
 Reef provides you with a way to attach nested components to their parent components. When the parent component is updated, it will automatically update the UI of its nested components if needed.
 
-Associate a nested component with its parent using the `attachTo` key in your options. This accepts an array of components to attach your nested component to. You only need to render the parent component. It's nested components will render automatically.
+Associate a nested component with its parent using the `attachTo` key in your options. You can provide a component or array of components for a value.
 
-You can access a parent component's state from a nested component by assigning the parent component `data` property to the `data` key in your nested component's options.
+You only need to render the parent component. It's nested components will render automatically.
 
 ```js
 // Parent component
 var app = new Reef('#app', {
 	data: {
-		greeting: 'Hello, world!',
-		todos: [
-			'Buy milk',
-			'Bake a birthday cake',
-			'Go apple picking'
-		]
+		greeting: 'Hello, world!'
 	},
 	template: function (props) {
 		return `
@@ -103,16 +99,18 @@ var app = new Reef('#app', {
 
 // Nested component
 var todos = new Reef('#todos', {
-	data: app.data,
+	data: {
+		todos: ['Swim', 'Climb', 'Jump', 'Play']
+	},
 	template: function (props) {
 		return `
-			<h2>Todo List</h2>
 			<ul>
 				${props.todos.map(function (todo) {
 					return `<li>${todo}</li>`;
 				}).join('')}
 			</ul>`;
-	}
+	},
+	attachTo: app
 });
 
 app.render();
@@ -121,11 +119,11 @@ app.render();
 **[Try nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/abvLvER)**
 
 
-## Attaching and Detaching Nested Components
+### Attaching and Detaching Nested Components
 
-You can attach or detach nested components at any time using the `attach()` and `detach()` methods.
+You can attach or detach nested components at any time using the `attach()` and `detach()` methods on the parent component.
 
-Both methods accept individual components or arrays of components as arguments.
+Provide an individual component or array of components as an argument.
 
 ```js
 // Attach components
@@ -141,126 +139,132 @@ app.detach([todos]);
 
 
 
-## Shared State
+## Shared State with Data Stores
 
-There are two ways to handle shared state with Reef when your components (in addition to the [nested component/parent component relationship](#nested-components) documented above).
+A *Data Store* is a special Reef object that holds reactive data you can share with multiple components.
 
-### Source of Truth Object
+Any time you update the data in your *Data Store*, any components that use the data will also be updated, and will render again if there are any UI changes.
 
-You can associate a named data object with multiple components.
-
-The biggest downside to this approach is that it's non-reactive. You need to [manually run the `render()` method](/state-management#manual-state) on any component that needs to be updated when you update the state.
+Create a *Data Store* using the `new Reef.Store()` constructor.
 
 ```js
-var sourceOfTruth = {
-	greeting: 'Hello, world!',
-	todos: [
-		'Buy milk',
-		'Bake a birthday cake',
-		'Go apple picking'
-	]
-};
-
-// Parent component
-var app = new Reef('#app', {
-	data: sourceOfTruth,
-	template: function (props) {
-		return `
-			<h1>${props.greeting}</h1>
-			<div id="todos"></div>`;
+var store = new Reef.Store({
+	data: {
+		heading: 'My Todos',
+		todos: ['Swim', 'Climb', 'Jump', 'Play']
 	}
 });
-
-// Nested component
-var todos = new Reef('#todos', {
-	data: sourceOfTruth,
-	template: function (props) {
-		return `
-			<h2>Todo List</h2>
-			<ul>
-				${props.todos.map(function (todo) {
-					return `<li>${todo}</li>`;
-				}).join('')}
-			</ul>`;
-	},
-	attachTo: [app]
-});
-
-// Initial render
-app.render();
-
-// Update the state
-sourceOfTruth.greeting = 'Hi, universe';
-
-// Re-render the DOM
-app.render();
 ```
 
-**[Try working with a single source of truth on CodePen &rarr;](https://codepen.io/cferdinandi/pen/MWaEazG)**
-
-### Data Stores (aka Lagoons)
-
-A *lagoon* is a Reef instance that's only purpose is to reactively store shared data.
-
-Create a lagoon by setting the `lagoon` option to `true` when creating your Reef instance. A lagoon doesn't have a template of its own, but automatically updates the UI of any attached components when its data is updated.
+To use your *Data Store* with a component, pass it in with the `store` property instead of providing a `data` object.
 
 ```js
-var sourceOfTruth = new Reef(null, {
-	data: {
-		greeting: 'Hello, world!',
-		todos: [
-			'Buy milk',
-			'Bake a birthday cake',
-			'Go apple picking'
-		]
-	},
-	lagoon: true
-});
-
-// Parent component
 var app = new Reef('#app', {
-	data: sourceOfTruth.data,
+	store: store,
 	template: function (props) {
 		return `
-			<h1>${props.greeting}</h1>
-			<div id="todos"></div>`;
-	},
-	attachTo: [sourceOfTruth]
-});
-
-// Nested component
-var todos = new Reef('#todos', {
-	data: sourceOfTruth.data,
-	template: function (props) {
-		return `
-			<h2>Todo List</h2>
+			<h1>${props.heading}</h1>
 			<ul>
 				${props.todos.map(function (todo) {
 					return `<li>${todo}</li>`;
 				}).join('')}
 			</ul>`;
-	},
-	attachTo: [sourceOfTruth, app]
+
+	}
 });
+```
 
-// Initial render
-app.render();
+When using a *Data Store*, a component will have no `data` of its own. All state/data updates must happen by updating the `store`.
 
-// Reactively update state
-sourceOfTruth.data.greeting = 'Hi, universe';
+```js
+// Add a todo item
+store.data.todos.push('Take a nap... zzzz');
 ```
 
 **[Try creating a lagoon on CodePen &rarr;](https://codepen.io/cferdinandi/pen/dyYVYry)**
 
 
 
-## The `render` event
+## Setters & Getters
+
+Reef's reactive `data` makes updating your UI as updating an object property.
+
+But as your app scales, you may find that keeping track of what's updating state and causing changes to the UI becomes harder to track and maintain.
+
+Setters and getters provide you with a way to control how data flows in and out of your component.
+
+### Setters
+
+Setters are functions that update your component or store data.
+
+Create setters by passing in an object of setter functions with the `setters` property in your Reef options. The first argument on a setter function is the store or component data. You can pass in as many other arguments as you'd like.
+
+```js
+var store = new Reef.Store({
+	data: {
+		heading: 'My Todos',
+		todos: ['Swim', 'Climb', 'Jump', 'Play']
+	},
+	setters: {
+		// Add a new todo item to the component
+		addTodo: function (props, todo) {
+			props.todos.push(todo);
+		}
+	}
+});
+```
+
+Use setter functions by calling the `do()` method on your component or store. Pass in the name of setter, along with any required arguments (except for `props`).
+
+```js
+// Add a new todo item
+store.do('addTodo', 'Take a nap... zzzz');
+```
+
+**When a component/store has setter functions, you cannot update data directly.**
+
+Setter functions are the only way to make updates. This protects your component or store data from unwanted changes. The `data` property always returns an immutable copy of the data.
+
+```js
+// This will NOT update the store.data or the UI
+store.data.todos.push('Take a nap... zzzz');
+```
+
+### Getters
+
+Getters are functions that parse data from your component or store and return a value.
+
+They're useful if you need to manipulate and retrieve the same data across multiple views of components. Rather than having to import helper functions, you can attach them directly to the component or store.
+
+Create getters by passing in an object of getter functions with the `getters` property in your Reef options. They accept the store or component data as their only argument.
+
+```js
+var store = new Reef.Store({
+	data: {
+		heading: 'My Todos',
+		todos: ['Swim', 'Climb', 'Jump', 'Play']
+	},
+	getters: {
+		total: function (props) {
+			return props.todos.length;
+		}
+	}
+});
+```
+
+Use getter functions by calling the `get()` method on your component or store. Pass in the name of getter as an argument.
+
+```js
+// Add a new todo item
+store.get('total');
+```
+
+
+## Event Hooks
 
 Whenever Reef updates the DOM, it emits a custom `render` event that you can listen for with `addEventListener()`.
 
-The `render` event is emitted on the element that was updated, and bubbles, so you can [use event delegation](https://gomakethings.com/checking-event-target-selectors-with-event-bubbling-in-vanilla-javascript/) if you'd prefer.
-
-The `event.detail` property includes a copy of the `data` at the time that the template was rendered.
+The `render` event is emitted on the element that was updated, and bubbles, so you can also [use event delegation](https://gomakethings.com/checking-event-target-selectors-with-event-bubbling-in-vanilla-javascript/). The `event.detail` property includes a copy of the `data` at the time that the component template was rendered.
 
 ```js
 document.addEventListener('render', function (event) {
@@ -268,8 +272,8 @@ document.addEventListener('render', function (event) {
 	// Only run for elements with the #app ID
 	if (!event.target.matches('#app')) return;
 
-	// The data for this template
-	var data = event.detail;
+	// Log the data at the time of render
+	console.log(event.detail);
 
 }, false);
 ```
@@ -278,7 +282,7 @@ document.addEventListener('render', function (event) {
 
 
 
-## Emitting your own custom events
+### Emitting your own custom events
 
 Reef includes a helper function, `Reef.emit()`, that you can use to emit your own custom events in your apps.
 
