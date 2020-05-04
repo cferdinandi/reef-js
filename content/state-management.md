@@ -39,7 +39,7 @@ app.data = {
 };
 ```
 
-**[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/KKdXdmm)**
+**[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/MWarYLP)**
 
 
 ## Non-Reactive Data
@@ -63,6 +63,8 @@ When you're ready to update your component data, you can set the component's `da
 // Reactively update the component data
 app.data = data;
 ```
+
+**[Try non-reactive data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/vYNpEPX)**
 
 _**Note:** You can use the `Reef.clone()` method to create an immutable copy of any array or object, not just your component data._
 

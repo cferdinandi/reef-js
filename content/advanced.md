@@ -71,7 +71,7 @@ var app = new Reef('#app', {
 });
 ```
 
-**[Try allowing HTML in your data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/yLYzYzz)**
+**[Try allowing HTML in your data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/KKdZwYB)**
 
 
 ## Nested Components
@@ -116,7 +116,7 @@ var todos = new Reef('#todos', {
 app.render();
 ```
 
-**[Try nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/abvLvER)**
+**[Try nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/gOaobJW)**
 
 
 ### Attaching and Detaching Nested Components
@@ -135,7 +135,7 @@ app.detach(todos);
 app.detach([todos]);
 ```
 
-**[Try attaching nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/jObGbZw)**
+**[Try attaching nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/zYvpxQV)**
 
 
 
@@ -181,13 +181,13 @@ When using a *Data Store*, a component will have no `data` of its own. All state
 store.data.todos.push('Take a nap... zzzz');
 ```
 
-**[Try creating a lagoon on CodePen &rarr;](https://codepen.io/cferdinandi/pen/dyYVYry)**
+**[Try creating a Data Store on CodePen &rarr;](https://codepen.io/cferdinandi/pen/mdepyNW)**
 
 
 
 ## Setters & Getters
 
-Reef's reactive `data` makes updating your UI as updating an object property.
+Reef's reactive `data` makes updating your UI as simple updating an object property.
 
 But as your app scales, you may find that keeping track of what's updating state and causing changes to the UI becomes harder to track and maintain.
 
@@ -230,6 +230,8 @@ Setter functions are the only way to make updates. This protects your component 
 store.data.todos.push('Take a nap... zzzz');
 ```
 
+**[Try working with setter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/qBOpdBO)**
+
 ### Getters
 
 Getters are functions that parse data from your component or store and return a value.
@@ -259,6 +261,8 @@ Use getter functions by calling the `get()` method on your component or store. P
 store.get('total');
 ```
 
+**[Try working with getter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/RwWxPNp)**
+
 
 ## Event Hooks
 
@@ -278,7 +282,7 @@ document.addEventListener('render', function (event) {
 }, false);
 ```
 
-**[Try the `render` event on CodePen &rarr;](https://codepen.io/cferdinandi/pen/zYvEvXy)**
+**[Try the `render` event hook on CodePen &rarr;](https://codepen.io/cferdinandi/pen/ZEbvGYP)**
 
 
 

@@ -151,6 +151,6 @@ Render your component by calling the `render()` method on it.
 app.render();
 ```
 
-**[Try the demo on CodePen &rarr;](https://codepen.io/cferdinandi/pen/KKdXpvw)**
+**[Try the demo on CodePen &rarr;](https://codepen.io/cferdinandi/pen/VwvyYge)**
 
 {{<mailchimp intro="true">}}
