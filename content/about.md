@@ -27,7 +27,14 @@ The code is available under the [MIT License](/mit).
 
 You can find all available versions [under releases](https://github.com/cferdinandi/reef/releases).
 
-**Version 6 (current version) completely changes how data reactivity works.**
+**Version 7 (current version) introduces new tools for managing more complex applications.**
+
+- Added `new Reef.Store()` *data store* constructor for reactive shared state.
+- Added `getter` and `setter` functions for more fine-grained control over how data flows in and out of components.
+- Improved process for attaching nested components to parent components.
+- Removed the `clone()` method on individual components (the global `Reef.clone()` method still exists).
+
+**[Version 6](/v6) completely changes how data reactivity works.**
 
 - Component data is now directly reactive.
 - The `setData()` and `getData()` methods (previously used for reactivity) have been removed.
