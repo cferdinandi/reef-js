@@ -49,6 +49,20 @@ Compiled and production-ready code can be found in the `dist` directory. The `sr
 <script src="path/to/reef.min.js"></script>
 ```
 
+**NPM**
+
+You can also use NPM (or your favorite package manager). First, install with NPM.
+
+```bash
+npm install reefjs --save
+```
+
+Then import the package.
+
+```js
+import Reef from 'reefjs';
+```
+
 **CommonJS**
 
 If you use NodeJS, you can import Reef using the `require()` method with the `.cjs` version.
@@ -65,14 +79,6 @@ If you use RequireJS, SystemJS, and other AMD formats, you can import Reef with 
 requirejs(['https://cdn.jsdelivr.net/npm/reefjs/dist/reef.amd.min.js'], function (Reef) {
   //...
 });
-```
-
-**NPM**
-
-You can also use NPM (or your favorite package manager).
-
-```bash
-npm install reefjs --save
 ```
 {{%/md%}}
 </details>
