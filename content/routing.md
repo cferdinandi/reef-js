@@ -139,9 +139,27 @@ var app = new Reef('#app', {
 });
 ```
 
+
+
+## Accessibility
+
 Any time the route changes, any associated components automatically re-render.
 
 The `document.title` is also updated, and focus is shifted to the primary heading on the page (or an anchor element if scrolling to an anchored location).
+
+### Focus rings on headings
+
+Headings and anchor locations will appear with a focus ring around them, which you may find visually unappealing.
+
+Elements that don't normally receive focus are given a `tabindex` if `-1` to make them focusable with JS. You can remove the focus ring by styling `[tabindex="-1"]`.
+
+```css
+[tabindex="-1"] {
+	outline: 0;
+}
+```
+
+_**Note:** you should NOT remove focus styles from elements that are normally focusable._
 
 
 
