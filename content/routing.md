@@ -95,7 +95,7 @@ No custom components required. Any link element with an `href` will work.
 
 Create a `new Reef.Router()` to define your routes.
 
-Every route requires a `title` and `url`. You can add any additional properties that you want (for example, an `id` for the route).
+Every route requires a `title` and `url`. You can add any additional properties that you want (for example, an `id` for the route). You can use `*` as a `url` to catch any unmatched URLs.
 
 ```js
 var router = new Reef.Router({
@@ -123,7 +123,7 @@ var router = new Reef.Router({
 
 For any Reef component that should be updated when the route changes, add a `router` property and associate your router component with it.
 
-Details about the current route are automatically passed into the `template` function as a second argument.
+Details about the current route are automatically passed into the `template` function as a second argument. By default, for unmatched routes the `route` argument will have a value of `null`.
 
 ```js
 var app = new Reef('#app', {
