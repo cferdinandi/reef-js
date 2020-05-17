@@ -17,7 +17,7 @@ Reef includes an optional router you can use to handle URL/route management with
 - Works with any link element. Unlike bigger frameworks, you don't need custom routing components.
 - Baked-in accessibility. Reef's router automatically handles focus management and title updates.
 - Supports real URL paths, with an optional hashbang pattern (`#!`) fallback.
-- Weighs just 1.9kb minified and gzipped.
+- Weighs just 2kb minified and gzipped.
 
 
 
