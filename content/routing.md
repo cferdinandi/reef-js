@@ -163,7 +163,9 @@ _**Note:** you should NOT remove focus styles from elements that are normally fo
 
 
 
-## Getting parameters from routes
+## Advanced Routing
+
+### Getting parameters from routes
 
 You can include variable parameters in your URLs, either in the path itself or as query or search parameters.
 
@@ -211,9 +213,7 @@ var app = new Reef('#app', {
 });
 ```
 
-
-
-## Nested routes
+### Nested routes
 
 Reef Router supports nested routes out-of-the-box.
 
@@ -242,6 +242,50 @@ var router = new Reef.Router({
 			title: 'Change Password',
 			url: '/account/:user/password'
 		}
+	]
+});
+```
+
+### Redirects
+
+As your app grows, routes may change. You can setup redirects from one route to another.
+
+When creating the route, create the `url` property as normal, and add a `redirect` property with the route that the URL should point to.
+
+```js
+var router = new Reef.Router({
+	routes: [
+		{
+			id: 'contact',
+			title: 'Contact',
+			url: '/contact/'
+		},
+		{
+			url: '/contact-us/',
+			redirect: '/contact/'
+		}
+	]
+});
+```
+
+The `redirect` property can also be a function that returns a string.
+
+The function automatically receive the existing `route` object, with URL and search parameters, as an argument.
+
+```js
+var router = new Reef.Router({
+	routes: [
+		{
+			id: 'user-account',
+			title: 'User Account',
+			url: '/account/:user'
+		},
+		{
+			url: '/my-account/:user',
+			redirect: function (route) {
+				return `/account/${route.params.user}/`
+			}
+		},
 	]
 });
 ```
