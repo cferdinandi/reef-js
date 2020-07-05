@@ -257,7 +257,7 @@ var store = new Reef.Store({
 Use getter functions by calling the `get()` method on your component or store. Pass in the name of getter as an argument.
 
 ```js
-// Add a new todo item
+// Get the number of todo items
 store.get('total');
 ```
 
