@@ -398,6 +398,15 @@ Associate a component with the router for automatic rendering.
 router.addComponent(app);
 ```
 
+### `current`
+
+The `current` property will return the details object for the current route.
+
+```js
+// Get the current route details
+router.current;
+```
+
 
 
 ## Routing Events
