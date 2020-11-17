@@ -74,6 +74,32 @@ var app = new Reef('#app', {
 **[Try allowing HTML in your data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/KKdZwYB)**
 
 
+### Getting the element the template is being rendered into
+
+An optional second argument is passed into the `template()` function: the element the template is being rendered into.
+
+This is particularly handy if you have data attributes on your element that affect what's rendered into the template.
+
+_**Requires Reef 7.5 or higher.**_
+
+```html
+<div id="app" data-greeting="Hello"></div>
+```
+
+```js
+var app = new Reef('#app', {
+	data: {
+		name: 'world'
+	},
+	template: function (props, elem) {
+		return `<h1>${elem.getAttribute('data-greeting')}, ${props.name}!</h1>`;
+	}
+});
+```
+
+**[Try getting the HTML element that the template was rendered into on CodePen &rarr;](https://codepen.io/cferdinandi/pen/NWrmxGP)**
+
+
 ## Nested Components
 
 If you're managing a bigger app, you may have components nested inside other components.

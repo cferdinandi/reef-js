@@ -139,6 +139,8 @@ var app = new Reef('#app', {
 });
 ```
 
+_**Note:** when using a router, the element that [the template was rendered into](/advanced/#getting-the-element-the-template-is-being-rendered-into) becomes the third argument on the `template()` function._
+
 
 
 ## Accessibility
