@@ -15,5 +15,6 @@ Want to see Reef in action? Here are some demos and examples you can play with.
 - [Stopwatch](https://codepen.io/cferdinandi/pen/GRpyJov)
 - [Todo List](https://codepen.io/cferdinandi/pen/MWarwyR)
 - [Whack-a-Mole Game](https://codepen.io/cferdinandi/pen/ExVojvV)
+- [Articles from an API](https://codepen.io/cferdinandi/pen/yLJrMaV)
 
 {{<mailchimp intro="true">}}

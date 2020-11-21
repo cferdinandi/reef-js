@@ -290,6 +290,56 @@ store.get('total');
 **[Try working with getter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/RwWxPNp)**
 
 
+## Asynchronous Data
+
+You can use asynchronous data (such as content from an API) in your templates.
+
+Set an initial default value, make your API call, and update the `data` property once you get data back. This will automatically trigger a render.
+
+```js
+// Create an app
+var app = new Reef('#app', {
+	data: {
+		articles: []
+	},
+	template: function (props) {
+
+    // If there are no articles
+    if (!props.articles.length) {
+      return `<p>There are no articles.</p>`;
+    }
+
+    // Otherwise, show the articles
+	return `
+		<ul>
+			${props.articles.map(function (article) {
+				return `<li>
+					<strong><a href="#">${article.title}.</a></strong>
+					${article.body}
+				</li>`;
+			}).join('')}
+		</ul>`;
+	}
+});
+
+// Fetch API data
+// Then, update the app data
+fetch('https://jsonplaceholder.typicode.com/posts').then(function (response) {
+	return response.json();
+}).then(function (data) {
+	app.data.articles = data;
+});
+```
+
+**[Try create a template from asynchronous data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/yLJrMaV)**
+
+You might also choose to hard-code a _loading message_ in your markup.
+
+```html
+<div id="app">Loading...</div>
+```
+
+
 ## Event Hooks
 
 Whenever Reef updates the DOM, it emits a custom `render` event that you can listen for with `addEventListener()`.
