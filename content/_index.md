@@ -37,7 +37,7 @@ It does a lot less than the big guys like React and Vue. It doesn't have a Virtu
 
 **Reef does just one thing: render UI.**
 
-Couldn't you just use some template strings and `innerHTML`? Sure. But Reef only updates things that have changed instead clobbering the DOM and removing focus from your form fields. It also automatically renders a new UI when your data updates, and helps protect you from XSS attacks.
+Couldn't you just use some template strings and `innerHTML`? Sure. But Reef only updates things that have changed instead of clobbering the DOM and removing focus from your form fields. It also automatically renders a new UI when your data updates, and helps protect you from XSS attacks.
 
 If you're craving a simpler, back-to-basics web development experience, Reef is for you.
 
