@@ -208,7 +208,7 @@ var app = new Reef('#app', {
 		return `
 			<h1>${route.title}</h1>
 			<p>${props.greeting} ${route.params.user}</p>
-			${route.params.photo ? `<p>
+			${route.search.photo ? `<p>
 				<img alt="A photo of ${route.params.user}" src="/img/${route.params.user}.jpg">
 			</p>` : ''}`;
 	}
