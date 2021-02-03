@@ -9,12 +9,13 @@ anchors: true
 
 Want to see Reef in action? Here are some demos and examples you can play with.
 
-- [Clock](https://codepen.io/cferdinandi/pen/gOaoppx)
-- [Mirror Typing](https://codepen.io/cferdinandi/pen/WNQdvQK)
-- [Pomodoro Timer](https://codepen.io/cferdinandi/pen/ExVojPx)
-- [Stopwatch](https://codepen.io/cferdinandi/pen/GRpyJov)
-- [Todo List](https://codepen.io/cferdinandi/pen/MWarwyR)
-- [Whack-a-Mole Game](https://codepen.io/cferdinandi/pen/ExVojvV)
-- [Articles from an API](https://codepen.io/cferdinandi/pen/yLJrMaV)
+- [Clock](https://codepen.io/cferdinandi/pen/jOVPgJo)
+- [Mirror Typing](https://codepen.io/cferdinandi/pen/rNWVXbx)
+- [Pomodoro Timer](https://codepen.io/cferdinandi/pen/RwoPXOM)
+- [Stopwatch](https://codepen.io/cferdinandi/pen/wvoaVZR)
+- [Progress Bar](https://codepen.io/cferdinandi/pen/mdOJNYL)
+- [Todo List](https://codepen.io/cferdinandi/pen/yLVNmWL)
+- [Whack-a-Mole Game](https://codepen.io/cferdinandi/pen/rNWVXgx)
+- [Articles from an API](https://codepen.io/cferdinandi/pen/gOLpVZK)
 
 {{<mailchimp intro="true">}}

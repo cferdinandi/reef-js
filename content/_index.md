@@ -8,7 +8,7 @@ fullWidth: false
 
 <h1 class="text-xlarge margin-bottom-small">Reef</h1>
 
-<p class="text-large">A lightweight library for creating reactive, state-based components and UI.</p>
+<p class="text-large">A lightweight library for creating reactive, state-based UI.</p>
 
 Reef is a simpler alternative to React, Vue, and other large frameworks.
 
@@ -16,18 +16,23 @@ Reef is a simpler alternative to React, Vue, and other large frameworks.
 
 {{<cta for="funnel">}}
 
+
+
 ## Features
 
-- Weighs just 2.5kb minified and gzipped, with zero dependencies.
+- Weighs just 2.7kb minified and gzipped, with zero dependencies.
 - Simple templating with JavaScript strings or template literals.
-- Load it with a `<script>` element or ES module import&mdash;no command line or transpiling required.
+- Load it with a `<script>` element or ES module import&mdash;no command line or transpiling required (though you can if you want).
 - Uses DOM diffing to update only the things that have changed.
-- Has Redux/Vuex-like data stores, setters and getters baked right in.
-- Automatically encodes markup in your data to protect you from cross-site scripting (XSS) attacks.
+- Has Redux/Vuex-like data stores, with setters and getters baked right in.
+- Bundled with an optional lightweight router for single-page apps.
+- Automatically encodes and sanitizes data to help protect you from cross-site scripting (XSS) attacks.
 - Work with native JavaScript methods and browser APIs instead of custom methods and pseudo-languages.
-- Supported all the way back to IE9.
+- Compatible with all modern browsers.
 
 Ditch that bloated framework, and make web development fun and simple again!
+
+
 
 ## Why use Reef?
 
@@ -44,6 +49,8 @@ If you're craving a simpler, back-to-basics web development experience, Reef is 
 (*And if not, that's cool too! Carry on.*)
 
 <a class="btn btn-large" href="/getting-started">Get started with Reef &rarr;</a>
+
+
 
 {{<about-me>}}
 

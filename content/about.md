@@ -9,25 +9,39 @@ anchors: true
 
 <div id="table-of-contents"></div>
 
+
 ## Browser Compatibility
 
-Reef works in all modern browsers, and IE 9 and above.
+Reef works in all modern browsers. That means:
 
-<p class="margin-bottom-small"><strong>For IE support, you need to either...</strong></p>
+- The latest versions of Edge, Chrome, Firefox, and Safari.
+- Mobile Safari, Chrome, and Firefox on Safari.
+- WebView, Chrome, and Firefox for Android.
 
-- Use the `.polyfill` build of Reef, or
-- Include your own polyfills for Proxies and the CustomEvent() object, or
-- Transpile your code into ES5 with BabelJS.
+If you need to support older browsers, you'll need to transpile your code into ES5 with [BabelJS](https://babeljs.io/).
+
+
 
 ## License
 
 The code is available under the [MIT License](/mit).
 
+
+
 ## Changelog
 
 You can find all available versions [under releases](https://github.com/cferdinandi/reef/releases).
 
-**Version 7 (current version) introduces new tools for managing more complex applications.**
+**Version 8 (current version) brings more predictability and convenience when building interactive UIs.**
+
+- Added `reef-checked`, `reef-selected`, and `reef-value` attributes (and `reef-default-*` versions) for more predictable form field behavior.
+- Added new helper methods for more accurate type checking and throwing errors.
+- Improved DOM diffing under-the-hood.
+- Fixed router issues with module bundlers.
+- Improved control for route titles.
+- Dropped legacy browser support.
+
+**[Version 7](/v7) introduces new tools for managing more complex applications.**
 
 - Added `new Reef.Store()` *data store* constructor for reactive shared state.
 - Added `getter` and `setter` functions for more fine-grained control over how data flows in and out of components.

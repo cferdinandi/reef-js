@@ -7,6 +7,8 @@ noIndex: false
 anchors: true
 ---
 
+As your project gets bigger, the way you manage components and data may need to grow with it. Reef has some options to help make things a little easier.
+
 <div id="table-of-contents"></div>
 
 ## HTML Templates
@@ -14,6 +16,8 @@ anchors: true
 ### Default and state-based HTML attributes
 
 You can use component data to conditionally include or change the value of HTML attributes in your template.
+
+Use the `reef-checked`, `reef-selected`, and `reef-value` attributes to dynamically control the `checked`, `selected`, and `value` attributes, respectively. Use a _falsy value_ when the item should _not_ be checked or selected.
 
 In the example below, the checkbox is `checked` when `agreeToTOS` is `true`.
 
@@ -24,31 +28,34 @@ var app = new Reef('#app', {
 	},
 	template: function (props) {
 		return `
-			<label for="tos">
-				<input type="checkbox" id="tos" ${props.agreeToTOS ? 'checked' : ''}>
+			<label>
+				<input type="checkbox" reef-checked="${agreeToTOS}">
 			</label>`;
 	}
 });
 ```
 
-You might also want to use a default value for an attribute, but not change it based on your component's state. You can do that by prefixing any attribute with `default` in your template.
+You might also want to use a default value when an element initial renders, but defer to any changes the user makes after that.
 
-In this example, `option[value="hermione"]` has the `[selected]` attribute on it when first rendered, but will defer to whatever changes the user makes when diffing and updating the UI.
+You can do that with the `reef-default-checked`, `reef-default-selected`, and `reef-default-value` attributes.
+
+In this example, `option[value="Hermione"]` has the `[selected]` attribute on it when first rendered, but will defer to whatever changes the user makes when diffing and updating the UI.
 
 ```js
 var app = new Reef('#app', {
-	data: {},
 	template: function () {
 		return `
 			<label for="wizards">Who is the best wizard?</label>
 			<select>
-				<option value="harry">Harry</option>
-				<option value="hermione" defaultSelected>Hermione</option>
-				<option value="neville">Neville</option>
+				<option>Harry</option>
+				<option reef-default-selected>Hermione</option>
+				<option>Neville</option>
 			</select>`;
 	}
 });
 ```
+
+**[Try controlling form attributes on CodePen &rarr;](https://codepen.io/cferdinandi/pen/jOVPgdo)**
 
 ### Preventing Cross-Site Scripting (XSS) Attacks
 
@@ -71,7 +78,7 @@ var app = new Reef('#app', {
 });
 ```
 
-**[Try allowing HTML in your data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/KKdZwYB)**
+**[Try allowing HTML in your data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/RwoPXex)**
 
 
 ### Getting the element the template is being rendered into
@@ -79,8 +86,6 @@ var app = new Reef('#app', {
 An optional second argument is passed into the `template()` function: the element the template is being rendered into.
 
 This is particularly handy if you have data attributes on your element that affect what's rendered into the template.
-
-_**Requires Reef 7.5 or higher.**_
 
 ```html
 <div id="app" data-greeting="Hello"></div>
@@ -97,7 +102,9 @@ var app = new Reef('#app', {
 });
 ```
 
-**[Try getting the HTML element that the template was rendered into on CodePen &rarr;](https://codepen.io/cferdinandi/pen/NWrmxGP)**
+**[Try getting the HTML element that the template was rendered into on CodePen &rarr;](https://codepen.io/cferdinandi/pen/poNJMxX)**
+
+
 
 
 ## Nested Components
@@ -142,7 +149,7 @@ var todos = new Reef('#todos', {
 app.render();
 ```
 
-**[Try nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/gOaobJW)**
+**[Try nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/eYBNqQm)**
 
 
 ### Attaching and Detaching Nested Components
@@ -161,7 +168,7 @@ app.detach(todos);
 app.detach([todos]);
 ```
 
-**[Try attaching nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/zYvpxQV)**
+**[Try attaching nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/oNYXKQW)**
 
 
 
@@ -207,7 +214,7 @@ When using a *Data Store*, a component will have no `data` of its own. All state
 store.data.todos.push('Take a nap... zzzz');
 ```
 
-**[Try creating a Data Store on CodePen &rarr;](https://codepen.io/cferdinandi/pen/mdepyNW)**
+**[Try creating a Data Store on CodePen &rarr;](https://codepen.io/cferdinandi/pen/WNovVYP)**
 
 
 
@@ -247,7 +254,7 @@ Use setter functions by calling the `do()` method on your component or store. Pa
 store.do('addTodo', 'Take a nap... zzzz');
 ```
 
-**When a component/store has setter functions, you cannot update data directly.**
+**When a component or store has setter functions, you cannot update data directly.**
 
 Setter functions are the only way to make updates. This protects your component or store data from unwanted changes. The `data` property always returns an immutable copy of the data.
 
@@ -256,7 +263,7 @@ Setter functions are the only way to make updates. This protects your component 
 store.data.todos.push('Take a nap... zzzz');
 ```
 
-**[Try working with setter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/qBOpdBO)**
+**[Try working with setter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/rNWVXoO)**
 
 ### Getters
 
@@ -264,7 +271,7 @@ Getters are functions that parse data from your component or store and return a 
 
 They're useful if you need to manipulate and retrieve the same data across multiple views of components. Rather than having to import helper functions, you can attach them directly to the component or store.
 
-Create getters by passing in an object of getter functions with the `getters` property in your Reef options. They accept the store or component data as their only argument.
+Create getters by passing in an object of getter functions with the `getters` property in your Reef options. They accept just one argument: the store or component data.
 
 ```js
 var store = new Reef.Store({
@@ -287,7 +294,8 @@ Use getter functions by calling the `get()` method on your component or store. P
 store.get('total');
 ```
 
-**[Try working with getter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/RwWxPNp)**
+**[Try working with getter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/LYbVwMy)**
+
 
 
 ## Asynchronous Data
@@ -331,13 +339,14 @@ fetch('https://jsonplaceholder.typicode.com/posts').then(function (response) {
 });
 ```
 
-**[Try create a template from asynchronous data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/yLJrMaV)**
+**[Try create a template from asynchronous data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/gOLpVZK)**
 
 You might also choose to hard-code a _loading message_ in your markup.
 
 ```html
 <div id="app">Loading...</div>
 ```
+
 
 
 ## Event Hooks
@@ -355,10 +364,10 @@ document.addEventListener('render', function (event) {
 	// Log the data at the time of render
 	console.log(event.detail);
 
-}, false);
+});
 ```
 
-**[Try the `render` event hook on CodePen &rarr;](https://codepen.io/cferdinandi/pen/ZEbvGYP)**
+**[Try the `render` event hook on CodePen &rarr;](https://codepen.io/cferdinandi/pen/wvoaVRQ)**
 
 
 
@@ -379,15 +388,15 @@ Reef.emit(document, 'partyTime', {
 
 ## Debugging
 
-By default, Reef fails silently. You can put Reef into debugging mode to expose helpful error message in the Console tab of your browser's Developer Tools.
+By default, Reef fails silently. You can put Reef into _debug mode_ to expose helpful error message in the Console tab of your browser's Developer Tools.
 
-Turn debugging mode on or off with the `Reef.debug()` method. Pass in `true` to turn it on, and `false` to turn it off.
+Turn debug mode on or off with the `Reef.debug()` method. Pass in `true` to turn it on, and `false` to turn it off.
 
 ```js
-// Turns debugging mode on
+// Turns debug mode on
 Reef.debug(true);
 
-// Turns debugging mode off
+// Turns debug mode off
 Reef.debug(false);
 ```
 

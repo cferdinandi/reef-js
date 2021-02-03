@@ -9,13 +9,9 @@ anchors: true
 
 ## 1. Include Reef on your site
 
-Reef comes in two flavors: *standalone* and *polyfilled*.
+Reef works without any build step.
 
-The polyfilled build uses the `.polyfill` suffix, and includes the polyfills for Proxies and Custom Events that are required for IE support.
-
-**CDN**
-
-The fastest way to get started is with the [CDN from jsDelivr](https://cdn.jsdelivr.net/npm/reefjs/dist/).
+[The CDN is the fastest and simplest way to get started](https://cdn.jsdelivr.net/npm/reefjs/dist/), but you can use importable modules or a direct download if you'd prefer.
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/reefjs/dist/reef.min.js"></script>
@@ -25,28 +21,18 @@ Reef uses semantic versioning. You can grab a major, minor, or patch version fro
 
 ```html
 <!-- Use the latest major version -->
-<script src="https://cdn.jsdelivr.net/npm/reefjs@7/dist/reef.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reefjs@8/dist/reef.min.js"></script>
 ```
 
+<details>
+<summary class="margin-bottom-small"><strong>More ways to install Reef</strong></summary>
+{{%md%}}
 **ES Modules**
 
 Reef also supports modern browsers and module bundlers (like Rollup, Webpack, Snowpack, and so on) using the ES modules `import` syntax. Use the `.es` version.
 
 ```js
 import Reef from 'https://cdn.jsdelivr.net/npm/reefjs/dist/reef.es.min.js';
-```
-
-<details>
-<summary class="margin-bottom-small"><strong>More ways to install Reef</strong></summary>
-{{%md%}}
-**Direct Download**
-
-You can [download the files directly from GitHub](https://github.com/cferdinandi/reef/archive/master.zip).
-
-Compiled and production-ready code can be found in the `dist` directory. The `src` directory contains development code.
-
-```html
-<script src="path/to/reef.min.js"></script>
 ```
 
 **NPM**
@@ -68,7 +54,7 @@ import Reef from 'reefjs';
 If you use NodeJS, you can import Reef using the `require()` method with the `.cjs` version.
 
 ```js
-var Reef = require('https://cdn.jsdelivr.net/npm/reefjs/dist/reef.cjs.min.js');
+let Reef = require('https://cdn.jsdelivr.net/npm/reefjs/dist/reef.cjs.min.js');
 ```
 
 **AMD**
@@ -80,8 +66,20 @@ requirejs(['https://cdn.jsdelivr.net/npm/reefjs/dist/reef.amd.min.js'], function
   //...
 });
 ```
+
+**Direct Download**
+
+You can [download the files directly from GitHub](https://github.com/cferdinandi/reef/archive/master.zip).
+
+Compiled and production-ready code can be found in the `dist` directory. The `src` directory contains development code.
+
+```html
+<script src="path/to/reef.min.js"></script>
+```
 {{%/md%}}
 </details>
+
+
 
 ## 2. Add an element to render your component/UI into
 
@@ -101,11 +99,11 @@ The first argument is the selector for the element you want to render the UI int
 
 ```js
 // This works
-var app = new Reef('#app');
+let app = new Reef('#app');
 
 // This does too
-var elem = document.querySelector('#app');
-var app = new Reef(elem);
+let elem = document.querySelector('#app');
+let app = new Reef(elem);
 ```
 
 ### Provide a Template
@@ -116,12 +114,12 @@ You can use old-school strings or ES6 template literals.
 
 ```js
 // Your template can be a string
-var app = new Reef('#app', {
+let app = new Reef('#app', {
 	template: '<h1>Hello, world!</h1>'
 });
 
 // It can also be a function that returns a string
-var app = new Reef('#app', {
+let app = new Reef('#app', {
 	template: function () {
 		return '<h1>Hello, world!</h1>';
 	}
@@ -136,7 +134,7 @@ The data object is automatically encoded and passed into your template function,
 
 ```js
 // Some data
-var app = new Reef('#app', {
+let app = new Reef('#app', {
 	data: {
 		greeting: 'Hello',
 		name: 'world'
@@ -147,7 +145,7 @@ var app = new Reef('#app', {
 });
 ```
 
-*Template literals give you a simple, JSX-like templating experience. If you want, you can use old-school concatenated strings for more backwards compatibility.*
+_Template literals give you a simple, JSX-like templating experience._
 
 ## 4. Render your component
 
@@ -157,6 +155,6 @@ Render your component by calling the `render()` method on it.
 app.render();
 ```
 
-**[Try the demo on CodePen &rarr;](https://codepen.io/cferdinandi/pen/VwvyYge)**
+**[Try the demo on CodePen &rarr;](https://codepen.io/cferdinandi/pen/dyOoxjW)**
 
 {{<mailchimp intro="true">}}

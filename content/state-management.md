@@ -7,13 +7,13 @@ noIndex: false
 anchors: true
 ---
 
-Reef uses *data reactivity* to update your UI.
+Reef uses _data reactivity_ to update your UI.
 
 Data reactivity means that the UI "reacts" to changes in your data. Update your data, and the UI automatically renders any required updates based on the new state.
 
 ```js
 // Create a component and render it
-var app = new Reef('#app', {
+let app = new Reef('#app', {
 	data: {
 		greeting: 'Hello',
 		name: 'world'
@@ -39,7 +39,7 @@ app.data = {
 };
 ```
 
-**[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/MWarYLP)**
+**[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/OJbVKow)**
 
 *For better performance, multiple property updates may be batched into a single, asynchronous render. You can detect when a render has been completed using [the `render` event hook](/advanced/#event-hooks).*
 
@@ -52,7 +52,7 @@ You can get an *immutable copy* of your data by passing it into the `Reef.clone(
 
 ```js
 // Create an immutable copy of the app.data
-var data = Reef.clone(app.data);
+let data = Reef.clone(app.data);
 
 // Update the copy
 // This does NOT update the app.data or render a new UI
@@ -66,7 +66,7 @@ When you're ready to update your component data, you can set the component's `da
 app.data = data;
 ```
 
-**[Try non-reactive data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/vYNpEPX)**
+**[Try non-reactive data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/ZEBGgqE)**
 
 _**Note:** You can use the `Reef.clone()` method to create an immutable copy of any array or object, not just your component data._
 

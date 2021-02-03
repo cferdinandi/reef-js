@@ -17,6 +17,7 @@ Reef includes an optional router you can use to handle URL/route management with
 - Works with any link element. Unlike bigger frameworks, you don't need custom routing components.
 - Baked-in accessibility. Reef's router automatically handles focus management and title updates.
 - Supports real URL paths, with an optional hashbang pattern (`#!`) fallback.
+- Compatible with nested routing structures.
 - Weighs just 2kb minified and gzipped.
 
 
@@ -25,52 +26,61 @@ Reef includes an optional router you can use to handle URL/route management with
 
 Reef Router is just as easy to install as Reef itself. Reef must also be installed as a dependency.
 
-**_Reef Router requires Reef v7.1.0 or higher._**
-
-**CDN**
+The fastest way to get started is [with the CDN](https://cdn.jsdelivr.net/npm/reefjs/dist/), but you can also use a module system or direct download if you'd prefer.
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/reefjs/dist/reef.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/reefjs/dist/router.min.js"></script>
 ```
 
+<details>
+<summary class="margin-bottom-small"><strong>More ways to install Reef</strong></summary>
+{{%md%}}
+When used with a module system, you must explicitly associate Reef with the router with the `ReefRouter.install()` method.
+
 **ES Modules**
 
 ```js
 import Reef from 'https://cdn.jsdelivr.net/npm/reefjs/dist/reef.es.min.js';
-import 'https://cdn.jsdelivr.net/npm/reefjs/dist/router.es.min.js';
-```
+import ReefRouter from 'https://cdn.jsdelivr.net/npm/reefjs/dist/router.es.min.js';
 
-<details>
-<summary class="margin-bottom-small"><strong>More ways to install Reef</strong></summary>
-{{%md%}}
-**Direct Download**
-
-```html
-<script src="path/to/reef.min.js"></script>
-<script src="path/to/router.min.js"></script>
+ReefRouter.install(Reef);
 ```
 
 **NPM**
 
 ```js
 import Reef from 'reefjs';
-import 'reefjs/router';
+import ReefRouter from 'reefjs/router';
+
+ReefRouter.install(Reef);
 ```
 
 **CommonJS**
 
 ```js
 var Reef = require('https://cdn.jsdelivr.net/npm/reefjs/dist/reef.cjs.min.js');
-var Router = require('https://cdn.jsdelivr.net/npm/reefjs/dist/router.cjs.min.js');
+var ReefRouter = require('https://cdn.jsdelivr.net/npm/reefjs/dist/router.cjs.min.js');
+
+ReefRouter.install(Reef);
 ```
 
 **AMD**
 
 ```js
-requirejs(['https://cdn.jsdelivr.net/npm/reefjs/dist/reef.amd.min.js', 'https://cdn.jsdelivr.net/npm/reefjs/dist/router.amd.min.js'], function (Reef) {
-  //...
+requirejs([
+	'https://cdn.jsdelivr.net/npm/reefjs/dist/reef.amd.min.js',
+	'https://cdn.jsdelivr.net/npm/reefjs/dist/router.amd.min.js'
+],function (Reef, ReefRouter) {
+	ReefRouter.install(Reef);
 });
+```
+
+**Direct Download**
+
+```html
+<script src="path/to/reef.min.js"></script>
+<script src="path/to/router.min.js"></script>
 ```
 {{%/md%}}
 </details>
@@ -93,12 +103,14 @@ No custom components required. Any link element with an `href` will work.
 
 **Step 2: Define your routes**
 
-Create a `new Reef.Router()` to define your routes.
+Create a `new ReefRouter()` instance to define your routes.
 
-Every route requires a `title` and `url`. You can add any additional properties that you want (for example, an `id` for the route). You can use `*` as a `url` to catch any unmatched URLs.
+Every route requires a `title` and `url`. The `title` can be a string, or a function that returns a string and accepts the `route` object as an argument. You can add any additional properties that you want (for example, an `id` for the route).
+
+Optionally, you can use `*` as a `url` to catch any unmatched URLs.
 
 ```js
-var router = new Reef.Router({
+var router = new ReefRouter({
 	routes: [
 		{
 			id: 'home',
@@ -107,7 +119,9 @@ var router = new Reef.Router({
 		},
 		{
 			id: 'about',
-			title: 'About',
+			title: function (route) {
+				return 'About';
+			},
 			url: '/about'
 		},
 		{
@@ -121,9 +135,9 @@ var router = new Reef.Router({
 
 **Step 3: Associate your router with one or more components**
 
-For any Reef component that should be updated when the route changes, add a `router` property and associate your router component with it.
+For any Reef component that should be updated when the route changes, add a `router` property and use your router component as the value.
 
-Details about the current route are automatically passed into the `template` function as a second argument. By default, for unmatched routes the `route` argument will have a value of `null`.
+Details about the current route are automatically passed into the `template` function as a second argument. If you don't provide a catchall (`url: '*'`) route, an unmatched `route` will have a value of `null`.
 
 ```js
 var app = new Reef('#app', {
@@ -153,7 +167,7 @@ The `document.title` is also updated, and focus is shifted to the primary headin
 
 Headings and anchor locations will appear with a focus ring around them, which you may find visually unappealing.
 
-Elements that don't normally receive focus are given a `tabindex` if `-1` to make them focusable with JS. You can remove the focus ring by styling `[tabindex="-1"]`.
+Elements that don't normally receive focus are given a `tabindex` of `-1` to make them focusable with JS. You can remove the focus ring by styling `[tabindex="-1"]`.
 
 ```css
 [tabindex="-1"] {
@@ -161,7 +175,47 @@ Elements that don't normally receive focus are given a `tabindex` if `-1` to mak
 }
 ```
 
-_**Note:** you should NOT remove focus styles from elements that are normally focusable._
+_**Note:** you should NOT remove focus styles from elements that are natively focusable._
+
+
+
+## Server Configuration
+
+Single page apps works great when you visit the homepage first. But when someone visits one of your routes or hits reload, they get a 404 page.
+
+To fix that, you need to configure your server to point all pages to your `index.html` file. Paul Sherman has a great deep-dive on how that all works titled [Single-Page Applications and the Server](https://blog.pshrmn.com/single-page-applications-and-the-server/).
+
+Here's an `.htaccess` file example for apache servers.
+
+```apache
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^index\.html$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . index.html [L]
+</IfModule>
+```
+
+And here's what it might look like in express (taken from [the Reach Router docs](https://reach.tech/router/server-config)).
+
+```js
+const path = require('path');
+const express = require('express');
+const app = new express()
+
+// requests for static files in the "public" directory
+// like JavaScript, CSS, images will be served
+app.use(express.static('public'));
+
+// Every other request will send the index.html file that
+// contains your application
+app.use('*', function(req, resp) {
+	resp.sendFile('/public/index.html');
+});
+
+app.listen('8000');
+```
 
 
 
@@ -171,7 +225,7 @@ _**Note:** you should NOT remove focus styles from elements that are normally fo
 
 You can include variable parameters in your URLs, either in the path itself or as query or search parameters.
 
-Reef Router will add them to the `route` object that gets passed into your `template()`. Path parameters are included under the `params` property, and query or search parameters are included under the `search` property.
+Reef Router will add them to the `route` object that gets passed into your `template()`. Path parameters are included under the `params` property, and query/search parameters are included under the `search` property.
 
 ```html
 <ul>
@@ -181,7 +235,7 @@ Reef Router will add them to the `route` object that gets passed into your `temp
 ```
 
 ```js
-var router = new Reef.Router({
+var router = new ReefRouter({
 	routes: [
 		{
 			id: 'home',
@@ -190,7 +244,9 @@ var router = new Reef.Router({
 		},
 		{
 			id: 'user-account',
-			title: 'User Account',
+			title: function (route) {
+				return `User Account: ${route.params.user}`;
+			},
 			url: '/account/:user'
 		}
 	]
@@ -222,7 +278,7 @@ Reef Router supports nested routes out-of-the-box.
 The order does not matter. Reef Router will check deeper routes for matches first.
 
 ```js
-var router = new Reef.Router({
+var router = new ReefRouter({
 	routes: [
 		{
 			id: 'home',
@@ -255,7 +311,7 @@ As your app grows, routes may change. You can setup redirects from one route to 
 When creating the route, create the `url` property as normal, and add a `redirect` property with the route that the URL should point to.
 
 ```js
-var router = new Reef.Router({
+var router = new ReefRouter({
 	routes: [
 		{
 			id: 'contact',
@@ -272,10 +328,10 @@ var router = new Reef.Router({
 
 The `redirect` property can also be a function that returns a string.
 
-The function automatically receive the existing `route` object, with URL and search parameters, as an argument.
+The function automatically receives the existing `route` object, with URL and search parameters, as an argument.
 
 ```js
-var router = new Reef.Router({
+var router = new ReefRouter({
 	routes: [
 		{
 			id: 'user-account',
@@ -285,7 +341,7 @@ var router = new Reef.Router({
 		{
 			url: '/my-account/:user',
 			redirect: function (route) {
-				return `/account/${route.params.user}/`
+				return `/account/${route.params.user}/`;
 			}
 		},
 	]
@@ -299,52 +355,57 @@ var router = new Reef.Router({
 In addition to your routes, Reef Router accepts a few options you can use to customize how the router behaves.
 
 ```js
-var router = new Reef.Router({
+var router = new ReefRouter({
 	root: '', // The root URL for your app, if using a subdirectory
-	title: '{{title}}', // The pattern to use for the page title. {{title}} will be replaced with the actual title
+	// The pattern to use for the document.title
+	// Receives the current route and route.title as arguments
+	title: function (route, title) {
+		if (route.url === '/') return 'My Awesome App';
+		return `${title} | My Awesome App`;
+	},
 	useHash: false // If true, uses a hashbang (#!) pattern instead of true URL paths
 });
 ```
 
-The `title` property can be a string *or* a function that returns a string.
+The `title` property can be a string *or* a function that returns a string. As a function, it receives the current `route` and the `route.title` as arguments.
 
-The `useHash` property is automatically set to `true` in browsers that don't support the `history.pushState()` method, and local `file:` pages.
+The `useHash` property is automatically set to `true` for local `file:` pages.
 
 ### Examples
 
 The app lives at `my-site.com/my-app/`.
 
 ```js
-var router = new Reef.Router({
+var router = new ReefRouter({
 	root: '/my-app'
 });
 ```
 
-The `document.title` will always have ` | My App` after it.
+The `document.title` will always be the `router.title`.
 
 ```js
-var router = new Reef.Router({
-	title: '{{title}} | My App'
+var router = new ReefRouter({
+	title: function (route, title) {
+		return title;
+	}
 });
 ```
 
-The `document.title` will always have ` | My App` after it *except* on the homepage, where it's just `My App`.
+The `document.title` will always have ` | My Awesome App` after it, except on the homepage, where it's just `My Awesome App`.
 
 ```js
-var router = new Reef.Router({
-	title: function (route) {
-		if (route && route.id === 'home') {
-			return 'My App';
-		}
-		return '{{title}} | My App';
-	}
+var router = new ReefRouter({
+	title: function (route, title) {
+		if (route.url === '/') return 'My Awesome App';
+		return `${title} | My Awesome App`;
+	},
 });
 ```
 
 Always use the hashbang pattern.
 
 ```js
-var router = new Reef.Router({
+var router = new ReefRouter({
 	useHash: true
 });
 ```
@@ -357,7 +418,7 @@ Reef.Router exposes a few public methods you can use in your scripts.
 
 ### `addRoutes()`
 
-Add routes to an existing route. Accepts an array of routes, or an individual route object.
+Add routes to an existing router. Accepts an array of routes, or an individual route object.
 
 ```js
 // Add an individual route
@@ -402,7 +463,7 @@ router.addComponent(app);
 
 ### `current`
 
-The `current` property will return the details object for the current route.
+The object for the current route.
 
 ```js
 // Get the current route details
@@ -448,6 +509,4 @@ window.addEventListener('routeUpdated', function (event) {
 
 ## Kudos
 
-Reef Router's URL path matching and parameter extraction is adapted from [Navigo by Krasimir Tsonev](https://github.com/krasimir/navigo).
-
-Click handling is adapted from [pages.js by Vision Media](https://github.com/visionmedia/page.js).
+Reef Router's URL path matching and parameter extraction is adapted from [Navigo by Krasimir Tsonev](https://github.com/krasimir/navigo). Click handling is adapted from [pages.js by Vision Media](https://github.com/visionmedia/page.js).
