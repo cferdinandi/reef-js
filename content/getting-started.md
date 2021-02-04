@@ -14,6 +14,7 @@ Reef works without any build step.
 [The CDN is the fastest and simplest way to get started](https://cdn.jsdelivr.net/npm/reefjs/dist/), but you can use importable modules or a direct download if you'd prefer.
 
 ```html
+<!-- Get the latest major version -->
 <script src="https://cdn.jsdelivr.net/npm/reefjs@8/dist/reef.min.js"></script>
 ```
 
