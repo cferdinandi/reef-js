@@ -25,7 +25,7 @@ Reef is a simpler alternative to React, Vue, and other large frameworks.
 - Load it with a `<script>` element or ES module import&mdash;no command line or transpiling required (though you can if you want).
 - Uses DOM diffing to update only the things that have changed.
 - Has Redux/Vuex-like data stores, with setters and getters baked right in.
-- Bundled with an optional lightweight router for single-page apps.
+- Bundled with an optional lightweight router for single-page apps, as well as an ajax-loaded HTML alternative for super snappy multi-page apps.
 - Automatically encodes and sanitizes data to help protect you from cross-site scripting (XSS) attacks.
 - Work with native JavaScript methods and browser APIs instead of custom methods and pseudo-languages.
 - Compatible with all modern browsers.

@@ -28,7 +28,7 @@ Reef uses semantic versioning. You can grab a major, minor, or patch version fro
 Reef also supports modern browsers and module bundlers (like Rollup, Webpack, Snowpack, and so on) using the ES modules `import` syntax. Use the `.es` version.
 
 ```js
-import Reef from 'https://cdn.jsdelivr.net/npm/reefjs/dist/reef.es.min.js';
+import Reef from 'https://cdn.jsdelivr.net/npm/reefjs@8/dist/reef.es.min.js';
 ```
 
 **NPM**
@@ -50,7 +50,7 @@ import Reef from 'reefjs';
 If you use NodeJS, you can import Reef using the `require()` method with the `.cjs` version.
 
 ```js
-let Reef = require('https://cdn.jsdelivr.net/npm/reefjs/dist/reef.cjs.min.js');
+let Reef = require('https://cdn.jsdelivr.net/npm/reefjs@8/dist/reef.cjs.min.js');
 ```
 
 **AMD**
@@ -58,7 +58,7 @@ let Reef = require('https://cdn.jsdelivr.net/npm/reefjs/dist/reef.cjs.min.js');
 If you use RequireJS, SystemJS, and other AMD formats, you can import Reef with the `.amd` version.
 
 ```js
-requirejs(['https://cdn.jsdelivr.net/npm/reefjs/dist/reef.amd.min.js'], function (Reef) {
+requirejs(['https://cdn.jsdelivr.net/npm/reefjs@8/dist/reef.amd.min.js'], function (Reef) {
   //...
 });
 ```
@@ -105,8 +105,6 @@ let app = new Reef(elem);
 ### Provide a Template
 
 The second argument is an object of options. It requires a template property, as either a string or a function that returns a string, to render into the DOM.
-
-You can use old-school strings or ES6 template literals.
 
 ```js
 // Your template can be a string

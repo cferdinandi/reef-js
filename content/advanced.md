@@ -22,7 +22,7 @@ Use the `reef-checked`, `reef-selected`, and `reef-value` attributes to dynamica
 In the example below, the checkbox is `checked` when `agreeToTOS` is `true`.
 
 ```js
-var app = new Reef('#app', {
+let app = new Reef('#app', {
 	data: {
 		agreeToTOS: true
 	},
@@ -35,14 +35,14 @@ var app = new Reef('#app', {
 });
 ```
 
-You might also want to use a default value when an element initial renders, but defer to any changes the user makes after that.
+You might also want to use a default value when an element initially renders, but defer to any changes the user makes after that.
 
 You can do that with the `reef-default-checked`, `reef-default-selected`, and `reef-default-value` attributes.
 
-In this example, `option[value="Hermione"]` has the `[selected]` attribute on it when first rendered, but will defer to whatever changes the user makes when diffing and updating the UI.
+In this example, `Hermione` has the `[selected]` attribute on it when first rendered, but will defer to whatever changes the user makes when diffing and updating the UI.
 
 ```js
-var app = new Reef('#app', {
+let app = new Reef('#app', {
 	template: function () {
 		return `
 			<label for="wizards">Who is the best wizard?</label>
@@ -66,7 +66,7 @@ You can disable this feature by setting the `allowHTML` option to `true`.
 *__Important!__ Do NOT do this with third-party or user-provided data. This exposes you to the risk of cross-site scripting (XSS) attacks.*
 
 ```js
-var app = new Reef('#app', {
+let app = new Reef('#app', {
 	data: {
 		greeting: '<strong>Hello</strong>',
 		name: 'world'
@@ -92,7 +92,7 @@ This is particularly handy if you have data attributes on your element that affe
 ```
 
 ```js
-var app = new Reef('#app', {
+let app = new Reef('#app', {
 	data: {
 		name: 'world'
 	},
@@ -113,13 +113,13 @@ If you're managing a bigger app, you may have components nested inside other com
 
 Reef provides you with a way to attach nested components to their parent components. When the parent component is updated, it will automatically update the UI of its nested components if needed.
 
-Associate a nested component with its parent using the `attachTo` key in your options. You can provide a component or array of components for a value.
+Associate a nested component with its parent using the `attachTo` key in your `options` object. You can provide a component or array of components for a value.
 
 You only need to render the parent component. It's nested components will render automatically.
 
 ```js
 // Parent component
-var app = new Reef('#app', {
+let app = new Reef('#app', {
 	data: {
 		greeting: 'Hello, world!'
 	},
@@ -131,7 +131,7 @@ var app = new Reef('#app', {
 });
 
 // Nested component
-var todos = new Reef('#todos', {
+let todos = new Reef('#todos', {
 	data: {
 		todos: ['Swim', 'Climb', 'Jump', 'Play']
 	},
@@ -181,7 +181,7 @@ Any time you update the data in your *Data Store*, any components that use the d
 Create a *Data Store* using the `new Reef.Store()` constructor.
 
 ```js
-var store = new Reef.Store({
+let store = new Reef.Store({
 	data: {
 		heading: 'My Todos',
 		todos: ['Swim', 'Climb', 'Jump', 'Play']
@@ -192,7 +192,7 @@ var store = new Reef.Store({
 To use your *Data Store* with a component, pass it in with the `store` property instead of providing a `data` object.
 
 ```js
-var app = new Reef('#app', {
+let app = new Reef('#app', {
 	store: store,
 	template: function (props) {
 		return `
@@ -230,10 +230,10 @@ Setters and getters provide you with a way to control how data flows in and out 
 
 Setters are functions that update your component or store data.
 
-Create setters by passing in an object of setter functions with the `setters` property in your Reef options. The first argument on a setter function is the store or component data. You can pass in as many other arguments as you'd like.
+Create setters by passing in an object of setter functions with the `setters` property in your `options` object. The first parameter on a setter function is the store or component data. You can add as many other parameters as you'd like.
 
 ```js
-var store = new Reef.Store({
+let store = new Reef.Store({
 	data: {
 		heading: 'My Todos',
 		todos: ['Swim', 'Climb', 'Jump', 'Play']
@@ -247,16 +247,16 @@ var store = new Reef.Store({
 });
 ```
 
-Use setter functions by calling the `do()` method on your component or store. Pass in the name of setter, along with any required arguments (except for `props`).
+Use setter functions by calling the `do()` method on your component or store. Pass in the name of the setter, along with any required arguments (except for `props`).
 
 ```js
 // Add a new todo item
 store.do('addTodo', 'Take a nap... zzzz');
 ```
 
-**When a component or store has setter functions, you cannot update data directly.**
+**When a component or store has setter functions, they become the only way to update app or store data.**
 
-Setter functions are the only way to make updates. This protects your component or store data from unwanted changes. The `data` property always returns an immutable copy of the data.
+This protects your component or store data from unwanted changes. The `data` property always returns an immutable copy.
 
 ```js
 // This will NOT update the store.data or the UI
@@ -271,10 +271,12 @@ Getters are functions that parse data from your component or store and return a 
 
 They're useful if you need to manipulate and retrieve the same data across multiple views of components. Rather than having to import helper functions, you can attach them directly to the component or store.
 
-Create getters by passing in an object of getter functions with the `getters` property in your Reef options. They accept just one argument: the store or component data.
+Create getters by passing in an object of getter functions with the `getters` property in your `options` object. The first parameter on a getter function is the store or component data. You can add as many other parameters as you'd like.
+
+_Support for parameters besides `props` requires version `8.2.0` or higher._
 
 ```js
-var store = new Reef.Store({
+let store = new Reef.Store({
 	data: {
 		heading: 'My Todos',
 		todos: ['Swim', 'Climb', 'Jump', 'Play']
@@ -287,7 +289,7 @@ var store = new Reef.Store({
 });
 ```
 
-Use getter functions by calling the `get()` method on your component or store. Pass in the name of getter as an argument.
+Use getter functions by calling the `get()` method on your component or store. Pass in the name of getter, along with any required arguments (except for `props`).
 
 ```js
 // Get the number of todo items
@@ -306,7 +308,7 @@ Set an initial default value, make your API call, and update the `data` property
 
 ```js
 // Create an app
-var app = new Reef('#app', {
+let app = new Reef('#app', {
 	data: {
 		articles: []
 	},
@@ -345,43 +347,6 @@ You might also choose to hard-code a _loading message_ in your markup.
 
 ```html
 <div id="app">Loading...</div>
-```
-
-
-
-## Event Hooks
-
-Whenever Reef updates the DOM, it emits a custom `render` event that you can listen for with `addEventListener()`.
-
-The `render` event is emitted on the element that was updated, and bubbles, so you can also [use event delegation](https://gomakethings.com/checking-event-target-selectors-with-event-bubbling-in-vanilla-javascript/). The `event.detail` property includes a copy of the `data` at the time that the component template was rendered.
-
-```js
-document.addEventListener('render', function (event) {
-
-	// Only run for elements with the #app ID
-	if (!event.target.matches('#app')) return;
-
-	// Log the data at the time of render
-	console.log(event.detail);
-
-});
-```
-
-**[Try the `render` event hook on CodePen &rarr;](https://codepen.io/cferdinandi/pen/wvoaVRQ)**
-
-
-
-### Emitting your own custom events
-
-Reef includes a helper function, `Reef.emit()`, that you can use to emit your own custom events in your apps.
-
-Pass in the element to emit the event on and the event name as arguments. You can optionally pass in an object with event details as a third argument.
-
-```js
-// Emit the 'partyTime' event on the document element
-Reef.emit(document, 'partyTime', {
-	msg: `It's party time!`
-});
 ```
 
 

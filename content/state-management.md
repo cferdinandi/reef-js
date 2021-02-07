@@ -41,14 +41,16 @@ app.data = {
 
 **[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/OJbVKow)**
 
-*For better performance, multiple property updates may be batched into a single, asynchronous render. You can detect when a render has been completed using [the `render` event hook](/advanced/#event-hooks).*
+<!-- @todo update where this points to -->
+
+*For better performance, multiple property updates may be batched into a single, asynchronous render. You can detect when a render has been completed using [the `reef:render` event hook](/advanced/#event-hooks).*
 
 
 ## Non-Reactive Data
 
 Sometimes, you want to update data *without* updating the UI.
 
-You can get an *immutable copy* of your data by passing it into the `Reef.clone()` method. This creates a non-reactive copy of your data that won't affect the state of your component.
+You can get an *immutable copy* of your data by passing it into the `Reef.clone()` method. This creates a non-reactive copy of your data that won't affect the state of your component or cause a UI update.
 
 ```js
 // Create an immutable copy of the app.data
