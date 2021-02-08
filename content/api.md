@@ -424,7 +424,7 @@ document.addEventListener('reef:render', function (event) {
 });
 ```
 
-### Reef
+### Reef Events
 
 - **`reef:ready`** is emitted when Reef is loaded into the DOM and ready to use.
 - **`reef:initialized`** is emitted when a new Reef component is initialized.
@@ -441,7 +441,7 @@ document.addEventListener('reef:render', function (event) {
 - **`reef:detached`** is emitted when one or more components is detached from a component.
 	+ `event.detail` - an object with the `component` and an array of `detached` components
 
-### Snorkel
+### Snorkel Events
 
 - **`snorkel:ready`** is emitted when Snorkel is loaded into the DOM and ready to use.
 - **`snorkel:initialized`** is emitted when a new Snorkel instance is initialized.
@@ -464,7 +464,7 @@ document.addEventListener('reef:render', function (event) {
 - **`snorkel:cache-cleared`** is emitted when the internal cache is cleared.
 	+ `event.detail` - the Snorkel instance
 
-### Snorkel
+### Router Events
 
 - **`router:ready`** is emitted when Reef Router is loaded into the DOM and ready to use.
 - **`router:initialized`** is emitted when a new Router instance is initialized.
