@@ -32,7 +32,12 @@ The code is available under the [MIT License](/mit).
 
 You can find all available versions [under releases](https://github.com/cferdinandi/reef/releases).
 
-**Version 8 (current version) brings more predictability and convenience when building interactive UIs.**
+**Version 9 (current version) reduces under-the-hood complexity.**
+
+- Large refactor to reduce abstractions for improved performance and reduced file size.
+- Removed all router options.
+
+**[Version 8](/v8) brings more predictability and convenience when building interactive UIs.**
 
 - Added `reef-checked`, `reef-selected`, and `reef-value` attributes (and `reef-default-*` versions) for more predictable form field behavior.
 - Added new helper methods for more accurate type checking and throwing errors.

@@ -55,7 +55,7 @@ let app = new Reef('#app', {
 });
 ```
 
-**[Try controlling form attributes on CodePen &rarr;](https://codepen.io/cferdinandi/pen/jOVPgdo)**
+**[Try controlling form attributes on CodePen &rarr;](https://codepen.io/cferdinandi/pen/oNWZdxG)**
 
 ### Preventing Cross-Site Scripting (XSS) Attacks
 
@@ -78,7 +78,7 @@ let app = new Reef('#app', {
 });
 ```
 
-**[Try allowing HTML in your data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/RwoPXex)**
+**[Try allowing HTML in your data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/ZEKeoOb)**
 
 
 ### Getting the element the template is being rendered into
@@ -102,7 +102,7 @@ let app = new Reef('#app', {
 });
 ```
 
-**[Try getting the HTML element that the template was rendered into on CodePen &rarr;](https://codepen.io/cferdinandi/pen/poNJMxX)**
+**[Try getting the HTML element that the template was rendered into on CodePen &rarr;](https://codepen.io/cferdinandi/pen/Vwbpxjy)**
 
 
 
@@ -149,7 +149,7 @@ let todos = new Reef('#todos', {
 app.render();
 ```
 
-**[Try nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/eYBNqQm)**
+**[Try nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/XWRMqjj)**
 
 
 ### Attaching and Detaching Nested Components
@@ -168,7 +168,7 @@ app.detach(todos);
 app.detach([todos]);
 ```
 
-**[Try attaching nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/oNYXKQW)**
+**[Try attaching nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/GRmWdjX)**
 
 
 
@@ -214,7 +214,7 @@ When using a *Data Store*, a component will have no `data` of its own. All state
 store.data.todos.push('Take a nap... zzzz');
 ```
 
-**[Try creating a Data Store on CodePen &rarr;](https://codepen.io/cferdinandi/pen/WNovVYP)**
+**[Try creating a Data Store on CodePen &rarr;](https://codepen.io/cferdinandi/pen/GRmWdNX)**
 
 
 
@@ -263,7 +263,7 @@ This protects your component or store data from unwanted changes. The `data` pro
 store.data.todos.push('Take a nap... zzzz');
 ```
 
-**[Try working with setter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/rNWVXoO)**
+**[Try working with setter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/yLbMjgN)**
 
 ### Getters
 
@@ -296,7 +296,7 @@ Use getter functions by calling the `get()` method on your component or store. P
 store.get('total');
 ```
 
-**[Try working with getter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/LYbVwMy)**
+**[Try working with getter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/bGWqMgJ)**
 
 
 
@@ -341,7 +341,7 @@ fetch('https://jsonplaceholder.typicode.com/posts').then(function (response) {
 });
 ```
 
-**[Try create a template from asynchronous data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/gOLpVZK)**
+**[Try create a template from asynchronous data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/yLbMjMN)**
 
 You might also choose to hard-code a _loading message_ in your markup.
 

@@ -39,9 +39,7 @@ app.data = {
 };
 ```
 
-**[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/OJbVKow)**
-
-<!-- @todo update where this points to -->
+**[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/qBmrYPV)**
 
 *For better performance, multiple property updates may be batched into a single, asynchronous render. You can detect when a render has been completed using [the `reef:render` event hook](/advanced/#event-hooks).*
 
@@ -68,7 +66,7 @@ When you're ready to update your component data, you can set the component's `da
 app.data = data;
 ```
 
-**[Try non-reactive data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/ZEBGgqE)**
+**[Try non-reactive data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/OJmpZxq)**
 
 _**Note:** You can use the `Reef.clone()` method to create an immutable copy of any array or object, not just your component data._
 
