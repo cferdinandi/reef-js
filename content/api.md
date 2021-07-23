@@ -7,7 +7,7 @@ noIndex: false
 anchors: true
 ---
 
-Reef, Snorkel, and Reef Router expose a set of options, methods, and custom events that you can hook into.
+Reef exposes a set of options, methods, and custom events that you can hook into.
 
 <div id="table-of-contents"></div>
 
@@ -59,6 +59,39 @@ Reef.emit(app, 'awesome', {
 ```
 
 You can listen for custom events with the `Element.addEventListener()` method.
+
+
+
+## Component Properties
+
+Access these properties on individual Reef components.
+
+### `Reef.prototype.data`
+
+Get a reactive copy of the app data.
+
+```js
+let data = app.data;
+```
+
+### `Reef.prototype.dataCopy`
+
+Get a non-reactive, immutable copy of the app data.
+
+```js
+let copy = app.dataCopy;
+
+// This will not update the component data or cause a render
+copy.todos.push('Zzzz... take a nap!');
+```
+
+### `Reef.prototype.elem`
+
+The element the component is associated with. Returns a string or Node.
+
+```js
+let elem = app.elem;
+```
 
 
 
@@ -158,36 +191,6 @@ app.get('count');
 
 
 
-## Instance Properties
-
-Access these properties on individual Reef components.
-
-### `Reef.prototype.data`
-
-Get a reactive copy of the app data.
-
-```js
-let data = app.data;
-```
-
-### `Reef.prototype.elem`
-
-The element the component is associated with. Returns a string or Node.
-
-```js
-let elem = app.elem;
-```
-
-### `Reef.prototype.allowHTML`
-
-Whether or not HTML is allowed in the Reef component data. Returns a boolean.
-
-```js
-let allowed = app.allowHTML;
-```
-
-
-
 ## Events
 
 Reef emits custom events throughout the lifecycle of a component or instance.
@@ -238,9 +241,6 @@ new Reef(elem, {
 	// A data store to use
 	// If used, the data option is ignored
 	store: null,
-
-	// A router to use for this component
-	router: null,
 
 	// An object of setter methods
 	setters: {},

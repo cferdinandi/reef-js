@@ -55,30 +55,30 @@ let app = new Reef('#app', {
 });
 ```
 
-**[Try controlling form attributes on CodePen &rarr;](https://codepen.io/cferdinandi/pen/oNWZdxG)**
+**[Try controlling form attributes on CodePen &rarr;](https://codepen.io/cferdinandi/pen/WNjXXqo)**
 
 ### Preventing Cross-Site Scripting (XSS) Attacks
 
-To reduce your risk of cross-site scripting (XSS) attacks, Reef automatically encodes any markup in your data before passing it into your template.
+To reduce your risk of cross-site scripting (XSS) attacks, Reef automatically sanitizes the HTML from your template before rendering it.
 
-You can disable this feature by setting the `allowHTML` option to `true`.
-
-*__Important!__ Do NOT do this with third-party or user-provided data. This exposes you to the risk of cross-site scripting (XSS) attacks.*
+In the example below, the attempted XSS attack (the `alert()`) will not run. Safe HTML, like the bold in the `greeting` property, will be rendered as expected.
 
 ```js
 let app = new Reef('#app', {
 	data: {
 		greeting: '<strong>Hello</strong>',
-		name: 'world'
+		name: 'world',
+		img: '<img src="x" onerror="alert(1)">'
 	},
 	template: function (props) {
-		return `<h1>${props.greeting}, ${props.name}!</h1>`;
-	},
-	allowHTML: true // Do NOT use with third-party/user-supplied data
+		return `
+			<h1>${props.greeting}, ${props.name}!</h1>
+			${props.img}`;
+	}
 });
 ```
 
-**[Try allowing HTML in your data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/ZEKeoOb)**
+**[Try HTML sanitization on CodePen &rarr;](https://codepen.io/cferdinandi/pen/XWRzzLq)**
 
 
 ### Getting the element the template is being rendered into
@@ -102,7 +102,7 @@ let app = new Reef('#app', {
 });
 ```
 
-**[Try getting the HTML element that the template was rendered into on CodePen &rarr;](https://codepen.io/cferdinandi/pen/Vwbpxjy)**
+**[Try getting the HTML element that the template was rendered into on CodePen &rarr;](https://codepen.io/cferdinandi/pen/gOWXXVp)**
 
 
 
@@ -113,7 +113,7 @@ If you're managing a bigger app, you may have components nested inside other com
 
 Reef provides you with a way to attach nested components to their parent components. When the parent component is updated, it will automatically update the UI of its nested components if needed.
 
-Associate a nested component with its parent using the `attachTo` key in your `options` object. You can provide a component or array of components for a value.
+Associate a nested component with its parent using the `attachTo` key on your `options` object. You can provide a component or array of components for a value.
 
 You only need to render the parent component. It's nested components will render automatically.
 
@@ -149,7 +149,7 @@ let todos = new Reef('#todos', {
 app.render();
 ```
 
-**[Try nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/XWRMqjj)**
+**[Try nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/NWjwwQb)**
 
 
 ### Attaching and Detaching Nested Components
@@ -168,7 +168,7 @@ app.detach(todos);
 app.detach([todos]);
 ```
 
-**[Try attaching nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/GRmWdjX)**
+**[Try attaching nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/ZEKaagv)**
 
 
 
@@ -207,20 +207,44 @@ let app = new Reef('#app', {
 });
 ```
 
-When using a *Data Store*, a component will have no `data` of its own. All state/data updates must happen by updating the `store`.
+When using a *Data Store*, your component can still have its own local `data` as well.
+
+The local component `data` is merged into the `store` and pass into the `template()` function as a single `props` object.
 
 ```js
-// Add a todo item
-store.data.todos.push('Take a nap... zzzz');
+let store = new Reef.Store({
+	data: {
+		todos: ['Swim', 'Climb', 'Jump', 'Play']
+	}
+});
+
+let app = new Reef('#app', {
+	store: store,
+	data: {
+		heading: 'My Todos'
+	},
+	template: function (props) {
+		return `
+			<h1>${props.heading}</h1>
+			<ul>
+				${props.todos.map(function (todo) {
+					return `<li>${todo}</li>`;
+				}).join('')}
+			</ul>`;
+
+	}
+});
 ```
 
-**[Try creating a Data Store on CodePen &rarr;](https://codepen.io/cferdinandi/pen/GRmWdNX)**
+**[Try creating a Data Store on CodePen &rarr;](https://codepen.io/cferdinandi/pen/zYwPPga)**
+
+_**Note:** if any properties in your `store` and `data` that share the same name, the local component `data` gets priority._
 
 
 
 ## Setters & Getters
 
-Reef's reactive `data` makes updating your UI as simple updating an object property.
+Reef's reactive `data` makes updating your UI as simple as updating an object property.
 
 But as your app scales, you may find that keeping track of what's updating state and causing changes to the UI becomes harder to track and maintain.
 
@@ -230,7 +254,7 @@ Setters and getters provide you with a way to control how data flows in and out 
 
 Setters are functions that update your component or store data.
 
-Create setters by passing in an object of setter functions with the `setters` property in your `options` object. The first parameter on a setter function is the store or component data. You can add as many other parameters as you'd like.
+Create setters by passing in an object of setter functions with the `setters` property on your `options` object. The first parameter on a setter function must be the store or component data. You can add as many other parameters as you'd like.
 
 ```js
 let store = new Reef.Store({
@@ -263,17 +287,15 @@ This protects your component or store data from unwanted changes. The `data` pro
 store.data.todos.push('Take a nap... zzzz');
 ```
 
-**[Try working with setter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/yLbMjgN)**
+**[Try working with setter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/OJmOzLM)**
 
 ### Getters
 
 Getters are functions that parse data from your component or store and return a value.
 
-They're useful if you need to manipulate and retrieve the same data across multiple views of components. Rather than having to import helper functions, you can attach them directly to the component or store.
+They're useful if you need to manipulate and retrieve the same data across multiple views or components. Rather than having to import helper functions, you can attach them directly to the component or store.
 
-Create getters by passing in an object of getter functions with the `getters` property in your `options` object. The first parameter on a getter function is the store or component data. You can add as many other parameters as you'd like.
-
-_Support for parameters besides `props` requires version `8.2.0` or higher._
+Create getters by passing in an object of getter functions with the `getters` property on your `options` object. The first parameter on a getter function must be the store or component data. You can add as many other parameters as you'd like.
 
 ```js
 let store = new Reef.Store({
@@ -296,7 +318,7 @@ Use getter functions by calling the `get()` method on your component or store. P
 store.get('total');
 ```
 
-**[Try working with getter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/bGWqMgJ)**
+**[Try working with getter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/YzVEYKo)**
 
 
 
@@ -341,7 +363,7 @@ fetch('https://jsonplaceholder.typicode.com/posts').then(function (response) {
 });
 ```
 
-**[Try create a template from asynchronous data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/yLbMjMN)**
+**[Try create a template from asynchronous data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/GRmOyRg)**
 
 You might also choose to hard-code a _loading message_ in your markup.
 

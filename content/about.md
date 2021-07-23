@@ -32,7 +32,14 @@ The code is available under the [MIT License](/mit).
 
 You can find all available versions [under releases](https://github.com/cferdinandi/reef/releases).
 
-**Version 9 (current version) reduces under-the-hood complexity.**
+**Version 10 (current version) brings more layout control.**
+
+- Template `data` is allowed to contain HTML by default.
+- The sanitization engine has been updated to be more robust.
+- `on*` attributes are no longer allowed on elements.
+- Components can now use both a shared `store` _and_ local `data`.
+
+**[Version 9](/v9) reduces under-the-hood complexity.**
 
 - Large refactor to reduce abstractions for improved performance and reduced file size.
 - Removed all router options.

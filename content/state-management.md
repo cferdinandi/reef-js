@@ -12,7 +12,7 @@ Reef uses _data reactivity_ to update your UI.
 Data reactivity means that the UI "reacts" to changes in your data. Update your data, and the UI automatically renders any required updates based on the new state.
 
 ```js
-// Create a component and render it
+// Create a component
 let app = new Reef('#app', {
 	data: {
 		greeting: 'Hello',
@@ -22,6 +22,8 @@ let app = new Reef('#app', {
 		return `<h1>${props.greeting}, ${props.name}!</h1>`;
 	}
 });
+
+// Render the initial UI
 app.render();
 
 // This causes component to update with "Hi, universe"
@@ -39,20 +41,20 @@ app.data = {
 };
 ```
 
-**[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/qBmrYPV)**
+**[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/ExmbbzR)**
 
 *For better performance, multiple property updates may be batched into a single, asynchronous render. You can detect when a render has been completed using [the `reef:render` event hook](/advanced/#event-hooks).*
 
 
 ## Non-Reactive Data
 
-Sometimes, you want to update data *without* updating the UI.
+Sometimes, you want to update data _without_ updating the UI.
 
-You can get an *immutable copy* of your data by passing it into the `Reef.clone()` method. This creates a non-reactive copy of your data that won't affect the state of your component or cause a UI update.
+You can get an _immutable copy_ of your data with the `Reef.prototype.dataCopy` property. This returns an immutable, non-reactive copy of your data that won't affect the state of your component or cause a UI update.
 
 ```js
-// Create an immutable copy of the app.data
-let data = Reef.clone(app.data);
+// Get an immutable copy of the app.data
+let data = app.dataCopy;
 
 // Update the copy
 // This does NOT update the app.data or render a new UI
@@ -66,8 +68,6 @@ When you're ready to update your component data, you can set the component's `da
 app.data = data;
 ```
 
-**[Try non-reactive data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/OJmpZxq)**
-
-_**Note:** You can use the `Reef.clone()` method to create an immutable copy of any array or object, not just your component data._
+**[Try non-reactive data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/YzVEEbb)**
 
 {{<mailchimp intro="true">}}
