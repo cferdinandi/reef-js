@@ -15,7 +15,7 @@ Reef works without any build step.
 
 ```html
 <!-- Get the latest major version -->
-<script src="https://cdn.jsdelivr.net/npm/reef@10/dist/reef.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reefjs@10/dist/reef.min.js"></script>
 ```
 
 Reef uses semantic versioning. You can grab a major, minor, or patch version from the CDN with the `@1.2.3` syntax. You can find all available versions [under releases](https://github.com/cferdinandi/reef/releases).
@@ -28,7 +28,7 @@ Reef uses semantic versioning. You can grab a major, minor, or patch version fro
 Reef also supports modern browsers and module bundlers (like Rollup, Webpack, Snowpack, and so on) using the ES modules `import` syntax. Use the `.es` version.
 
 ```js
-import Reef from 'https://cdn.jsdelivr.net/npm/reef@10/dist/reef.es.min.js';
+import Reef from 'https://cdn.jsdelivr.net/npm/reefjs@10/dist/reef.es.min.js';
 ```
 
 **NPM**
@@ -50,7 +50,7 @@ import Reef from 'reefjs';
 If you use NodeJS, you can import Reef using the `require()` method with the `.cjs` version.
 
 ```js
-let Reef = require('https://cdn.jsdelivr.net/npm/reef@10/dist/reef.cjs.min.js');
+let Reef = require('https://cdn.jsdelivr.net/npm/reefjs@10/dist/reef.cjs.min.js');
 ```
 
 **AMD**
@@ -58,7 +58,7 @@ let Reef = require('https://cdn.jsdelivr.net/npm/reef@10/dist/reef.cjs.min.js');
 If you use RequireJS, SystemJS, and other AMD formats, you can import Reef with the `.amd` version.
 
 ```js
-requirejs(['https://cdn.jsdelivr.net/npm/reef@10/dist/reef.amd.min.js'], function (Reef) {
+requirejs(['https://cdn.jsdelivr.net/npm/reefjs@10/dist/reef.amd.min.js'], function (Reef) {
   //...
 });
 ```
