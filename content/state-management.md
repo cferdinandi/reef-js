@@ -41,9 +41,9 @@ app.data = {
 };
 ```
 
-**[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/ExmbbzR)**
+**[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/jOGmvmN)**
 
-*For better performance, multiple property updates may be batched into a single, asynchronous render. You can detect when a render has been completed using [the `reef:render` event hook](/advanced/#event-hooks).*
+*For better performance, multiple property updates may be batched into a single, asynchronous render. You can detect when a render has been completed using [the `reef:render` event](/api/#events).*
 
 
 ## Non-Reactive Data
@@ -68,6 +68,6 @@ When you're ready to update your component data, you can set the component's `da
 app.data = data;
 ```
 
-**[Try non-reactive data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/YzVEEbb)**
+**[Try non-reactive data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/rNGmZmM)**
 
 {{<mailchimp intro="true">}}

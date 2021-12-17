@@ -7,7 +7,7 @@ noIndex: false
 anchors: true
 ---
 
-Reef exposes a set of options, methods, and custom events that you can hook into.
+Reef provides various options, methods, and custom events that you can hook into.
 
 <div id="table-of-contents"></div>
 
@@ -26,39 +26,6 @@ Reef.debug(true);
 // Turn debug mode off
 Reef.debug(false);
 ```
-
-### `Reef.clone()`
-
-Create an immutable copy of an array, object, `Map()`, or `Set()`.
-
-```js
-Reef.clone({});
-```
-
-### `Reef.err()`
-
-Log a warning in the console conditionally only if debug mode is on.
-
-```js
-Reef.err('You did something, silly!');
-```
-
-### `Reef.emit()`
-
-Emit a custom event. Pass in the element to emit the event on, the event name, and optionally, event details as arguments.
-
-```js
-// Emits the "awesome" event on the document
-Reef.emit(document, 'awesome');
-
-// Emit the "awesome" event on the #app element, with some details
-let app = document.querySelector('#app');
-Reef.emit(app, 'awesome', {
-	whoIs: 'You are'
-});
-```
-
-You can listen for custom events with the `Element.addEventListener()` method.
 
 
 
@@ -105,42 +72,26 @@ Render a Reef component in the UI.
 
 ```js
 let app = new Reef('#app', {
-	template: 'Hello world!'
+	template: function () {
+		return 'Hello world!';
+	}
 });
 
 app.render();
 ```
 
-### `Reef.prototype.attach()`
+### `Reef.prototype.html()`
 
-Attach one or more components to a Reef component. Pass in the component or an array of components as an argument.
+Get the compiled HTML string for a component. Used for nesting components.
 
 ```js
 let app = new Reef('#app', {
-	template: '<ul id="todos"></ul>'
+	template: function () {
+		return 'Hello world!';
+	}
 });
 
-let todos = new Reef('#todos', {
-	template: '<li>Build something with Reef</li>'
-});
-
-// Attach one item
-app.attach(todos);
-
-// Attach an array of items
-app.attach([todos]);
-```
-
-### `Reef.prototype.detach()`
-
-Detach an attached component. Pass in the component or an array of components as an argument.
-
-```js
-// Detach one component
-app.detach(todos);
-
-// Detach an array of components
-app.detach([todos]);
+app.html();
 ```
 
 ### `Reef.prototype.do()`
@@ -166,42 +117,19 @@ let app = new Reef('#app', {
 app.do('increase');
 ```
 
-### `Reef.prototype.get()`
-
-Run a getter function. Pass in the name of the getter, and a comma-separate list of any arguments.
-
-```js
-let app = new Reef('#app', {
-	data: {
-		count: 0
-	},
-	template: function (props) {
-		return count;
-	},
-	getters: {
-		count: function (props) {
-			return props.count;
-		}
-	}
-});
-
-// Run the count getter
-app.get('count');
-```
-
 
 
 ## Events
 
 Reef emits custom events throughout the lifecycle of a component or instance.
 
-All Reef events follow a `reef:{event-name}` pattern. Unless otherwise specified, all events are emitted on the `document` element. Event details can be accessed on the `event.details` property.
+All Reef events follow a `reef:{event-name}` pattern. Unless otherwise specified, all events are emitted on the `document` element. Event details can be accessed on the `event.detail` property.
 
 ```js
 // Listen for when Reef components are rendered into the DOM
 document.addEventListener('reef:render', function (event) {
 	console.log(event.target); // The element it was rendered into
-	console.log(event.detail); // The data used for the render
+	console.log(event.detail); // The component, and the data used for the render
 });
 ```
 
@@ -210,15 +138,11 @@ document.addEventListener('reef:render', function (event) {
 	+ `event.detail` - the instance
 - **`reef:before-render`** is emitted on an element before a new UI is rendered into it.
 	+ `event.target` - the element the component is being rendered into
-	+ `event.detail` - the current component `data`
+	+ `event.detail` - the `component` and the `data` at time of render
 	+ `event.preventDefault()` - stop the component from rendering
 - **`reef:render`** is emitted on an element after a new UI is rendered into it.
 	+ `event.target` - the element the component was rendered into
-	+ `event.detail` - the component `data` at time of render
-- **`reef:attached`** is emitted when one or more components is attached to a component.
-	+ `event.detail` - an object with the `component` and an array of `attached` components
-- **`reef:detached`** is emitted when one or more components is detached from a component.
-	+ `event.detail` - an object with the `component` and an array of `detached` components
+	+ `event.detail` - the `component` and the `data` that was used for the render
 
 
 
@@ -235,9 +159,6 @@ new Reef(elem, {
 	// The component data
 	data: {},
 
-	// A component or array of components to attach to
-	attachTo: [],
-
 	// A data store to use
 	// If used, the data option is ignored
 	store: null,
@@ -245,8 +166,8 @@ new Reef(elem, {
 	// An object of setter methods
 	setters: {},
 
-	// An object of getter methods
-	getters: {}
+	// An object of allowed event listeners
+	listeners: {}
 
 });
 ```

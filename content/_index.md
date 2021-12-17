@@ -10,7 +10,7 @@ fullWidth: false
 
 <p class="text-large">A lightweight library for creating reactive, state-based UI.</p>
 
-Reef is a simpler alternative to React, Vue, and other large frameworks.
+Reef is a simpler alternative to React, Vue, and other large UI libraries.
 
 <a class="btn btn-large" href="/getting-started">Get started with Reef &rarr;</a>
 
@@ -24,7 +24,7 @@ Reef is a simpler alternative to React, Vue, and other large frameworks.
 - Simple templating with JavaScript strings or template literals.
 - Load it with a `<script>` element or ES module import&mdash;no command line or transpiling required (though you can if you want).
 - Uses DOM diffing to update only the things that have changed.
-- Has Redux/Vuex-like data stores, with setters and getters baked right in.
+- Has Redux/Vuex-like data stores, with setters baked right in.
 - Automatically sanitizes HTML before rendering to help protect you from cross-site scripting (XSS) attacks.
 - Work with native JavaScript methods and browser APIs instead of custom methods and pseudo-languages.
 - Compatible with all modern browsers.

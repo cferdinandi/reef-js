@@ -32,7 +32,15 @@ The code is available under the [MIT License](/mit).
 
 You can find all available versions [under releases](https://github.com/cferdinandi/reef/releases).
 
-**Version 10 (current version) brings more layout control.**
+**Version 11 (current version) improves the developer experience.**
+
+- Removed `getters` (which were causing confusion).
+- Removed `Reef.clone()`, `Reef.emit()`, and `Reef.err()` methods.
+- Updated nested components for easier use.
+- Added ability to attach event listeners directly to elements in templates.
+- Updated dynamic and default form values to use `@` and `#` for better ergonomics.
+
+**[Version 10](/v10) brings more layout control.**
 
 - Template `data` is allowed to contain HTML by default.
 - The sanitization engine has been updated to be more robust.

@@ -17,7 +17,7 @@ As your project gets bigger, the way you manage components and data may need to 
 
 You can use component data to conditionally include or change the value of HTML attributes in your template.
 
-Use the `reef-checked`, `reef-selected`, and `reef-value` attributes to dynamically control the `checked`, `selected`, and `value` attributes, respectively. Use a _falsy value_ when the item should _not_ be checked or selected.
+To dynamically set `checked`, `selected`, and `value` attributes, prefix them with an `@` symbol. Use a _falsy value_ when the item should _not_ be checked or selected.
 
 In the example below, the checkbox is `checked` when `agreeToTOS` is `true`.
 
@@ -29,15 +29,15 @@ let app = new Reef('#app', {
 	template: function (props) {
 		return `
 			<label>
-				<input type="checkbox" reef-checked="${agreeToTOS}">
+				<input type="checkbox" @checked="${agreeToTOS}">
 			</label>`;
 	}
 });
 ```
 
-You might also want to use a default value when an element initially renders, but defer to any changes the user makes after that.
+You might instead want to use a default value when an element initially renders, but defer to any changes the user makes after that.
 
-You can do that with the `reef-default-checked`, `reef-default-selected`, and `reef-default-value` attributes.
+You can do that by prefixing your attributes with a `#` symbol.
 
 In this example, `Hermione` has the `[selected]` attribute on it when first rendered, but will defer to whatever changes the user makes when diffing and updating the UI.
 
@@ -48,14 +48,14 @@ let app = new Reef('#app', {
 			<label for="wizards">Who is the best wizard?</label>
 			<select>
 				<option>Harry</option>
-				<option reef-default-selected>Hermione</option>
+				<option #selected>Hermione</option>
 				<option>Neville</option>
 			</select>`;
 	}
 });
 ```
 
-**[Try controlling form attributes on CodePen &rarr;](https://codepen.io/cferdinandi/pen/WNjXXqo)**
+**[Try controlling form attributes on CodePen &rarr;](https://codepen.io/cferdinandi/pen/LYzyJLO)**
 
 ### Preventing Cross-Site Scripting (XSS) Attacks
 
@@ -78,12 +78,40 @@ let app = new Reef('#app', {
 });
 ```
 
-**[Try HTML sanitization on CodePen &rarr;](https://codepen.io/cferdinandi/pen/XWRzzLq)**
+**[Try HTML sanitization on CodePen &rarr;](https://codepen.io/cferdinandi/pen/ZEXKMJW)**
 
+### Attaching event listeners to elements
+
+To use event listeners in your templates, allowed callback functions need to be added to the `listeners` property on the component `options` object. 
+
+Inside the callback function, `this` refers to the components and its properties. Reef uses event delegation under-the-hood for better performance, and automatically cleans up listeners when the elements they're attached to are removed.
+
+_Any `on*` callback function not included in the `listeners` object is removed to reduce the risk of XSS attacks._
+
+```js
+new Reef('#app', {
+	data: {
+		text: ''
+	},
+	template: function (props) {
+		return `
+			<label for="mirror">Whatever you type shows up below the field</label>
+			<input type="text" oninput="mirror()" id="mirror">
+			<div><em aria-live="polite">${props.text.length ? props.text : 'Type something above to change this text'}</em></div>`;
+	},
+	listeners: {
+		mirror: function (event) {
+			this.data.text = event.target.value;
+		}
+	}
+}).render();
+```
+
+**[Try working with event listeners on CodePen &rarr;](https://codepen.io/cferdinandi/pen/QWqvVqL)**
 
 ### Getting the element the template is being rendered into
 
-An optional second argument is passed into the `template()` function: the element the template is being rendered into.
+An optional second argument is passed into the `template()` function: the element that the template is being rendered into.
 
 This is particularly handy if you have data attributes on your element that affect what's rendered into the template.
 
@@ -102,7 +130,7 @@ let app = new Reef('#app', {
 });
 ```
 
-**[Try getting the HTML element that the template was rendered into on CodePen &rarr;](https://codepen.io/cferdinandi/pen/gOWXXVp)**
+**[Try getting the HTML element that the template was rendered into on CodePen &rarr;](https://codepen.io/cferdinandi/pen/dyVWqde)**
 
 
 
@@ -111,22 +139,20 @@ let app = new Reef('#app', {
 
 If you're managing a bigger app, you may have components nested inside other components.
 
-Reef provides you with a way to attach nested components to their parent components. When the parent component is updated, it will automatically update the UI of its nested components if needed.
-
-Associate a nested component with its parent using the `attachTo` key on your `options` object. You can provide a component or array of components for a value.
-
-You only need to render the parent component. It's nested components will render automatically.
+You can Reef components inside each other using the `Reef.prototype.html()` method in your template string. When the parent component is updated, it will automatically update the UI of its nested components if needed.
 
 ```js
 // Parent component
 let app = new Reef('#app', {
 	data: {
-		greeting: 'Hello, world!'
+		heading: 'My Todos'
 	},
 	template: function (props) {
 		return `
-			<h1>${props.greeting}</h1>
-			<div id="todos"></div>`;
+			<h1>${props.heading}</h1>
+			<div id="todos">
+				${todos.html()}
+			</div>`;
 	}
 });
 
@@ -142,33 +168,16 @@ let todos = new Reef('#todos', {
 					return `<li>${todo}</li>`;
 				}).join('')}
 			</ul>`;
-	},
-	attachTo: app
+	}
 });
 
+// Render your app
+// todos will be automatically rendered because they're nested in the app component
 app.render();
 ```
 
-**[Try nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/NWjwwQb)**
+**[Try nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/rNGmZvj)**
 
-
-### Attaching and Detaching Nested Components
-
-You can attach or detach nested components at any time using the `attach()` and `detach()` methods on the parent component.
-
-Provide an individual component or array of components as an argument.
-
-```js
-// Attach components
-app.attach(todos);
-app.attach([todos]);
-
-// Detach components
-app.detach(todos);
-app.detach([todos]);
-```
-
-**[Try attaching nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/ZEKaagv)**
 
 
 
@@ -209,7 +218,7 @@ let app = new Reef('#app', {
 
 When using a *Data Store*, your component can still have its own local `data` as well.
 
-The local component `data` is merged into the `store` and pass into the `template()` function as a single `props` object.
+The local component `data` is merged into the `store` and passed into the `template()` function as a single `props` object.
 
 ```js
 let store = new Reef.Store({
@@ -236,25 +245,21 @@ let app = new Reef('#app', {
 });
 ```
 
-**[Try creating a Data Store on CodePen &rarr;](https://codepen.io/cferdinandi/pen/zYwPPga)**
+**[Try creating a Data Store on CodePen &rarr;](https://codepen.io/cferdinandi/pen/RwLVYJq)**
 
 _**Note:** if any properties in your `store` and `data` that share the same name, the local component `data` gets priority._
 
 
 
-## Setters & Getters
+## Setter Functions
 
 Reef's reactive `data` makes updating your UI as simple as updating an object property.
 
 But as your app scales, you may find that keeping track of what's updating state and causing changes to the UI becomes harder to track and maintain.
 
-Setters and getters provide you with a way to control how data flows in and out of your component.
+Setter functions provide you with a way to control how data flows in and out of your component.
 
-### Setters
-
-Setters are functions that update your component or store data.
-
-Create setters by passing in an object of setter functions with the `setters` property on your `options` object. The first parameter on a setter function must be the store or component data. You can add as many other parameters as you'd like.
+Add your setter functions to the `setters` property on your `options` object. The first parameter on a setter function must be the store or component data. You can add as many other parameters as you'd like.
 
 ```js
 let store = new Reef.Store({
@@ -287,38 +292,7 @@ This protects your component or store data from unwanted changes. The `data` pro
 store.data.todos.push('Take a nap... zzzz');
 ```
 
-**[Try working with setter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/OJmOzLM)**
-
-### Getters
-
-Getters are functions that parse data from your component or store and return a value.
-
-They're useful if you need to manipulate and retrieve the same data across multiple views or components. Rather than having to import helper functions, you can attach them directly to the component or store.
-
-Create getters by passing in an object of getter functions with the `getters` property on your `options` object. The first parameter on a getter function must be the store or component data. You can add as many other parameters as you'd like.
-
-```js
-let store = new Reef.Store({
-	data: {
-		heading: 'My Todos',
-		todos: ['Swim', 'Climb', 'Jump', 'Play']
-	},
-	getters: {
-		total: function (props) {
-			return props.todos.length;
-		}
-	}
-});
-```
-
-Use getter functions by calling the `get()` method on your component or store. Pass in the name of getter, along with any required arguments (except for `props`).
-
-```js
-// Get the number of todo items
-store.get('total');
-```
-
-**[Try working with getter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/YzVEYKo)**
+**[Try working with setter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/vYemzvQ)**
 
 
 
@@ -336,12 +310,12 @@ let app = new Reef('#app', {
 	},
 	template: function (props) {
 
-    // If there are no articles
-    if (!props.articles.length) {
-      return `<p>There are no articles.</p>`;
-    }
+		// If there are no articles
+		if (!props.articles.length) {
+			return `<p>There are no articles.</p>`;
+		}
 
-    // Otherwise, show the articles
+		// Otherwise, show the articles
 	return `
 		<ul>
 			${props.articles.map(function (article) {
@@ -363,7 +337,7 @@ fetch('https://jsonplaceholder.typicode.com/posts').then(function (response) {
 });
 ```
 
-**[Try create a template from asynchronous data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/GRmOyRg)**
+**[Try create a template from asynchronous data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/LYzyJar)**
 
 You might also choose to hard-code a _loading message_ in your markup.
 

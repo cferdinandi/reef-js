@@ -15,7 +15,7 @@ Reef works without any build step.
 
 ```html
 <!-- Get the latest major version -->
-<script src="https://cdn.jsdelivr.net/npm/reefjs@10/dist/reef.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reefjs@11/dist/reef.min.js"></script>
 ```
 
 Reef uses semantic versioning. You can grab a major, minor, or patch version from the CDN with the `@1.2.3` syntax. You can find all available versions [under releases](https://github.com/cferdinandi/reef/releases).
@@ -28,7 +28,7 @@ Reef uses semantic versioning. You can grab a major, minor, or patch version fro
 Reef also supports modern browsers and module bundlers (like Rollup, Webpack, Snowpack, and so on) using the ES modules `import` syntax. Use the `.es` version.
 
 ```js
-import Reef from 'https://cdn.jsdelivr.net/npm/reefjs@10/dist/reef.es.min.js';
+import Reef from 'https://cdn.jsdelivr.net/npm/reefjs@11/dist/reef.es.min.js';
 ```
 
 **NPM**
@@ -50,7 +50,7 @@ import Reef from 'reefjs';
 If you use NodeJS, you can import Reef using the `require()` method with the `.cjs` version.
 
 ```js
-let Reef = require('https://cdn.jsdelivr.net/npm/reefjs@10/dist/reef.cjs.min.js');
+let Reef = require('https://cdn.jsdelivr.net/npm/reefjs@11/dist/reef.cjs.min.js');
 ```
 
 **AMD**
@@ -58,7 +58,7 @@ let Reef = require('https://cdn.jsdelivr.net/npm/reefjs@10/dist/reef.cjs.min.js'
 If you use RequireJS, SystemJS, and other AMD formats, you can import Reef with the `.amd` version.
 
 ```js
-requirejs(['https://cdn.jsdelivr.net/npm/reefjs@10/dist/reef.amd.min.js'], function (Reef) {
+requirejs(['https://cdn.jsdelivr.net/npm/reefjs@11/dist/reef.amd.min.js'], function (Reef) {
   //...
 });
 ```
@@ -104,15 +104,9 @@ let app = new Reef(elem);
 
 ### Provide a Template
 
-The second argument is an object of options. It requires a template property, as either a string or a function that returns a string, to render into the DOM.
+The second argument is an object of `options`. It requires a `template` property, a function that returns an HTML string to render into the DOM.
 
 ```js
-// Your template can be a string
-let app = new Reef('#app', {
-	template: '<h1>Hello, world!</h1>'
-});
-
-// It can also be a function that returns a string
 let app = new Reef('#app', {
 	template: function () {
 		return '<h1>Hello, world!</h1>';
@@ -122,9 +116,9 @@ let app = new Reef('#app', {
 
 ### [Optional] Add State/Data
 
-As an optional property of the options argument, you can include state for your component with the `data` property.
+As an optional property of the `options` argument, you can include state for your component with the `data` property.
 
-The data object is automatically encoded and passed into your template function, so that you can use it to customize your template.
+An immutable copy of the data object is automatically passed into your template function, so that you can use it to customize your template.
 
 ```js
 // Some data
@@ -149,6 +143,6 @@ Render your component by calling the `render()` method on it.
 app.render();
 ```
 
-**[Try the demo on CodePen &rarr;](https://codepen.io/cferdinandi/pen/mdmqqYb)**
+**[Try the demo on CodePen &rarr;](https://codepen.io/cferdinandi/pen/ExwmeWZ)**
 
 {{<mailchimp intro="true">}}
