@@ -51,6 +51,6 @@ If you're craving a simpler, back-to-basics web development experience, Reef is 
 
 
 
-{{<about-me>}}
+{{<cta for="bio-short">}}
 
 {{<mailchimp intro="true">}}
