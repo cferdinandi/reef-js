@@ -160,7 +160,6 @@ new Reef(elem, {
 	data: {},
 
 	// A data store to use
-	// If used, the data option is ignored
 	store: null,
 
 	// An object of setter methods
