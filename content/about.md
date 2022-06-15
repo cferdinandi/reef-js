@@ -112,6 +112,6 @@ You can find all available versions [under releases](https://github.com/cferdina
 - Shared state support (with data reactivity!)
 - Custom attribute exceptions for your templates
 
-{{<about-me>}}
+{{<cta for="bio-short">}}
 
 {{<mailchimp intro="true">}}
