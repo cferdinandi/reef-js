@@ -28,14 +28,14 @@ Reef works without any build step.
 <script src="https://cdn.jsdelivr.net/npm/reefjs@12/dist/reef.min.js"></script>
 ```
 
-With the global script, you can call the API methods on the `kelp` object, or destructure them into their own variables.
+With the global script, you can call the API methods on the `reef` object, or destructure them into their own variables.
 
 ```js
 // You do this...
-kelp.store();
+reef.store();
 
 // or this...
-let {store} = kelp;
+let {store} = reef;
 ```
 
 Reef uses semantic versioning. You can grab a major, minor, or patch version from the CDN with the `@1.2.3` syntax. You can find all available versions [under releases](https://github.com/cferdinandi/reef/releases).
