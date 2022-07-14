@@ -15,7 +15,7 @@ anchors: true
 Reef works in all modern browsers. That means:
 
 - The latest versions of Edge, Chrome, Firefox, and Safari.
-- Mobile Safari, Chrome, and Firefox on Safari.
+- Mobile Safari, Chrome, and Firefox on iOS.
 - WebView, Chrome, and Firefox for Android.
 
 If you need to support older browsers, you'll need to transpile your code into ES5 with [BabelJS](https://babeljs.io/).
