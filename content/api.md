@@ -181,9 +181,9 @@ app.start();
 Reef emits custom events throughout the lifecycle of a component or reactive store.
 
 - **`reef:store`** is emitted when a reactive store is modified. The `event.detail` property contains the data object.
-- **`reef:start`** is emitted on a component element when kelp starts listening for reactive data changes.
-- **`reef:stop`** is emitted on a component element when kelp stops listening for reactive data changes.
-- **`reef:render`** is emitted on a component element when kelp renders a UI update.
+- **`reef:start`** is emitted on a component element when reef starts listening for reactive data changes.
+- **`reef:stop`** is emitted on a component element when reef stops listening for reactive data changes.
+- **`reef:render`** is emitted on a component element when reef renders a UI update.
 
 You can listen for Reef events with the `Element.addEventListener()` method.
 
