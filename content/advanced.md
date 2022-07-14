@@ -57,6 +57,9 @@ function template () {
 }
 ```
 
+**[Try controlling form attributes on CodePen &rarr;](https://codepen.io/cferdinandi/pen/LYdbOdY)**
+
+
 
 
 ## Batch Rendering
@@ -87,6 +90,9 @@ document.addEventListener('reef:render', function (event) {
 	console.log(event.target);
 });
 ```
+
+**[Try batch rendering on CodePen &rarr;](https://codepen.io/cferdinandi/pen/BarQmxd?editors=1011)**
+
 
 
 
@@ -198,6 +204,8 @@ cart.push({
 	cost: 29
 });
 ```
+
+**[Try manual UI updates on CodePen &rarr;](https://codepen.io/cferdinandi/pen/MWVbOXP)**
 
 
 

@@ -128,6 +128,7 @@ let data = store({
 
 // Create a template function
 function template () {
+	let {greeting, name} = data;
 	return `<p>${greeting}, ${name}!</p>`;
 }
 
@@ -139,3 +140,5 @@ component('#app', template);
 data.greeting = 'Hi';
 data.name = 'Universe';
 ```
+
+**[Try this demo on CodePen &rarr;](https://codepen.io/cferdinandi/pen/yLKVPgK)**

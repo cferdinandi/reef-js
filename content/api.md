@@ -39,6 +39,8 @@ document.addEventListener('reef:store', function (event) {
 data.greeting = 'Hi there';
 ```
 
+**[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/zYWoPwy?editors=0011)**
+
 You can customize the event name by passing in a second argument into the `store()` method. It gets added to the end of the `reef:store` event with a dash delimiter (`-`).
 
 ```js
@@ -47,6 +49,8 @@ let wizards = store([], 'wizards');
 // A "reef:store-wizards" event gets emitted
 wizards.push('Merlin');
 ```
+
+**[Try custom event names on CodePen &rarr;](https://codepen.io/cferdinandi/pen/QWmGOgO?editors=0011)**
 
 
 
@@ -70,12 +74,16 @@ function template () {
 render('#app', template());
 ```
 
+**[Try rendering HTML on CodePen &rarr;](https://codepen.io/cferdinandi/pen/abYBVwx)**
+
 To reduce the risk of XSS attacks, dangerous properties (including `on*` events) are removed from the HTML before rendering.
 
 ```js
 // The onerror event is removed before rendering
 render('#app', '<p><img src="x" onerror="alert(1)"></p>');
 ```
+
+**[Try HTML sanitization on CodePen &rarr;](https://codepen.io/cferdinandi/pen/bGvBYrr)**
 
 If you want to allow `on*` event listeners, pass in `true` as an optional third argument.
 
@@ -92,6 +100,8 @@ function log () {
 // Render a button with an onclick event
 render('#app', `<button onclick="log()">Activate Me</button>`, true);
 ```
+
+**[Try event listener binding on CodePen &rarr;](https://codepen.io/cferdinandi/pen/JjLbOyQ?editors=1011)**
 
 _**Note:** Do NOT do this if your template contains any third-party data. It can expose you to cross-site scripting (XSS) attacks._
 
@@ -128,6 +138,8 @@ component('#app', template);
 todos.push('Take a nap... zzzz');
 ```
 
+**[Try creating a component on CodePen &rarr;](https://codepen.io/cferdinandi/pen/rNdWYGQ)**
+
 The `component()` method also accepts an object of `options` as a third argument.
 
 - `events` - If `true`, will allow inline events on the template.
@@ -145,6 +157,8 @@ component('#app', template, {stores: ['wizards']});
 component('#app', template, {stores: ['wizards'], events: true});
 ```
 
+**[Try component options on CodePen &rarr;](https://codepen.io/cferdinandi/pen/JjLbOOg)**
+
 If you assign your component to a variable, you can stop reactive rendering with the `component.stop()` method, and start it again with the `component.start()` method.
 
 ```js
@@ -157,6 +171,8 @@ app.stop();
 // Restart reactive rendering
 app.start();
 ```
+
+**[Try component methods on CodePen &rarr;](https://codepen.io/cferdinandi/pen/wvmoPyq?editors=1011)**
 
 
 
