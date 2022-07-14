@@ -3,7 +3,7 @@ baseURL: "https://reefjs.com"
 
 # Customer parameters
 params:
-  description: "A lightweight library for creating reactive, state-based components and UI. Reef is a simpler alternative to React, Vue, and other large frameworks."
+  description: "A tiny utility library for building reactive state-based UI. Reef is a simpler alternative to React, Vue, and other UI libraries."
   api: "https://gomakethings.com/api/data.json"
   rssURL: ""
   rssLimit: 7
