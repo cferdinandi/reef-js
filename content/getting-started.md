@@ -7,7 +7,17 @@ noIndex: false
 anchors: true
 ---
 
-## 1. Include Reef on your site
+<!-- Reef is just three utility functions that you can use with vanilla JS. Let's look at how to get started. -->
+
+Let's look at how to get started with Reef.
+
+<div id="table-of-contents"></div>
+
+<!-- Let's look at [how to install Reef](#installation) (it's as simple as loading a JS file), and [a quick intro to how it works](#how-reef-works). -->
+
+
+
+## Installation
 
 Reef works without any build step.
 
@@ -15,7 +25,17 @@ Reef works without any build step.
 
 ```html
 <!-- Get the latest major version -->
-<script src="https://cdn.jsdelivr.net/npm/reefjs@11/dist/reef.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reefjs@12/dist/reef.min.js"></script>
+```
+
+With the global script, you can call the API methods on the `kelp` object, or destructure them into their own variables.
+
+```js
+// You do this...
+kelp.store();
+
+// or this...
+let {store} = kelp;
 ```
 
 Reef uses semantic versioning. You can grab a major, minor, or patch version from the CDN with the `@1.2.3` syntax. You can find all available versions [under releases](https://github.com/cferdinandi/reef/releases).
@@ -28,7 +48,7 @@ Reef uses semantic versioning. You can grab a major, minor, or patch version fro
 Reef also supports modern browsers and module bundlers (like Rollup, Webpack, Snowpack, and so on) using the ES modules `import` syntax. Use the `.es` version.
 
 ```js
-import Reef from 'https://cdn.jsdelivr.net/npm/reefjs@11/dist/reef.es.min.js';
+import {store, component} from 'https://cdn.jsdelivr.net/npm/reefjs@12/dist/reef.es.min.js';
 ```
 
 **NPM**
@@ -42,7 +62,7 @@ npm install reefjs --save
 Then import the package.
 
 ```js
-import Reef from 'reefjs';
+import {store, component} from 'reefjs';
 ```
 
 **CommonJS**
@@ -50,17 +70,7 @@ import Reef from 'reefjs';
 If you use NodeJS, you can import Reef using the `require()` method with the `.cjs` version.
 
 ```js
-let Reef = require('https://cdn.jsdelivr.net/npm/reefjs@11/dist/reef.cjs.min.js');
-```
-
-**AMD**
-
-If you use RequireJS, SystemJS, and other AMD formats, you can import Reef with the `.amd` version.
-
-```js
-requirejs(['https://cdn.jsdelivr.net/npm/reefjs@11/dist/reef.amd.min.js'], function (Reef) {
-  //...
-});
+let {store, component} = require('https://cdn.jsdelivr.net/npm/reefjs@12/dist/reef.cjs.min.js');
 ```
 
 **Direct Download**
@@ -77,72 +87,55 @@ Compiled and production-ready code can be found in the `dist` directory. The `sr
 
 
 
-## 2. Add an element to render your component/UI into
+## How Reef works
 
-This is typically an empty `div` with a targetable selector.
+Reef is a tiny utility library with just three functions: `store()`, `render()`, and `component()`.
 
-```html
-<div id="app"></div>
-```
-
-## 3. Create your component
-
-Create a new `Reef()` instance, passing in two arguments: your selector, and your options.
-
-### Provide a selector
-
-The first argument is the selector for the element you want to render the UI into. Alternatively, you can pass in the element itself.
+**Create reactive data with the `store()` method.** Pass in an array or object, and Reef will emit a `reef:store` event whenever a property is updated.
 
 ```js
-// This works
-let app = new Reef('#app');
+let {store} = reef;
 
-// This does too
-let elem = document.querySelector('#app');
-let app = new Reef(elem);
-```
-
-### Provide a Template
-
-The second argument is an object of `options`. It requires a `template` property, a function that returns an HTML string to render into the DOM.
-
-```js
-let app = new Reef('#app', {
-	template: function () {
-		return '<h1>Hello, world!</h1>';
-	}
+// Create a reactive data store
+let data = store({
+	greeting: 'Hello',
+	name: 'World'
 });
+
+// Emits a reef:store event
+data.greeting = 'Hi';
 ```
 
-### [Optional] Add State/Data
-
-As an optional property of the `options` argument, you can include state for your component with the `data` property.
-
-An immutable copy of the data object is automatically passed into your template function, so that you can use it to customize your template.
+**Safely render UI from an HTML string with the `render()` method.** Pass in an element or element selector and your HTML string. Reef will sanitize your HTML, then diff the DOM and update only the things that are different.
 
 ```js
-// Some data
-let app = new Reef('#app', {
-	data: {
-		greeting: 'Hello',
-		name: 'world'
-	},
-	template: function (props) {
-		return `<h1>${props.greeting}, ${props.name}!</h1>`;
-	}
+let {render} = reef;
+
+let name = 'world';
+render('#app', `<p>Hello, ${name}!</p>`);
+```
+
+**Automatically update your UI when data changes with the `component()` method.** Pass in an element or element selector and a template function. Reef will listen for `reef:store` events and and run the `render()` function.
+
+```js
+let {store, component} = reef;
+
+// Create a reactive data store
+let data = store({
+	greeting: 'Hello',
+	name: 'World'
 });
+
+// Create a template function
+function template () {
+	return `<p>${greeting}, ${name}!</p>`;
+}
+
+// Create a component
+// Renders into the UI, and updates whenever the data changes
+component('#app', template);
+
+// The UI will automatically update
+data.greeting = 'Hi';
+data.name = 'Universe';
 ```
-
-_Template literals give you a simple, JSX-like templating experience._
-
-## 4. Render your component
-
-Render your component by calling the `render()` method on it.
-
-```js
-app.render();
-```
-
-**[Try the demo on CodePen &rarr;](https://codepen.io/cferdinandi/pen/ExwmeWZ)**
-
-{{<mailchimp intro="true">}}

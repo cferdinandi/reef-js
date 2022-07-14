@@ -8,7 +8,7 @@ params:
   rssURL: ""
   rssLimit: 7
   minify: true
-  version: 11.x
+  version: 12
 
 # Caches
 caches:

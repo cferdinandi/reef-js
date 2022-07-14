@@ -32,7 +32,14 @@ The code is available under the [MIT License](/mit).
 
 You can find all available versions [under releases](https://github.com/cferdinandi/reef/releases).
 
-**Version 11 (current version) improves the developer experience.**
+**Version 12 (current version) shifts to small, decoupled utility functions.**
+
+- Removed `new Reef()` constructor and component-focused API.
+- Added three small utility functions: `store()`, `render()`, and `component()`.
+- Focused on more vanilla JS oriented developer experience.
+- Removed support for AMD modules.
+
+**[Version 11](/v11) improves the developer experience.**
 
 - Removed `getters` (which were causing confusion).
 - Removed `Reef.clone()`, `Reef.emit()`, and `Reef.err()` methods.

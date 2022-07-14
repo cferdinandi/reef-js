@@ -1,5 +1,5 @@
 ---
-title: "Advanced Components"
+title: "Advanced Techniques"
 date: 2018-01-24T11:48:20-05:00
 draft: false
 noTitle: false
@@ -7,358 +7,221 @@ noIndex: false
 anchors: true
 ---
 
-As your project gets bigger, the way you manage components and data may need to grow with it. Reef has some options to help make things a little easier.
+Reef is a set of small functions you can mix-and-match as needed. As your project gets bigger, the way you manage components and data may need to grow with it.
 
 <div id="table-of-contents"></div>
 
-## HTML Templates
 
-### Default and state-based HTML attributes
 
-You can use component data to conditionally include or change the value of HTML attributes in your template.
+## Default and state-based HTML attributes
 
-To dynamically set `checked`, `selected`, and `value` attributes, prefix them with an `@` symbol. Use a _falsy value_ when the item should _not_ be checked or selected.
+You can use data to conditionally include or change the value of HTML attributes in your template.
+
+To dynamically set `checked`, `selected`, and `value` attributes, prefix them with an `@` symbol. Use a _falsy value_ when the item should _not_ be `checked` or `selected`.
 
 In the example below, the checkbox is `checked` when `agreeToTOS` is `true`.
 
 ```js
-let app = new Reef('#app', {
-	data: {
-		agreeToTOS: true
-	},
-	template: function (props) {
-		return `
-			<label>
-				<input type="checkbox" @checked="${agreeToTOS}">
-			</label>`;
-	}
+// The reactive store
+let data = store({
+	agreeToTOS: true
 });
+
+// The template
+function template () {
+	return `
+		<label>
+			<input type="checkbox" @checked="${agreeToTOS}">
+		</label>`;
+}
+
+// The component
+component('#app', template);
 ```
 
 You might instead want to use a default value when an element initially renders, but defer to any changes the user makes after that.
 
 You can do that by prefixing your attributes with a `#` symbol.
 
-In this example, `Hermione` has the `[selected]` attribute on it when first rendered, but will defer to whatever changes the user makes when diffing and updating the UI.
+In this example, `Merlin` has the `[selected]` attribute on it when first rendered, but will defer to whatever changes the user makes when diffing and updating the UI.
 
 ```js
-let app = new Reef('#app', {
-	template: function () {
-		return `
-			<label for="wizards">Who is the best wizard?</label>
-			<select>
-				<option>Harry</option>
-				<option #selected>Hermione</option>
-				<option>Neville</option>
-			</select>`;
-	}
+function template () {
+	return `
+		<label for="wizards">Who is the best wizard?</label>
+		<select>
+			<option>Gandalf</option>
+			<option #selected>Merlin</option>
+			<option>Ursula</option>
+		</select>`;
+}
+```
+
+
+
+## Batch Rendering
+
+With a `component()`, multiple reactive data updates are often batched into a single render that happens asynchronously.
+
+```js
+// Reactive store
+let todos = store(['Swim', 'Climb', 'Jump', 'Play']);
+
+// Create a component from a template
+component('#app', template);
+
+// These three updates would result in a single render
+todos.push('Sleep');
+todos.push('Wake up');
+todos.push('Repeat');
+```
+
+You can detect when a UI update happens inside a component by listening for [the `reef:render` event](/api#lifecycle-events).
+
+It's emitted directly on the element that was rendered, and also bubbles if you want to listen for all render events.
+
+```js
+// Log whenever an element is rendered into
+document.addEventListener('reef:render', function (event) {
+	console.log('The UI was just updated inside this element.');
+	console.log(event.target);
 });
 ```
 
-**[Try controlling form attributes on CodePen &rarr;](https://codepen.io/cferdinandi/pen/LYzyJLO)**
 
-### Preventing Cross-Site Scripting (XSS) Attacks
 
-To reduce your risk of cross-site scripting (XSS) attacks, Reef automatically sanitizes the HTML from your template before rendering it.
+## More efficient DOM diffing with IDs
 
-In the example below, the attempted XSS attack (the `alert()`) will not run. Safe HTML, like the bold in the `greeting` property, will be rendered as expected.
+Unique IDs can help Reef more effectively handle UI updates.
 
-```js
-let app = new Reef('#app', {
-	data: {
-		greeting: '<strong>Hello</strong>',
-		name: 'world',
-		img: '<img src="x" onerror="alert(1)">'
-	},
-	template: function (props) {
-		return `
-			<h1>${props.greeting}, ${props.name}!</h1>
-			${props.img}`;
-	}
-});
-```
-
-**[Try HTML sanitization on CodePen &rarr;](https://codepen.io/cferdinandi/pen/ZEXKMJW)**
-
-### Attaching event listeners to elements
-
-To use event listeners in your templates, allowed callback functions need to be added to the `listeners` property on the component `options` object. 
-
-Inside the callback function, `this` refers to the components and its properties. Reef uses event delegation under-the-hood for better performance, and automatically cleans up listeners when the elements they're attached to are removed.
-
-_Any `on*` callback function not included in the `listeners` object is removed to reduce the risk of XSS attacks._
+For example, imagine you have a list of items, and you're rendering them into the UI as an unordered list.
 
 ```js
-new Reef('#app', {
-	data: {
-		text: ''
-	},
-	template: function (props) {
-		return `
-			<label for="mirror">Whatever you type shows up below the field</label>
-			<input type="text" oninput="mirror()" id="mirror">
-			<div><em aria-live="polite">${props.text.length ? props.text : 'Type something above to change this text'}</em></div>`;
-	},
-	listeners: {
-		mirror: function (event) {
-			this.data.text = event.target.value;
-		}
-	}
-}).render();
-```
+// Reactive store
+let todos = store(['Swim', 'Climb', 'Jump', 'Play']);
 
-**[Try working with event listeners on CodePen &rarr;](https://codepen.io/cferdinandi/pen/QWqvVqL)**
-
-### Getting the element the template is being rendered into
-
-An optional second argument is passed into the `template()` function: the element that the template is being rendered into.
-
-This is particularly handy if you have data attributes on your element that affect what's rendered into the template.
-
-```html
-<div id="app" data-greeting="Hello"></div>
-```
-
-```js
-let app = new Reef('#app', {
-	data: {
-		name: 'world'
-	},
-	template: function (props, elem) {
-		return `<h1>${elem.getAttribute('data-greeting')}, ${props.name}!</h1>`;
-	}
-});
-```
-
-**[Try getting the HTML element that the template was rendered into on CodePen &rarr;](https://codepen.io/cferdinandi/pen/dyVWqde)**
-
-
-
-
-## Nested Components
-
-If you're managing a bigger app, you may have components nested inside other components.
-
-You can Reef components inside each other using the `Reef.prototype.html()` method in your template string. When the parent component is updated, it will automatically update the UI of its nested components if needed.
-
-```js
-// Parent component
-let app = new Reef('#app', {
-	data: {
-		heading: 'My Todos'
-	},
-	template: function (props) {
-		return `
-			<h1>${props.heading}</h1>
-			<div id="todos">
-				${todos.html()}
-			</div>`;
-	}
-});
-
-// Nested component
-let todos = new Reef('#todos', {
-	data: {
-		todos: ['Swim', 'Climb', 'Jump', 'Play']
-	},
-	template: function (props) {
-		return `
-			<ul>
-				${props.todos.map(function (todo) {
-					return `<li>${todo}</li>`;
-				}).join('')}
-			</ul>`;
-	}
-});
-
-// Render your app
-// todos will be automatically rendered because they're nested in the app component
-app.render();
-```
-
-**[Try nested components on CodePen &rarr;](https://codepen.io/cferdinandi/pen/rNGmZvj)**
-
-
-
-
-## Shared State with Data Stores
-
-A *Data Store* is a special Reef object that holds reactive data you can share with multiple components.
-
-Any time you update the data in your *Data Store*, any components that use the data will also be updated, and will render again if there are any UI changes.
-
-Create a *Data Store* using the `new Reef.Store()` constructor.
-
-```js
-let store = new Reef.Store({
-	data: {
-		heading: 'My Todos',
-		todos: ['Swim', 'Climb', 'Jump', 'Play']
-	}
-});
-```
-
-To use your *Data Store* with a component, pass it in with the `store` property instead of providing a `data` object.
-
-```js
-let app = new Reef('#app', {
-	store: store,
-	template: function (props) {
-		return `
-			<h1>${props.heading}</h1>
-			<ul>
-				${props.todos.map(function (todo) {
-					return `<li>${todo}</li>`;
-				}).join('')}
-			</ul>`;
-
-	}
-});
-```
-
-When using a *Data Store*, your component can still have its own local `data` as well.
-
-The local component `data` is merged into the `store` and passed into the `template()` function as a single `props` object.
-
-```js
-let store = new Reef.Store({
-	data: {
-		todos: ['Swim', 'Climb', 'Jump', 'Play']
-	}
-});
-
-let app = new Reef('#app', {
-	store: store,
-	data: {
-		heading: 'My Todos'
-	},
-	template: function (props) {
-		return `
-			<h1>${props.heading}</h1>
-			<ul>
-				${props.todos.map(function (todo) {
-					return `<li>${todo}</li>`;
-				}).join('')}
-			</ul>`;
-
-	}
-});
-```
-
-**[Try creating a Data Store on CodePen &rarr;](https://codepen.io/cferdinandi/pen/RwLVYJq)**
-
-_**Note:** if any properties in your `store` and `data` that share the same name, the local component `data` gets priority._
-
-
-
-## Setter Functions
-
-Reef's reactive `data` makes updating your UI as simple as updating an object property.
-
-But as your app scales, you may find that keeping track of what's updating state and causing changes to the UI becomes harder to track and maintain.
-
-Setter functions provide you with a way to control how data flows in and out of your component.
-
-Add your setter functions to the `setters` property on your `options` object. The first parameter on a setter function must be the store or component data. You can add as many other parameters as you'd like.
-
-```js
-let store = new Reef.Store({
-	data: {
-		heading: 'My Todos',
-		todos: ['Swim', 'Climb', 'Jump', 'Play']
-	},
-	setters: {
-		// Add a new todo item to the component
-		addTodo: function (props, todo) {
-			props.todos.push(todo);
-		}
-	}
-});
-```
-
-Use setter functions by calling the `do()` method on your component or store. Pass in the name of the setter, along with any required arguments (except for `props`).
-
-```js
-// Add a new todo item
-store.do('addTodo', 'Take a nap... zzzz');
-```
-
-**When a component or store has setter functions, they become the only way to update app or store data.**
-
-This protects your component or store data from unwanted changes. The `data` property always returns an immutable copy.
-
-```js
-// This will NOT update the store.data or the UI
-store.data.todos.push('Take a nap... zzzz');
-```
-
-**[Try working with setter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/vYemzvQ)**
-
-
-
-## Asynchronous Data
-
-You can use asynchronous data (such as content from an API) in your templates.
-
-Set an initial default value, make your API call, and update the `data` property once you get data back. This will automatically trigger a render.
-
-```js
-// Create an app
-let app = new Reef('#app', {
-	data: {
-		articles: []
-	},
-	template: function (props) {
-
-		// If there are no articles
-		if (!props.articles.length) {
-			return `<p>There are no articles.</p>`;
-		}
-
-		// Otherwise, show the articles
+// The template
+function template () {
 	return `
 		<ul>
-			${props.articles.map(function (article) {
-				return `<li>
-					<strong><a href="#">${article.title}.</a></strong>
-					${article.body}
-				</li>`;
-			}).join('')}
+			${todos.map(function (todo) {
+				return `<li>${todo}</li>`;
+			})}
 		</ul>`;
-	}
-});
+}
 
-// Fetch API data
-// Then, update the app data
-fetch('https://jsonplaceholder.typicode.com/posts').then(function (response) {
-	return response.json();
-}).then(function (data) {
-	app.data.articles = data;
-});
+// Create a component
+component('#app', template);
 ```
 
-**[Try create a template from asynchronous data on CodePen &rarr;](https://codepen.io/cferdinandi/pen/LYzyJar)**
-
-You might also choose to hard-code a _loading message_ in your markup.
+The resulting HTML would look like this.
 
 ```html
-<div id="app">Loading...</div>
+<ul>
+	<li>Swim</li>
+	<li>Climb</li>
+	<li>Jump</li>
+	<li>Play</li>
+</ul>
 ```
 
-
-
-## Debugging
-
-By default, Reef fails silently. You can put Reef into _debug mode_ to expose helpful error message in the Console tab of your browser's Developer Tools.
-
-Turn debug mode on or off with the `Reef.debug()` method. Pass in `true` to turn it on, and `false` to turn it off.
+Next, let's imagine that you remove an item from the middle of your array of `todos`.
 
 ```js
-// Turns debug mode on
-Reef.debug(true);
-
-// Turns debug mode off
-Reef.debug(false);
+// remove "Climb"
+todos.splice(1, 1);
 ```
 
-{{<mailchimp intro="true">}}
+Because of how Reef diffs the UI, rather than removing the list item (`li`) with `Climb` as it's text, it would update the text of `Climb` to `Jump`, and the text of `Jump` to `Play`, and _then_ remove the last list item from the UI.
+
+For larger and more complex UIs, this can be really inefficient.
+
+You can help Reef more effectively diff the UI by assigning unique IDs to elements that may change.
+
+```js
+// The template
+function template () {
+	return `
+		<ul>
+			${todos.map(function (todo) {
+				let id = todo.toLowerCase();
+				return `<li id="${id}">${todo}</li>`;
+			})}
+		</ul>`;
+}
+```
+
+Now, the starting HTML looks like this.
+
+```html
+<ul>
+	<li id="swim">Swim</li>
+	<li id="climb">Climb</li>
+	<li id="jump">Jump</li>
+	<li id="play">Play</li>
+</ul>
+```
+
+If you remove `Climb` from the `todos` array, Reef will now remove the `#climb` element rather than updating all of the other list items (and any content within them).
+
+
+
+## Reactive data and manual UI updates
+
+If you have a more simple UI component, you can combine the `store()` method with the browser-native `Element.addEventListener()` to manually update your UI instead of using the `render()` function.
+
+For example, imagine you have an element that displays the number of items in a shopping cart.
+
+```html
+Cart (<span id="cart-items">0</span>)
+```
+
+Rather than diffing the DOM every time that number of items changes, you can listen for data updates and use the `Element.textContent` property to manually update the UI. It will be faster and simpler.
+
+```js
+// Get the cart element
+let cartCount = document.querySelector('#cart-items');
+
+// Create a reactive store
+let cart = store([], 'cart');
+
+// Update how many cart items are displayed in the UI
+document.addEventListener('reef:store-cart', function () {
+	cartCount.textContent = cart.length;
+});
+
+// Add an item to the cart
+// The UI will automatically be updated
+cart.push({
+	item: 'T-Shirt',
+	size: 'M',
+	cost: 29
+});
+```
+
+
+
+## Native Web Components
+
+You can include native web components inside the HTML template strings that get rendered by Reef.
+
+Because web components control their own internal content, Reef _will_ modify element attributes, but will _not_ diff content within them.
+
+```js
+// Create a reactive store
+let data = store({
+	heading: 'My Counter',
+	emoji: '👋🎉'
+});
+
+// Create a template
+function template () {
+	let {heading, emoji} = data;
+	return `
+		<h1>${heading} ${emoji}</h1>
+		<count-up></count-up>`;
+}
+
+// Reef will NOT diff the content of the count-up element
+data.heading = 'Count it';
+```

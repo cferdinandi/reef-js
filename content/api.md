@@ -7,166 +7,174 @@ noIndex: false
 anchors: true
 ---
 
-Reef provides various options, methods, and custom events that you can hook into.
+Reef includes just three utility methods and a handful of lifecycle events.
 
 <div id="table-of-contents"></div>
 
-## Global Methods
+## store()
 
-Run these methods directly on the `Reef` object.
+Create a reactive data object. 
 
-### `Reef.debug()`
-
-Turn _debug mode_ on or off. Pass in `true` to turn debug mode on, and `false` to turn it off.
+It accepts an object (`{}`) or array (`[]`) as an argument. If no value is provided, it uses an empty object by default.
 
 ```js
-// Turn debug mode on
-Reef.debug(true);
+let {store} = reef;
 
-// Turn debug mode off
-Reef.debug(false);
+let data = store({
+	greeting: 'Hello',
+	name: 'World'
+});
 ```
 
-
-
-## Component Properties
-
-Access these properties on individual Reef components.
-
-### `Reef.prototype.data`
-
-Get a reactive copy of the app data.
+This emits a `reef:store` event on the `document` whenever a property is modified. The `event.detail` property contains the current value of the data.
 
 ```js
-let data = app.data;
-```
-
-### `Reef.prototype.dataCopy`
-
-Get a non-reactive, immutable copy of the app data.
-
-```js
-let copy = app.dataCopy;
-
-// This will not update the component data or cause a render
-copy.todos.push('Zzzz... take a nap!');
-```
-
-### `Reef.prototype.elem`
-
-The element the component is associated with. Returns a string or Node.
-
-```js
-let elem = app.elem;
-```
-
-
-
-## Component Methods
-
-Run these methods on individual Reef components.
-
-### `Reef.prototype.render()`
-
-Render a Reef component in the UI.
-
-```js
-let app = new Reef('#app', {
-	template: function () {
-		return 'Hello world!';
-	}
+// Listen for data changes
+document.addEventListener('reef:store', function (event) {
+	console.log('The data was updated!');
+	console.log(event.detail);
 });
 
-app.render();
+// Update the data
+data.greeting = 'Hi there';
 ```
 
-### `Reef.prototype.html()`
-
-Get the compiled HTML string for a component. Used for nesting components.
+You can customize the event name by passing in a second argument into the `store()` method. It gets added to the end of the `reef:store` event with a dash delimiter (`-`).
 
 ```js
-let app = new Reef('#app', {
-	template: function () {
-		return 'Hello world!';
-	}
-});
+let wizards = store([], 'wizards');
 
-app.html();
-```
-
-### `Reef.prototype.do()`
-
-Run a setter function. Pass in the name of the setter, and a comma-separate list of any arguments.
-
-```js
-let app = new Reef('#app', {
-	data: {
-		count: 0
-	},
-	template: function (props) {
-		return count;
-	},
-	setters: {
-		increase: function (props) {
-			props.count++;
-		}
-	}
-});
-
-// Run the increase setter
-app.do('increase');
+// A "reef:store-wizards" event gets emitted
+wizards.push('Merlin');
 ```
 
 
 
-## Events
+## render()
 
-Reef emits custom events throughout the lifecycle of a component or instance.
+Render an HTML template string into the UI. 
 
-All Reef events follow a `reef:{event-name}` pattern. Unless otherwise specified, all events are emitted on the `document` element. Event details can be accessed on the `event.detail` property.
+Pass in the element (or element selector) to render into, and an HTML string to render.
+
+Unlike the `Element.innerHTML` property, this sanitizes your HTML to reduce the risk of XSS attacks, and diffs the DOM, only updating the things that have changed.
 
 ```js
-// Listen for when Reef components are rendered into the DOM
+let {render} = reef;
+
+// Create a template
+function template () {
+	return '<p>Hello, world!</p>';
+}
+
+// Render it into the #app element
+render('#app', template());
+```
+
+To reduce the risk of XSS attacks, dangerous properties (including `on*` events) are removed from the HTML before rendering.
+
+```js
+// The onerror event is removed before rendering
+render('#app', '<p><img src="x" onerror="alert(1)"></p>');
+```
+
+If you want to allow `on*` event listeners, pass in `true` as an optional third argument.
+
+```js
+// Track clicks
+let n = 0;
+
+// Log clicks
+function log () {
+	n++;
+	console.log(`Clicked ${n} times.`);
+}
+
+// Render a button with an onclick event
+render('#app', `<button onclick="log()">Activate Me</button>`, true);
+```
+
+_**Note:** Do NOT do this if your template contains any third-party data. It can expose you to cross-site scripting (XSS) attacks._
+
+
+## component()
+
+Create a reactive component.
+
+Pass in the element (or element selector) to render into, and a template function that returns an HTML string to render.
+
+The `component()` method will render it into the UI, and automatically update the UI whenever your reactive data changes.
+
+```js
+let {store, component} = reef;
+
+// Create a reactive store
+let todos = store(['Swim', 'Climb', 'Jump', 'Play']);
+
+// Create a template
+function template () {
+	return `
+		<ul>
+			${todos.map(function (todo) {
+				return `<li>${todo}</li>`;
+			}).join('')}
+		</ul>`;
+}
+
+// Create a reactive component
+// It automatically renders into the UI
+component('#app', template);
+
+// Automatically adds a new list item to the UI
+todos.push('Take a nap... zzzz');
+```
+
+The `component()` method also accepts an object of `options` as a third argument.
+
+- `events` - If `true`, will allow inline events on the template.
+- `stores` - An array of custom event names to use for `store()` events.
+
+```js
+// Allow on* events
+component('#app', template, {events: true});
+
+// Use a custom event name
+let wizards = store([], 'wizards');
+component('#app', template, {stores: ['wizards']});
+
+// Use a custom name AND allow on* events
+component('#app', template, {stores: ['wizards'], events: true});
+```
+
+If you assign your component to a variable, you can stop reactive rendering with the `component.stop()` method, and start it again with the `component.start()` method.
+
+```js
+// Create a component
+let app = component('#app', template);
+
+// Stop reactive rendering
+app.stop();
+
+// Restart reactive rendering
+app.start();
+```
+
+
+
+## Lifecycle Events
+
+Reef emits custom events throughout the lifecycle of a component or reactive store.
+
+- **`reef:store`** is emitted when a reactive store is modified. The `event.detail` property contains the data object.
+- **`reef:start`** is emitted on a component element when kelp starts listening for reactive data changes.
+- **`reef:stop`** is emitted on a component element when kelp stops listening for reactive data changes.
+- **`reef:render`** is emitted on a component element when kelp renders a UI update.
+
+You can listen for Reef events with the `Element.addEventListener()` method.
+
+```js
+// Log whenever an element is rendered into
 document.addEventListener('reef:render', function (event) {
-	console.log(event.target); // The element it was rendered into
-	console.log(event.detail); // The component, and the data used for the render
-});
-```
-
-- **`reef:ready`** is emitted when Reef is loaded into the DOM and ready to use.
-- **`reef:initialized`** is emitted when a new Reef component is initialized.
-	+ `event.detail` - the instance
-- **`reef:before-render`** is emitted on an element before a new UI is rendered into it.
-	+ `event.target` - the element the component is being rendered into
-	+ `event.detail` - the `component` and the `data` at time of render
-	+ `event.preventDefault()` - stop the component from rendering
-- **`reef:render`** is emitted on an element after a new UI is rendered into it.
-	+ `event.target` - the element the component was rendered into
-	+ `event.detail` - the `component` and the `data` that was used for the render
-
-
-
-## Options
-
-All of the options for Reef.
-
-```js
-// This can be a string or a element
-let elem = '#app';
-
-new Reef(elem, {
-
-	// The component data
-	data: {},
-
-	// A data store to use
-	store: null,
-
-	// An object of setter methods
-	setters: {},
-
-	// An object of allowed event listeners
-	listeners: {}
-
+	console.log('The UI was just updated inside this element.');
+	console.log(event.target);
 });
 ```
