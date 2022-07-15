@@ -87,7 +87,7 @@ Compiled and production-ready code can be found in the `dist` directory. The `sr
 
 
 
-## How Reef works
+## Quick Start
 
 Reef is a tiny utility library with just three functions: `store()`, `render()`, and `component()`.
 
