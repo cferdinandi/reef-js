@@ -61,6 +61,55 @@ function template () {
 
 
 
+## Multiple Stores
+
+With Reef, you can create components that use data from multiple reactive stores.
+
+```js
+// Create multiple reactive store
+let data = store({
+	heading: 'My Todos',
+	emoji: '👋🎉'
+});
+let todos = store(['Swim', 'Climb', 'Jump', 'Play']);
+
+// Create a template
+function template () {
+	let {heading, emoji} = data;
+	return `
+		<h1>${heading} ${emoji}</h1>
+		<ul>
+			${todos.map(function (todo) {
+				return `<li id="${todo.toLowerCase().replaceAll(' ', '-')}">${todo}</li>`;
+			}).join('')}
+		</ul>`;
+}
+
+// Create a reactive component
+// It automatically renders into the UI
+component('#app', template);
+```
+
+If your stores use custom event names, pass them in as an array of store names with the `options.stores` property.
+
+```js
+// Create multiple reactive store
+let data = store({
+	heading: 'My Todos',
+	emoji: '👋🎉'
+}, 'heading');
+let todos = store(['Swim', 'Climb', 'Jump', 'Play'], 'todos');
+
+// ...
+
+// Create a reactive component with multiple stores
+component('#app', template, {stores: ['heading', 'todos']});
+```
+
+**[Try components with multiple stores on CodePen &rarr;](https://codepen.io/cferdinandi/pen/YzaZPMx?editors=1011)**
+
+
+
 
 ## Batch Rendering
 
@@ -169,6 +218,8 @@ Now, the starting HTML looks like this.
 ```
 
 If you remove `Climb` from the `todos` array, Reef will now remove the `#climb` element rather than updating all of the other list items (and any content within them).
+
+_**Tip:** you can easily [generate unique IDs using the `crypto.randomUUID()` method](https://gomakethings.com/generating-a-uuid-universally-unique-identifier-with-vanilla-js/)._
 
 
 
