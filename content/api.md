@@ -161,6 +161,8 @@ component('#app', template, {stores: ['wizards'], events: true});
 
 If you assign your component to a variable, you can stop reactive rendering with the `component.stop()` method, and start it again with the `component.start()` method.
 
+The `component.render()` method manually renders a component in the UI.
+
 ```js
 // Create a component
 let app = component('#app', template);
@@ -170,6 +172,9 @@ app.stop();
 
 // Restart reactive rendering
 app.start();
+
+// Manually render a component
+app.render();
 ```
 
 **[Try component methods on CodePen &rarr;](https://codepen.io/cferdinandi/pen/wvmoPyq?editors=1011)**
