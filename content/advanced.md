@@ -187,7 +187,7 @@ Next, let's imagine that you remove an item from the middle of your array of `to
 todos.splice(1, 1);
 ```
 
-Because of how Reef diffs the UI, rather than removing the list item (`li`) with `Climb` as it's text, it would update the text of `Climb` to `Jump`, and the text of `Jump` to `Play`, and _then_ remove the last list item from the UI.
+Because of how Reef diffs the UI, rather than removing the list item (`li`) with `Climb` as its text, it would update the text of `Climb` to `Jump`, and the text of `Jump` to `Play`, and _then_ remove the last list item from the UI.
 
 For larger and more complex UIs, this can be really inefficient.
 
