@@ -15,7 +15,7 @@ Reef includes just three utility methods and a handful of lifecycle events.
 
 Create a reactive data object. 
 
-It accepts an object (`{}`) or array (`[]`) as an argument. If no value is provided, it uses an empty object by default.
+It accepts any value as an argument. If no value is provided, it uses an empty object by default. If a string or number is used, it returns an object with the `value` property.
 
 ```js
 let {store} = reef;
@@ -24,6 +24,9 @@ let data = store({
 	greeting: 'Hello',
 	name: 'World'
 });
+
+// returns {value: 42}
+let num = store(42);
 ```
 
 This emits a `reef:store` event on the `document` whenever a property is modified. The `event.detail` property contains the current value of the data.
@@ -41,7 +44,7 @@ data.greeting = 'Hi there';
 
 **[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/zYWoPwy?editors=0011)**
 
-You can customize the event name by passing in a second argument into the `store()` method. It gets added to the end of the `reef:store` event with a dash delimiter (`-`).
+You can customize the event name by passing a second argument into the `store()` method. It gets added to the end of the `reef:store` event with a dash delimiter (`-`).
 
 ```js
 let wizards = store([], 'wizards');
@@ -181,6 +184,62 @@ app.render();
 
 
 
+## setter()
+
+Create a reactive data object that can only be updated [with _setter functions_](/advanced/#setter-functions) that you define at time of creation.
+
+It accepts the data as the first argument, and an object of _setter functions_ as the second argument. Setter functions automatically receive the data object as their first argument.
+
+```js
+let {setter} = reef;
+
+let todos = setter(['Swim', 'Climb', 'Jump', 'Play'], {
+
+	// Add an item to the todo list
+	add (todos, todo) {
+		todos.push(todo);
+	},
+
+	// Remove a todo item by name
+	delete (todos, todo) {
+		let index = todos.indexOf(todo);
+		if (index < 0) return;
+		todos.splice(index, 1);
+	}
+
+});
+```
+
+You can update your data by calling one of your setter methods directly on the `setter` object. Trying to update the data directly will not work.
+
+```js
+// This will update the data
+todos.add('Take a nap');
+todos.delete('Jump');
+
+// This WILL not
+todos.push('Do it again tomorrow');
+```
+
+**[Try setter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/oNaYoWV?editors=0011)**
+
+The `setter()` method creates a `store` under-the-hood, and emits a `reef:store` event on the `document` whenever a property is modified with a setter function.
+
+You can customize the event name by passing a third argument into the `setter()` method. It gets added to the end of the `reef:store` event with a dash delimiter (`-`).
+
+```js
+let todos = setter([], {
+	add (todos, todo) {
+		todos.push(todo);
+	},
+}, 'todos');
+
+// A "reef:store-todos" event gets emitted
+todos.add('Go to the store');
+```
+
+
+
 ## Lifecycle Events
 
 Reef emits custom events throughout the lifecycle of a component or reactive store.
@@ -188,6 +247,7 @@ Reef emits custom events throughout the lifecycle of a component or reactive sto
 - **`reef:store`** is emitted when a reactive store is modified. The `event.detail` property contains the data object.
 - **`reef:start`** is emitted on a component element when reef starts listening for reactive data changes.
 - **`reef:stop`** is emitted on a component element when reef stops listening for reactive data changes.
+- **`reef:before-render`** is emitted on a component element before it renders a UI update. The `event.preventDefault()` method cancels the render.
 - **`reef:render`** is emitted on a component element when reef renders a UI update.
 
 You can listen for Reef events with the `Element.addEventListener()` method.

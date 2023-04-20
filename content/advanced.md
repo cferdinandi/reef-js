@@ -223,6 +223,51 @@ _**Tip:** you can easily [generate unique IDs using the `crypto.randomUUID()` me
 
 
 
+## Setter Functions
+
+Reef’s `store()` method makes updating your UI as simple as updating an object property. But as your app scales, you may find that keeping track of what’s updating state and causing changes to the UI becomes harder to track and maintain.
+
+Setter functions provide you with a way to control how data flows in and out of `store` object. Use the `setter()` method to create a `store` that can only be updated with _setter functions_ that you define at time of creation. 
+
+Pass in your data and an object of functions as arguments. Setter functions automatically receive the data object as their first argument.
+
+```js
+let {setter} = reef;
+
+let todos = setter(['Swim', 'Climb', 'Jump', 'Play'], {
+
+	// Add an item to the todo list
+	add (todos, todo) {
+		todos.push(todo);
+	},
+
+	// Remove a todo item by name
+	delete (todos, todo) {
+		let index = todos.indexOf(todo);
+		if (index < 0) return;
+		todos.splice(index, 1);
+	}
+
+});
+```
+
+You can update your data by calling one of your setter methods directly on the `setter` object. Trying to update the data directly will not work.
+
+This protects your component or store data from unwanted changes. The data property always returns an immutable copy.
+
+```js
+// This will update the data
+todos.add('Take a nap');
+todos.delete('Jump');
+
+// This WILL not
+todos.push('Do it again tomorrow');
+```
+
+**[Try setter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/oNaYoWV?editors=0011)**
+
+
+
 ## Reactive data and manual UI updates
 
 If you have a more simple UI component, you can combine the `store()` method with the browser-native `Element.addEventListener()` to manually update your UI instead of using the `render()` function.
