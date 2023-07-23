@@ -223,6 +223,71 @@ _**Tip:** you can easily [generate unique IDs using the `crypto.randomUUID()` me
 
 
 
+## Events
+
+The preferred way to listen to events in a Reef template is _event delegation_.
+
+Run the `addEventListener()` method on the element you're rendering your template into, and filter out events that occur on elements you don't care about.
+
+```js
+// The count
+let count = store(0);
+
+// Increase the count by 1 when the [data-count] button is clicked
+function increase (event) {
+	if (!event.target.matches('[data-count]')) return;
+	count.value++;
+}
+
+// The template
+function template () {
+	return `<button data-count>Clicked ${count.value} times</button>`;
+}
+
+// Render the component
+let app = document.querySelector('#app');
+component(app, template);
+
+// Listen for events
+app.addEventListener('click', increase);
+```
+
+**[Try event delegation on CodePen &rarr;](https://codepen.io/cferdinandi/pen/VwVBgNB)**
+
+By default, `on*` events on elements are removed when rendering to reduce the risk of XSS attacks.
+
+If you'd prefer to attach events directly to elements in your template using `on*` events, you must register them with the `listeners()` method, and pass the `listeners` object into your `component` as the `events` option.
+
+Under-the-hood, Reef will use event delegation to handle your events, and remove any event handlers that aren't registered.
+
+```js
+let {store, component, listeners} = reef;
+
+// The count
+let count = store(0);
+
+// Increase the count by 1
+function increase () {
+	count.value++;
+}
+
+// The template
+function template () {
+	return `<button onclick="increase()">Clicked ${count.value} times</button>`;
+}
+
+// Register event listener methods
+let events = listeners({increase});
+
+// Render the component
+component('#app', template, {events});
+```
+
+**[Try event binding on CodePen &rarr;](https://codepen.io/cferdinandi/pen/yLQqZdJ?editors=1011)**
+
+
+
+
 ## Setter Functions
 
 Reef’s `store()` method makes updating your UI as simple as updating an object property. But as your app scales, you may find that keeping track of what’s updating state and causing changes to the UI becomes harder to track and maintain.
