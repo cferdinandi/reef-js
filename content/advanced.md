@@ -256,12 +256,12 @@ app.addEventListener('click', increase);
 
 By default, `on*` events on elements are removed when rendering to reduce the risk of XSS attacks.
 
-If you'd prefer to attach events directly to elements in your template using `on*` events, you must register them with the `listeners()` method, and pass the `listeners` object into your `component` as the `events` option.
+If you'd prefer to attach events directly to elements in your template using `on*` events, you must register them by passing an object of named event listener callback functions into your `component` as the `events` option.
 
-Under-the-hood, Reef will use event delegation to handle your events, and remove any event handlers that aren't registered.
+Under-the-hood, Reef will remove any event handlers that aren't registered.
 
 ```js
-let {store, component, listeners} = reef;
+let {store, component} = reef;
 
 // The count
 let count = store(0);
@@ -277,7 +277,7 @@ function template () {
 }
 
 // Register event listener methods
-let events = listeners({increase});
+let events = {increase};
 
 // Render the component
 component('#app', template, {events});

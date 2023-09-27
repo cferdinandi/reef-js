@@ -81,8 +81,6 @@ render('#app', template());
 
 To reduce the risk of XSS attacks, dangerous properties (including `on*` events) are removed from the HTML before rendering. 
 
-If you want to allow `on*` event listeners, you need to [register events with the `listeners()` method](#listeners).
-
 ```js
 // The onerror event is removed before rendering
 render('#app', '<p><img src="x" onerror="alert(1)"></p>');
@@ -90,18 +88,12 @@ render('#app', '<p><img src="x" onerror="alert(1)"></p>');
 
 **[Try HTML sanitization on CodePen &rarr;](https://codepen.io/cferdinandi/pen/bGvBYrr)**
 
+If you want to allow `on*` event listeners, pass an object of named `events` listener functions into `render()` function as the third argument. 
 
-
-## listeners()
-
-Register event listener events to be used in your HTML template. 
-
-Pass an object of named listener functions into the `listeners()` object, then pass the `listeners()` object into your `render()` function as the third argument.
-
-Any `on*` events that are _not_ registered with a `listeners()` object and passed into your `render()` function are removed to reduce the risk of XSS attacks.
+Any `on*` events that are _not_ passed into your `render()` function are removed to reduce the risk of XSS attacks.
 
 ```js
-let {render, listeners} = reef;
+let {render} = reef;
 
 // Track clicks
 let count = 0;
@@ -120,10 +112,10 @@ function warn () {
 }
 
 // Register event handlers
-let events = listeners({log});
+let events = {log};
 
 // Render a button with an onclick event
-render('#app', `<button onclick="log()">Activate Me</button><button onclick="warn()">This won't work</button>`, events);
+render('#app', `<button onclick="log()">Activate Me</button> <button onclick="warn()">This won't work</button>`, {events});
 ```
 
 **[Try event listener binding on CodePen &rarr;](https://codepen.io/cferdinandi/pen/JjLbOyQ?editors=1011)**
@@ -168,20 +160,19 @@ todos.push('Take a nap... zzzz');
 
 The `component()` method also accepts an object of `options` as a third argument.
 
-- `events` - [A `listeners()` object](#listeners) for `on*` event binding.
+- `events` - An object of allowed event binding callback functions.
 - `stores` - An array of custom event names to use [for `store()` events](#store).
 
 ```js
 // Allow registered on* events
-let events = listeners({reverseWizards});
-component('#app', template, {events});
+component('#app', template, {events: reverseWizards});
 
 // Use a custom event name
 let wizards = store([], 'wizards');
 component('#app', template, {stores: ['wizards']});
 
 // Use a custom name AND allow register on* events
-component('#app', template, {stores: ['wizards'], events});
+component('#app', template, {stores: ['wizards'], events: reverseWizards});
 ```
 
 **[Try component options on CodePen &rarr;](https://codepen.io/cferdinandi/pen/JjLbOOg)**
