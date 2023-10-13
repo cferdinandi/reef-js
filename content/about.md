@@ -32,7 +32,19 @@ The code is available under the [MIT License](/mit).
 
 You can find all available versions [under releases](https://github.com/cferdinandi/reef/releases).
 
-**Version 12 (current version) shifts to small, decoupled utility functions.**
+**Version 13 (current version) updates naming and brings rendering improvements.**
+
+- The `store()` function has been renamed `signal()` (and the `reef:store` event has been renamed `reef:signal`) to better align with industry norms.
+- The `reef:signal` event passes along the name and value of the updated property rather than the entire data object.
+- The `setter()` function has been renamed `store()` to more accurately describe what it is and does.
+- The `listeners()` function has been removed, as it was deprecated in v12.
+- When using `on*` event listeners, you can no longer pass in arguments. This was done for XSS attack/security reasons.
+- A new `focus()` function was added to improve accessibility when rendering UIs.
+- Changes were made to the `render()` function's DOM diffing to improve performance.
+- A `[reef-ignore]` attribute was added that can be used to exclude specific template elements from DOM diffing after initial render.
+- Added support for a `[key]` attribute to more easily ID list elements for more efficient DOM diffing.
+
+**[Version 12](/v12) shifts to small, decoupled utility functions.**
 
 - Removed `new Reef()` constructor and component-focused API.
 - Added three small utility functions: `store()`, `render()`, and `component()`.

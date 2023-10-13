@@ -61,17 +61,17 @@ function template () {
 
 
 
-## Multiple Stores
+## Multiple Signals
 
-With Reef, you can create components that use data from multiple reactive stores.
+With Reef, you can create components that use data from multiple reactive signals.
 
 ```js
-// Create multiple reactive store
-let data = store({
+// Create multiple reactive signals
+let data = signal({
 	heading: 'My Todos',
 	emoji: '👋🎉'
 });
-let todos = store(['Swim', 'Climb', 'Jump', 'Play']);
+let todos = signal(['Swim', 'Climb', 'Jump', 'Play']);
 
 // Create a template
 function template () {
@@ -86,27 +86,26 @@ function template () {
 }
 
 // Create a reactive component
-// It automatically renders into the UI
 component('#app', template);
 ```
 
-If your stores use custom event names, pass them in as an array of store names with the `options.stores` property.
+If your signals use custom event names, pass them in as an array of signals names with the `options.signals` property.
 
 ```js
-// Create multiple reactive store
-let data = store({
+// Create multiple named signals
+let data = signal({
 	heading: 'My Todos',
 	emoji: '👋🎉'
 }, 'heading');
-let todos = store(['Swim', 'Climb', 'Jump', 'Play'], 'todos');
+let todos = signal(['Swim', 'Climb', 'Jump', 'Play'], 'todos');
 
 // ...
 
-// Create a reactive component with multiple stores
-component('#app', template, {stores: ['heading', 'todos']});
+// Create a reactive component with multiple named signals
+component('#app', template, {signals: ['heading', 'todos']});
 ```
 
-**[Try components with multiple stores on CodePen &rarr;](https://codepen.io/cferdinandi/pen/YzaZPMx?editors=1011)**
+**[Try components with multiple signals on CodePen &rarr;](https://codepen.io/cferdinandi/pen/YzaZPMx?editors=1011)**
 
 
 
@@ -145,7 +144,7 @@ document.addEventListener('reef:render', function (event) {
 
 
 
-## More efficient DOM diffing with IDs
+## More efficient DOM diffing with IDs and keys
 
 Unique IDs can help Reef more effectively handle UI updates.
 
@@ -219,19 +218,67 @@ Now, the starting HTML looks like this.
 
 If you remove `Climb` from the `todos` array, Reef will now remove the `#climb` element rather than updating all of the other list items (and any content within them).
 
-_**Tip:** you can easily [generate unique IDs using the `crypto.randomUUID()` method](https://gomakethings.com/generating-a-uuid-universally-unique-identifier-with-vanilla-js/)._
+### Using a key instead of an ID
+
+Sometimes generating valid IDs is difficult. 
+
+For example, imagine that some of the `todos` contain multiple words.
+
+```js
+let todos = store(['Swim', 'Climb', 'Jump', 'Play', 'Go to the store']);
+```
+
+The last item would generate a list item that looks like this...
+
+```html
+<li id="Go to the store">Go to the store</li>
+```
+
+That's not a valid ID. To get around that, we can instead use a `[key]` attribute, with the `todo` item as its value.
+
+```js
+// The template
+function template () {
+	return `
+		<ul>
+			${todos.map(function (todo) {
+				return `<li key="${todo}">${todo}</li>`;
+			})}
+		</ul>`;
+}
+```
+
+Reef will use the `[key]` attribute as a unique identified within the parent element when diffing.
+
+### Don't use an `index` as the ID or key value
+
+One common pitfall developers encounter with IDs and keys is using an array `index` as the value.
+
+```js
+// The template
+function template () {
+	return `
+		<ul>
+			${todos.map(function (todo, index) {
+				return `<li key="${index}">${todo}</li>`;
+			})}
+		</ul>`;
+}
+```
+
+Because the index changes when you add, remove, or reorder items in the array, they do not help uniquely identify elements and will have no effect on diffing performance.
 
 
 
 ## Events
 
-The preferred way to listen to events in a Reef template is _event delegation_.
+The preferred way to listen for user interaction events in a Reef template is _event delegation_.
 
 Run the `addEventListener()` method on the element you're rendering your template into, and filter out events that occur on elements you don't care about.
 
 ```js
 // The count
-let count = store(0);
+let count = signal(0);
 
 // Increase the count by 1 when the [data-count] button is clicked
 function increase (event) {
@@ -261,10 +308,8 @@ If you'd prefer to attach events directly to elements in your template using `on
 Under-the-hood, Reef will remove any event handlers that aren't registered.
 
 ```js
-let {store, component} = reef;
-
 // The count
-let count = store(0);
+let count = signal(0);
 
 // Increase the count by 1
 function increase () {
@@ -276,11 +321,8 @@ function template () {
 	return `<button onclick="increase()">Clicked ${count.value} times</button>`;
 }
 
-// Register event listener methods
-let events = {increase};
-
 // Render the component
-component('#app', template, {events});
+component('#app', template, {events: {increase}});
 ```
 
 **[Try event binding on CodePen &rarr;](https://codepen.io/cferdinandi/pen/yLQqZdJ?editors=1011)**
@@ -288,18 +330,19 @@ component('#app', template, {events});
 
 
 
-## Setter Functions
+## Stores
 
-Reef’s `store()` method makes updating your UI as simple as updating an object property. But as your app scales, you may find that keeping track of what’s updating state and causing changes to the UI becomes harder to track and maintain.
+Reef’s `signal()` method makes updating your UI as simple as updating an object property. But as your app scales, you may find that keeping track of what’s updating state and causing changes to the UI becomes harder to track and maintain.
 
-Setter functions provide you with a way to control how data flows in and out of `store` object. Use the `setter()` method to create a `store` that can only be updated with _setter functions_ that you define at time of creation. 
+Stores and action functions provide you with a way to control how data flows in and out of `signal` object. Use the `store()` method to create a `signal` that can only be updated with _action functions_ that you define at time of creation. 
 
-Pass in your data and an object of functions as arguments. Setter functions automatically receive the data object as their first argument.
+Pass in your data and an object of functions as arguments. Action functions automatically receive the data object as their first argument.
 
 ```js
-let {setter} = reef;
+let {store} = reef;
 
-let todos = setter(['Swim', 'Climb', 'Jump', 'Play'], {
+// Create a store with `add()` and `delete()` actions
+let todos = store(['Swim', 'Climb', 'Jump', 'Play'], {
 
 	// Add an item to the todo list
 	add (todos, todo) {
@@ -316,9 +359,9 @@ let todos = setter(['Swim', 'Climb', 'Jump', 'Play'], {
 });
 ```
 
-You can update your data by calling one of your setter methods directly on the `setter` object. Trying to update the data directly will not work.
+You can update your data by calling one of your action methods directly on the `store()` object. Updating the data directly will not work.
 
-This protects your component or store data from unwanted changes. The data property always returns an immutable copy.
+This protects your component or signal data from unwanted changes. The store always returns an immutable copy of your data.
 
 ```js
 // This will update the data
@@ -329,13 +372,13 @@ todos.delete('Jump');
 todos.push('Do it again tomorrow');
 ```
 
-**[Try setter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/oNaYoWV?editors=0011)**
+**[Try store action functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/oNaYoWV?editors=0011)**
 
 
 
 ## Reactive data and manual UI updates
 
-If you have a more simple UI component, you can combine the `store()` method with the browser-native `Element.addEventListener()` to manually update your UI instead of using the `render()` function.
+If you have a more simple UI component, you can combine the `signal()` method with the `Element.addEventListener()` to manually update your UI instead of using the `render()` function.
 
 For example, imagine you have an element that displays the number of items in a shopping cart.
 
@@ -350,10 +393,10 @@ Rather than diffing the DOM every time that number of items changes, you can lis
 let cartCount = document.querySelector('#cart-items');
 
 // Create a reactive store
-let cart = store([], 'cart');
+let cart = signal([], 'cart');
 
 // Update how many cart items are displayed in the UI
-document.addEventListener('reef:store-cart', function () {
+document.addEventListener('reef:signal-cart', function () {
 	cartCount.textContent = cart.length;
 });
 
@@ -394,3 +437,43 @@ function template () {
 // Reef will NOT diff the content of the count-up element
 data.heading = 'Count it';
 ```
+
+
+
+## Ignoring Elements
+
+Often, using browser native features or manual DOM manipulation scripts is easier than managing every aspect of a UI in a `signal()`.
+
+For example, the `details` and `summary` elements provide browser-native disclosure functionality without any JavaScript.
+
+```js
+let name = signal('friend');
+
+function template () {
+	return `
+		<h1>Hello ${name.value}</h1>
+		<details>
+			<summary><strong>Tap me to open</strong></summary>
+			I'm open now!
+		</details>`;
+}
+```
+
+When a `details` element is expanded, it has an `[open]` attribute on it. If someone interacted with that element to expand it, and then a render event happened, Reef would notice the `[open]` attribute not present in the template and remove it, collapsing it.
+
+You can prevent Reef from diffing an element by adding the `[reef-ignore]` attribute to it.
+
+```js
+let name = signal('friend');
+
+function template () {
+	return `
+		<h1>Hello ${name.value}</h1>
+		<details reef-ignore>
+			<summary><strong>Tap me to open</strong></summary>
+			I'm open now!
+		</details>`;
+}
+```
+
+Reef will still render the element, but it won't modify any attributes or content after its initially rendered into the UI.

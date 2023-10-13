@@ -1,5 +1,5 @@
 ---
-title: "API Reference"
+title: API Reference
 date: 2018-01-24T11:48:20-05:00
 draft: false
 noTitle: false
@@ -7,35 +7,35 @@ noIndex: false
 anchors: true
 ---
 
-Reef includes just three utility methods and a handful of lifecycle events.
+Reef includes just five utility methods and a handful of lifecycle events.
 
 <div id="table-of-contents"></div>
 
-## store()
+## signal()
 
 Create a reactive data object. 
 
-It accepts any value as an argument. If no value is provided, it uses an empty object by default. If a string or number is used, it returns an object with the `value` property.
+It accepts any value as an argument. If no value is provided, it uses an empty object by default. If a primitive (like a string or number) is used, it returns an object with the `value` property.
 
 ```js
-let {store} = reef;
+let {signal} = reef;
 
-let data = store({
+let data = signal({
 	greeting: 'Hello',
 	name: 'World'
 });
 
 // returns {value: 42}
-let num = store(42);
+let num = signal(42);
 ```
 
-This emits a `reef:store` event on the `document` whenever a property is modified. The `event.detail` property contains the current value of the data.
+This emits a `reef:signal` event on the `document` whenever a property is modified. The `event.detail` property contains the `prop` and `value` that were updated, and `action` done to the data (either `set` or `delete`).
 
 ```js
 // Listen for data changes
-document.addEventListener('reef:store', function (event) {
+document.addEventListener('reef:signal', function (event) {
 	console.log('The data was updated!');
-	console.log(event.detail);
+	let {prop, value, action} = event.detail;
 });
 
 // Update the data
@@ -44,12 +44,12 @@ data.greeting = 'Hi there';
 
 **[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/zYWoPwy?editors=0011)**
 
-You can customize the event name by passing a second argument into the `store()` method. It gets added to the end of the `reef:store` event with a dash delimiter (`-`).
+You can customize the event name by passing a second argument into the `signal()` method. It gets added to the end of the `reef:signal` event with a dash delimiter (`-`).
 
 ```js
-let wizards = store([], 'wizards');
+let wizards = signal([], 'wizards');
 
-// A "reef:store-wizards" event gets emitted
+// A "reef:signal-wizards" event gets emitted
 wizards.push('Merlin');
 ```
 
@@ -61,9 +61,10 @@ wizards.push('Merlin');
 
 Render an HTML template string into the UI. 
 
-Pass in the element (or element selector) to render into, and an HTML string to render.
+Pass in the element (or element selector) to render into, and an HTML string to render. Unlike the `Element.innerHTML` property, this... 
 
-Unlike the `Element.innerHTML` property, this sanitizes your HTML to reduce the risk of XSS attacks, and diffs the DOM, only updating the things that have changed.
+1. Sanitizes your HTML to reduce the risk of XSS attacks. 
+2. Diffs the DOM, only updating the things that have changed.
 
 ```js
 let {render} = reef;
@@ -93,8 +94,6 @@ If you want to allow `on*` event listeners, pass an object of named `events` lis
 Any `on*` events that are _not_ passed into your `render()` function are removed to reduce the risk of XSS attacks.
 
 ```js
-let {render} = reef;
-
 // Track clicks
 let count = 0;
 
@@ -111,16 +110,15 @@ function warn () {
 	console.warn(`Clicked ${count} times.`);
 }
 
-// Register event handlers
-let events = {log};
-
 // Render a button with an onclick event
-render('#app', `<button onclick="log()">Activate Me</button> <button onclick="warn()">This won't work</button>`, {events});
+render('#app', `<button onclick="log()">Activate Me</button> <button onclick="warn()">This won't work</button>`, {log});
 ```
 
 **[Try event listener binding on CodePen &rarr;](https://codepen.io/cferdinandi/pen/JjLbOyQ?editors=1011)**
 
-_**Note:** this is only needed if you're using `on*` events directly on your elements. If you're using event delegation outside of your template, it's not needed._
+<div class="callout">
+	👋 <strong>Heads up!</strong> This is only needed if you're using <code>on*</code> events directly on your elements. If you're using event delegation, you can skip it.
+</div>
 
 
 
@@ -130,13 +128,13 @@ Create a reactive component.
 
 Pass in the element (or element selector) to render into, and a template function that returns an HTML string to render.
 
-The `component()` method will render it into the UI, and automatically update the UI whenever your reactive data changes.
+The `component()` method will render it into the UI, and automatically update the UI whenever a `reef:signal` event is emitted.
 
 ```js
-let {store, component} = reef;
+let {signal, component} = reef;
 
-// Create a reactive store
-let todos = store(['Swim', 'Climb', 'Jump', 'Play']);
+// Create a signal
+let todos = signal(['Swim', 'Climb', 'Jump', 'Play']);
 
 // Create a template
 function template () {
@@ -152,7 +150,7 @@ function template () {
 // It automatically renders into the UI
 component('#app', template);
 
-// Automatically adds a new list item to the UI
+// Automatically render a new list item in the UI
 todos.push('Take a nap... zzzz');
 ```
 
@@ -160,19 +158,19 @@ todos.push('Take a nap... zzzz');
 
 The `component()` method also accepts an object of `options` as a third argument.
 
-- `events` - An object of allowed event binding callback functions.
-- `stores` - An array of custom event names to use [for `store()` events](#store).
+- `events` - An object of allowed event callback functions.
+- `signals` - An array of custom event names to use [for `signal()` events](#signal).
 
 ```js
 // Allow registered on* events
-component('#app', template, {events: reverseWizards});
+component('#app', template, {events: {reverseWizards}});
 
 // Use a custom event name
-let wizards = store([], 'wizards');
-component('#app', template, {stores: ['wizards']});
+let wizards = signal([], 'wizards');
+component('#app', template, {signals: ['wizards']});
 
 // Use a custom name AND allow register on* events
-component('#app', template, {stores: ['wizards'], events: reverseWizards});
+component('#app', template, {signals: ['wizards'], events: {reverseWizards}});
 ```
 
 **[Try component options on CodePen &rarr;](https://codepen.io/cferdinandi/pen/JjLbOOg)**
@@ -199,16 +197,17 @@ app.render();
 
 
 
-## setter()
+## store()
 
-Create a reactive data object that can only be updated [with _setter functions_](/advanced/#setter-functions) that you define at time of creation.
+Create a `signal()` object that can only be updated [with _action functions_](/advanced/#stores) that you define at time of creation.
 
-It accepts the data as the first argument, and an object of _setter functions_ as the second argument. Setter functions automatically receive the data object as their first argument.
+It accepts the data as the first argument, and an object of _action functions_ as the second argument. Action functions automatically receive the data object as their first argument.
 
 ```js
-let {setter} = reef;
+let {store} = reef;
 
-let todos = setter(['Swim', 'Climb', 'Jump', 'Play'], {
+// Create a store with `add()` and `delete()` actions
+let todos = store(['Swim', 'Climb', 'Jump', 'Play'], {
 
 	// Add an item to the todo list
 	add (todos, todo) {
@@ -225,7 +224,7 @@ let todos = setter(['Swim', 'Climb', 'Jump', 'Play'], {
 });
 ```
 
-You can update your data by calling one of your setter methods directly on the `setter` object. Trying to update the data directly will not work.
+You can update your data by calling one of your action methods directly on the `store()` object. Trying to update the data directly will not work.
 
 ```js
 // This will update the data
@@ -236,20 +235,20 @@ todos.delete('Jump');
 todos.push('Do it again tomorrow');
 ```
 
-**[Try setter functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/oNaYoWV?editors=0011)**
+**[Try store actions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/oNaYoWV?editors=0011)**
 
-The `setter()` method creates a `store` under-the-hood, and emits a `reef:store` event on the `document` whenever a property is modified with a setter function.
+The `store()` method creates a `signal()` under-the-hood, and emits a `reef:signal` event on the `document` whenever a property is modified with an action function.
 
-You can customize the event name by passing a third argument into the `setter()` method. It gets added to the end of the `reef:store` event with a dash delimiter (`-`).
+You can customize the event name by passing a third argument into the `store()` method. It gets added to the end of the `reef:signal` event with a dash delimiter (`-`).
 
 ```js
-let todos = setter([], {
+let todos = store([], {
 	add (todos, todo) {
 		todos.push(todo);
 	},
 }, 'todos');
 
-// A "reef:store-todos" event gets emitted
+// A "reef:signal-todos" event gets emitted
 todos.add('Go to the store');
 ```
 
@@ -257,12 +256,12 @@ todos.add('Go to the store');
 
 ## Lifecycle Events
 
-Reef emits custom events throughout the lifecycle of a component or reactive store.
+Reef emits custom events throughout the lifecycle of a reactive signal or component.
 
-- **`reef:store`** is emitted when a reactive store is modified. The `event.detail` property contains the data object.
+- **`reef:signal`** is emitted when a signal is modified. The `event.detail` property contains the `prop` and `value` that were changed, and the `action` that was done to the data.
 - **`reef:start`** is emitted on a component element when reef starts listening for reactive data changes.
 - **`reef:stop`** is emitted on a component element when reef stops listening for reactive data changes.
-- **`reef:before-render`** is emitted on a component element before it renders a UI update. The `event.preventDefault()` method cancels the render.
+- **`reef:before-render`** is emitted on a component element before it renders a UI update. Running the `event.preventDefault()` method will cancel the render.
 - **`reef:render`** is emitted on a component element when reef renders a UI update.
 
 You can listen for Reef events with the `Element.addEventListener()` method.
