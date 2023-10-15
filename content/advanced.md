@@ -504,3 +504,5 @@ function template () {
 ```
 
 Reef will still render the element, but it won't modify any attributes or content after its initially rendered into the UI.
+
+**[Try ignoring elements on CodePen &rarr;](#)**
