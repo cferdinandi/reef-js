@@ -1,23 +1,16 @@
 ---
-title: "Getting Started"
+title: Getting Started
 date: 2018-01-24T11:48:20-05:00
 draft: false
-noTitle: false
-noIndex: false
 anchors: true
 ---
-
-<!-- Reef is just three utility functions that you can use with vanilla JS. Let's look at how to get started. -->
 
 Let's look at how to get started with Reef.
 
 <div id="table-of-contents"></div>
 
-<!-- Let's look at [how to install Reef](#installation) (it's as simple as loading a JS file), and [a quick intro to how it works](#how-reef-works). -->
 
-
-
-## Installation
+## Install
 
 Reef works without any build step.
 
@@ -25,7 +18,7 @@ Reef works without any build step.
 
 ```html
 <!-- Get the latest major version -->
-<script src="https://cdn.jsdelivr.net/npm/reefjs@12/dist/reef.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reefjs@13/dist/reef.min.js"></script>
 ```
 
 With the global script, you can call the API methods on the `reef` object, or destructure them into their own variables.
@@ -48,7 +41,7 @@ Reef uses semantic versioning. You can grab a major, minor, or patch version fro
 Reef also supports modern browsers and module bundlers (like Rollup, Webpack, Snowpack, and so on) using the ES modules `import` syntax. Use the `.es` version.
 
 ```js
-import {store, component} from 'https://cdn.jsdelivr.net/npm/reefjs@12/dist/reef.es.min.js';
+import {store, component} from 'https://cdn.jsdelivr.net/npm/reefjs@13/dist/reef.es.min.js';
 ```
 
 **NPM**
@@ -70,7 +63,7 @@ import {store, component} from 'reefjs';
 If you use NodeJS, you can import Reef using the `require()` method with the `.cjs` version.
 
 ```js
-let {store, component} = require('https://cdn.jsdelivr.net/npm/reefjs@12/dist/reef.cjs.min.js');
+let {store, component} = require('https://cdn.jsdelivr.net/npm/reefjs@13/dist/reef.cjs.min.js');
 ```
 
 **Direct Download**
@@ -89,20 +82,20 @@ Compiled and production-ready code can be found in the `dist` directory. The `sr
 
 ## Quick Start
 
-Reef is a tiny utility library with just three functions: `store()`, `render()`, and `component()`.
+Reef is a tiny utility library with three core functions: `signal()`, `render()`, and `component()`.
 
-**Create reactive data with the `store()` method.** Pass in an array or object, and Reef will emit a `reef:store` event whenever a property is updated.
+**Create reactive data with the `signal()` method.** Pass in an array or object, and Reef will emit a `reef:signal` event whenever a property is updated.
 
 ```js
-let {store} = reef;
+let {signal} = reef;
 
-// Create a reactive data store
-let data = store({
+// Create a signal
+let data = signal({
 	greeting: 'Hello',
 	name: 'World'
 });
 
-// Emits a reef:store event
+// Emits a reef:signal event
 data.greeting = 'Hi';
 ```
 
@@ -112,16 +105,16 @@ data.greeting = 'Hi';
 let {render} = reef;
 
 let name = 'world';
-render('#app', `<p>Hello, ${name}!</p>`);
+render('#app', `<h1>Hello, ${name}!</h1>`);
 ```
 
-**Automatically update your UI when data changes with the `component()` method.** Pass in an element or element selector and a template function. Reef will listen for `reef:store` events and and run the `render()` function.
+**Automatically update your UI when data changes with the `component()` method.** Pass in an element or element selector and a template function. Reef will listen for `reef:signal` events and and automatically run the `render()` function.
 
 ```js
-let {store, component} = reef;
+let {signal, component} = reef;
 
-// Create a reactive data store
-let data = store({
+// Create a signal
+let data = signal({
 	greeting: 'Hello',
 	name: 'World'
 });
