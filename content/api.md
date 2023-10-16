@@ -42,7 +42,7 @@ document.addEventListener('reef:signal', function (event) {
 data.greeting = 'Hi there';
 ```
 
-**[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/zYWoPwy?editors=0011)**
+**[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/NWeVBpB?editors=1111)**
 
 You can customize the event name by passing a second argument into the `signal()` method. It gets added to the end of the `reef:signal` event with a dash delimiter (`-`).
 
@@ -53,7 +53,7 @@ let wizards = signal([], 'wizards');
 wizards.push('Merlin');
 ```
 
-**[Try custom event names on CodePen &rarr;](https://codepen.io/cferdinandi/pen/QWmGOgO?editors=0011)**
+**[Try custom event names on CodePen &rarr;](https://codepen.io/cferdinandi/pen/JjwqBNX?editors=1111)**
 
 
 
@@ -78,7 +78,7 @@ function template () {
 render('#app', template());
 ```
 
-**[Try rendering HTML on CodePen &rarr;](https://codepen.io/cferdinandi/pen/abYBVwx)**
+**[Try rendering HTML on CodePen &rarr;](https://codepen.io/cferdinandi/pen/BavePRx)**
 
 To reduce the risk of XSS attacks, dangerous properties (including `on*` events) are removed from the HTML before rendering. 
 
@@ -87,7 +87,7 @@ To reduce the risk of XSS attacks, dangerous properties (including `on*` events)
 render('#app', '<p><img src="x" onerror="alert(1)"></p>');
 ```
 
-**[Try HTML sanitization on CodePen &rarr;](https://codepen.io/cferdinandi/pen/bGvBYrr)**
+**[Try HTML sanitization on CodePen &rarr;](https://codepen.io/cferdinandi/pen/abPrjwv)**
 
 If you want to allow `on*` event listeners, pass an object of named `events` listener functions into `render()` function as the third argument. 
 
@@ -114,7 +114,7 @@ function warn () {
 render('#app', `<button onclick="log()">Activate Me</button> <button onclick="warn()">This won't work</button>`, {log});
 ```
 
-**[Try event listener binding on CodePen &rarr;](https://codepen.io/cferdinandi/pen/JjLbOyQ?editors=1011)**
+**[Try event listener binding on CodePen &rarr;](https://codepen.io/cferdinandi/pen/mdaYjwB?editors=1111)**
 
 <div class="callout">
 	👋 <strong>Heads up!</strong> This is only needed if you're using <code>on*</code> events directly on your elements. If you're using event delegation, you can skip it.
@@ -154,7 +154,7 @@ component('#app', template);
 todos.push('Take a nap... zzzz');
 ```
 
-**[Try creating a component on CodePen &rarr;](https://codepen.io/cferdinandi/pen/rNdWYGQ)**
+**[Try creating a component on CodePen &rarr;](https://codepen.io/cferdinandi/pen/NWeVBvL)**
 
 The `component()` method also accepts an object of `options` as a third argument.
 
@@ -173,7 +173,7 @@ component('#app', template, {signals: ['wizards']});
 component('#app', template, {signals: ['wizards'], events: {reverseWizards}});
 ```
 
-**[Try component options on CodePen &rarr;](https://codepen.io/cferdinandi/pen/JjLbOOg)**
+**[Try component options on CodePen &rarr;](https://codepen.io/cferdinandi/pen/MWZdBvd)**
 
 If you assign your component to a variable, you can stop reactive rendering with the `component.stop()` method, and start it again with the `component.start()` method.
 
@@ -193,7 +193,7 @@ app.start();
 app.render();
 ```
 
-**[Try component methods on CodePen &rarr;](https://codepen.io/cferdinandi/pen/wvmoPyq?editors=1011)**
+**[Try component methods on CodePen &rarr;](https://codepen.io/cferdinandi/pen/QWzRBqz?editors=1011)**
 
 
 
@@ -235,7 +235,7 @@ todos.delete('Jump');
 todos.push('Do it again tomorrow');
 ```
 
-**[Try store actions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/oNaYoWV?editors=0011)**
+**[Try store actions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/GRPaBOy?editors=1011)**
 
 The `store()` method creates a `signal()` under-the-hood, and emits a `reef:signal` event on the `document` whenever a property is modified with an action function.
 
@@ -276,6 +276,8 @@ render('#app', template());
 component('#app', template);
 focus('h1');
 ```
+
+**[Try setting focus on CodePen &rarr;](https://codepen.io/cferdinandi/pen/YzdbjYQ)**
 
 <div class="callout">
 	⚠️ <strong>Use this sparingly.</strong> You generally only need to set focus in limited circumstances, like if your initial UI render is delayed when calling an API.

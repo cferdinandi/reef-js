@@ -134,4 +134,4 @@ data.greeting = 'Hi';
 data.name = 'Universe';
 ```
 
-**[Try this demo on CodePen &rarr;](https://codepen.io/cferdinandi/pen/yLKVPgK)**
+**[Try this demo on CodePen &rarr;](https://codepen.io/cferdinandi/pen/rNogrjX?editors=1010)**

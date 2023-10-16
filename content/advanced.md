@@ -103,7 +103,7 @@ let todos = signal(['Swim', 'Climb', 'Jump', 'Play'], 'todos');
 component('#app', template, {signals: ['heading', 'todos']});
 ```
 
-**[Try components with multiple signals on CodePen &rarr;](https://codepen.io/cferdinandi/pen/YzaZPMx?editors=1011)**
+**[Try components with multiple signals on CodePen &rarr;](https://codepen.io/cferdinandi/pen/oNJRMEZ?editors=0011)**
 
 
 
@@ -137,7 +137,7 @@ document.addEventListener('reef:render', function (event) {
 });
 ```
 
-**[Try batch rendering on CodePen &rarr;](https://codepen.io/cferdinandi/pen/BarQmxd?editors=1011)**
+**[Try batch rendering on CodePen &rarr;](https://codepen.io/cferdinandi/pen/wvRbxyE?editors=1011)**
 
 
 
@@ -297,7 +297,7 @@ component(app, template);
 app.addEventListener('click', increase);
 ```
 
-**[Try event delegation on CodePen &rarr;](https://codepen.io/cferdinandi/pen/VwVBgNB)**
+**[Try event delegation on CodePen &rarr;](https://codepen.io/cferdinandi/pen/bGOyjvm)**
 
 By default, `on*` events on elements are removed when rendering to reduce the risk of XSS attacks.
 
@@ -323,7 +323,7 @@ function template () {
 component('#app', template, {events: {increase}});
 ```
 
-**[Try event binding on CodePen &rarr;](https://codepen.io/cferdinandi/pen/yLQqZdJ?editors=1011)**
+**[Try event binding on CodePen &rarr;](https://codepen.io/cferdinandi/pen/mdaYjwB?editors=1111)**
 
 
 
@@ -370,7 +370,7 @@ todos.delete('Jump');
 todos.push('Do it again tomorrow');
 ```
 
-**[Try store action functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/oNaYoWV?editors=0011)**
+**[Try store action functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/GRPaBOy?editors=1011)**
 
 
 
@@ -396,6 +396,8 @@ render('#app', template());
 component('#app', template);
 focus('h1');
 ```
+
+**[Try setting focus on CodePen &rarr;](https://codepen.io/cferdinandi/pen/YzdbjYQ)**
 
 <div class="callout">
 	⚠️ <strong>Use this sparingly.</strong> You generally only need to set focus in limited circumstances, like if your initial UI render is delayed when calling an API.
@@ -436,7 +438,7 @@ cart.push({
 });
 ```
 
-**[Try manual UI updates on CodePen &rarr;](https://codepen.io/cferdinandi/pen/MWVbOXP)**
+**[Try manual UI updates on CodePen &rarr;](https://codepen.io/cferdinandi/pen/JjwqBvR)**
 
 
 
@@ -505,4 +507,4 @@ function template () {
 
 Reef will still render the element, but it won't modify any attributes or content after its initially rendered into the UI.
 
-**[Try ignoring elements on CodePen &rarr;](#)**
+**[Try ignoring elements on CodePen &rarr;](https://codepen.io/cferdinandi/pen/RwEmByj)**
