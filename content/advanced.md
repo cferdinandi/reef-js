@@ -357,17 +357,22 @@ let todos = store(['Swim', 'Climb', 'Jump', 'Play'], {
 });
 ```
 
+You can access an immutable copy of the data with the `.value` property.
+
 You can update your data by calling one of your action methods directly on the `store()` object. Updating the data directly will not work.
 
 This protects your component or signal data from unwanted changes. The store always returns an immutable copy of your data.
 
 ```js
+// Access the todos
+let firstTodo = todos.value[0];
+
 // This will update the data
 todos.add('Take a nap');
 todos.delete('Jump');
 
 // This WILL not
-todos.push('Do it again tomorrow');
+todos.value.push('Do it again tomorrow');
 ```
 
 **[Try store action functions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/GRPaBOy?editors=1011)**
