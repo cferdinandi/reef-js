@@ -1,9 +1,22 @@
 <article>
 
 	{{ if not .Params.noTitle }}
+	{{ if .IsPage | and (not .Parent.IsHome) }}
+	<strong><a class="link-no-underline" href="{{ .Parent.URL }}">{{ .Parent.Title }}</a></strong>
+	<h1 class="no-padding-top">{{ ( .Title | htmlUnescape ) }}</h1>
+	{{ else }}
 	<h1>{{ ( .Title | htmlUnescape ) }}</h1>
+	{{ end }}
 	{{ end }}
 
 	{{ .Content }}
+
+	{{ if .Pages }}
+		<ul>
+		{{ range .Pages }}
+			<li><a class="link-no-underline" href="{{ .URL }}">{{ .Title }}</a></li>
+		{{ end }}
+		</ul>
+	{{ end }}
 
 </article>
