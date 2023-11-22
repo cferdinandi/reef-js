@@ -1,1 +1,8 @@
-<nav id="table-of-contents"></nav>
+{{- if .Get "collapse" -}}
+<details>
+	<summary class="margin-bottom-small"><strong>On this page</strong></summary>
+	<div data-toc></div>
+</details>
+{{- else -}}
+<div data-toc="{{ if .Get "heading" }}On this page:{{ end }}"></div>
+{{- end -}}

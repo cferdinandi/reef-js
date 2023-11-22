@@ -31,7 +31,7 @@ function template () {
 component('#app', template);
 ```
 
-If your signals use custom event names, pass them in as an array of signals names with the `options.signals` property.
+If your signals use custom namespaces, pass them in as an array of signals names with the `options.signals` property.
 
 ```js
 // Create multiple named signals

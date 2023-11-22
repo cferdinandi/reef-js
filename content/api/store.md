@@ -6,9 +6,16 @@ weight: 40
 anchors: true
 ---
 
-Create a `signal()` object that can only be updated [with _action functions_](/advanced/#stores) that you define at time of creation.
+The `store()` method creates a `signal` object that can only be updated with _action functions_ that you define at time of creation.
 
-It accepts the data as the first argument, and an object of _action functions_ as the second argument. Action functions automatically receive the data object as their first argument.
+{{<toc>}}
+
+
+## Overview
+
+The `store()` method accepts any data value as the first argument, and an object of _action functions_ as the second argument. 
+
+Action functions automatically receive the `signal` data object as their first argument.
 
 ```js
 let {store} = reef;
@@ -49,7 +56,10 @@ todos.value.push('Do it again tomorrow');
 
 **[Try store actions on CodePen &rarr;](https://codepen.io/cferdinandi/pen/GRPaBOy?editors=1011)**
 
-The `store()` method creates a `signal()` under-the-hood, and emits a `reef:signal` event on the `document` whenever a property is modified with an action function.
+
+## Namespaces
+
+The `store()` method creates a `signal` under-the-hood, and emits a `reef:signal` event on the `document` whenever a property is modified with an action function.
 
 You can customize the event name by passing a third argument into the `store()` method. It gets added to the end of the `reef:signal` event with a dash delimiter (`-`).
 

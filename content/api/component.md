@@ -6,9 +6,14 @@ weight: 30
 anchors: true
 ---
 
-Create a reactive component.
+The `component()` method creates a reactive component.
 
-Pass in the element (or element selector) to render into, and a template function that returns an HTML string to render.
+{{<toc>}}
+
+
+## Overview
+
+Pass in the element (or selector string for the element) to render into, and a template function that returns an HTML string to render.
 
 The `component()` method will render it into the UI, and automatically update the UI whenever a `reef:signal` event is emitted.
 
@@ -38,10 +43,13 @@ todos.push('Take a nap... zzzz');
 
 **[Try creating a component on CodePen &rarr;](https://codepen.io/cferdinandi/pen/NWeVBvL)**
 
+
+## Options
+
 The `component()` method also accepts an object of `options` as a third argument.
 
-- `events` - An object of allowed event callback functions.
-- `signals` - An array of custom event names to use [for `signal()` events](#signal).
+- **`events`** - an object of allowed event callback functions.
+- **`signals`** - an array of signal namespaces to use [for `signal` events](/api/signal).
 
 ```js
 // Allow registered on* events
@@ -52,10 +60,16 @@ let wizards = signal([], 'wizards');
 component('#app', template, {signals: ['wizards']});
 
 // Use a custom name AND allow register on* events
-component('#app', template, {signals: ['wizards'], events: {reverseWizards}});
+component('#app', template, {
+	signals: ['wizards'], 
+	events: {reverseWizards}
+});
 ```
 
 **[Try component options on CodePen &rarr;](https://codepen.io/cferdinandi/pen/MWZdBvd)**
+
+
+## Methods
 
 If you assign your component to a variable, you can stop reactive rendering with the `component.stop()` method, and start it again with the `component.start()` method.
 

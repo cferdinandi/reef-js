@@ -7,6 +7,11 @@ weight: 10
 
 You can use data to conditionally include or change the value of HTML attributes in your template.
 
+{{<toc>}}
+
+
+## Form field values
+
 To dynamically set `checked`, `selected`, and `value` attributes, prefix them with an `@` symbol. Use a _falsy value_ when the item should _not_ be `checked` or `selected`.
 
 In the example below, the checkbox is `checked` when `agreeToTOS` is `true`.
@@ -28,6 +33,9 @@ function template () {
 // The component
 component('#app', template);
 ```
+
+
+## Default values
 
 You might instead want to use a default value when an element initially renders, but defer to any changes the user makes after that.
 

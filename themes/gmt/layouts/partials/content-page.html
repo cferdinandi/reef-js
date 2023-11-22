@@ -11,7 +11,7 @@
 
 	{{ .Content }}
 
-	{{ if .Pages }}
+	{{ if .Pages | and (not .IsHome) }}
 		<ul>
 		{{ range .Pages }}
 			<li><a class="link-no-underline" href="{{ .URL }}">{{ .Title }}</a></li>

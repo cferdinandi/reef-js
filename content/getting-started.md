@@ -7,7 +7,7 @@ anchors: true
 
 Let's look at how to get started with Reef.
 
-<div id="table-of-contents"></div>
+{{<toc>}}
 
 
 ## Install

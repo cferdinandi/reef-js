@@ -6,13 +6,21 @@ weight: 10
 anchors: true
 ---
 
-Create a reactive data object. 
+The `signal()` method creates a reactive data object. 
 
-It accepts any value as an argument. If no value is provided, it uses an empty object by default. If a primitive (like a string or number) is used, it returns an object with the `value` property.
+{{<toc>}}
+
+
+## Overview
+
+The `signal()` method accepts any value as an argument. 
+
+If no value is provided, it uses an empty object by default. If a primitive (like a string or number) is used, it returns an object with the `value` property.
 
 ```js
 let {signal} = reef;
 
+// Create a signal object
 let data = signal({
 	greeting: 'Hello',
 	name: 'World'
@@ -22,7 +30,9 @@ let data = signal({
 let num = signal(42);
 ```
 
-This emits a `reef:signal` event on the `document` whenever a property is modified. The `event.detail` property contains the `prop` and `value` that were updated, and `action` done to the data (either `set` or `delete`).
+A `signal` emits a `reef:signal` event on the `document` whenever one of its properties is modified. 
+
+The `event.detail` property contains the `prop` and `value` that were updated, and the `action` done to the data (either `set` or `delete`).
 
 ```js
 // Listen for data changes
@@ -35,9 +45,14 @@ document.addEventListener('reef:signal', function (event) {
 data.greeting = 'Hi there';
 ```
 
-**[Try data reactivity on CodePen &rarr;](https://codepen.io/cferdinandi/pen/NWeVBpB?editors=1111)**
+**[Try signals on CodePen &rarr;](https://codepen.io/cferdinandi/pen/NWeVBpB?editors=1111)**
+
+
+## Namespaces
 
 You can customize the event name by passing a second argument into the `signal()` method. It gets added to the end of the `reef:signal` event with a dash delimiter (`-`).
+
+This provides useful way to differentiate updates to one `signal` from another.
 
 ```js
 let wizards = signal([], 'wizards');
@@ -46,4 +61,4 @@ let wizards = signal([], 'wizards');
 wizards.push('Merlin');
 ```
 
-**[Try custom event names on CodePen &rarr;](https://codepen.io/cferdinandi/pen/JjwqBNX?editors=1111)**
+**[Try signal namespaces on CodePen &rarr;](https://codepen.io/cferdinandi/pen/JjwqBNX?editors=1111)**

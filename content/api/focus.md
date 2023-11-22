@@ -6,7 +6,7 @@ weight: 50
 anchors: true
 ---
 
-Set focus to an element after the next UI render.
+The `focus()` method sets focus on an element after the next UI render.
 
 Pass in a selector for the element you want to set focus on as an argument. It will set focus on the target element, if one exists, after the next `reef:render` event is emitted.
 

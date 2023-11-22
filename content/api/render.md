@@ -6,9 +6,14 @@ weight: 20
 anchors: true
 ---
 
-Render an HTML template string into the UI. 
+The `render()` method renders an HTML template string into the UI.
 
-Pass in the element (or element selector) to render into, and an HTML string to render. Unlike the `Element.innerHTML` property, this... 
+{{<toc>}}
+
+
+## Overview
+
+Pass in the element (or selector string for the element) to render into, and an HTML string to render. Unlike the `Element.innerHTML` property, this... 
 
 1. Sanitizes your HTML to reduce the risk of XSS attacks. 
 2. Diffs the DOM, only updating the things that have changed.
@@ -26,6 +31,9 @@ render('#app', template());
 ```
 
 **[Try rendering HTML on CodePen &rarr;](https://codepen.io/cferdinandi/pen/BavePRx)**
+
+
+## Event listeners
 
 To reduce the risk of XSS attacks, dangerous properties (including `on*` events) are removed from the HTML before rendering. 
 

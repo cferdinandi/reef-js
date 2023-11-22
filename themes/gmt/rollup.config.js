@@ -5,7 +5,7 @@ import pkg from './package.json';
 
 // Configs
 var configs = {
-	files: ['main.js', 'swInit.js'],
+	files: ['newsletter.js', 'toc.js', 'anchors.js', 'swInit.js'],
 	formats: ['iife'],
 	default: 'iife',
 	pathIn: 'src/js',

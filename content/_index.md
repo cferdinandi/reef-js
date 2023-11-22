@@ -2,8 +2,7 @@
 title: ""
 date: 2018-01-14T21:38:44-05:00
 draft: false
-noTitle: true
-fullWidth: false
+noTitle: tru
 ---
 
 <h1 class="text-xlarge margin-bottom-small">Reef</h1>

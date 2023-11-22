@@ -1,9 +1,16 @@
 ---
-title: Events
+title: Event Listeners
 date: 2018-01-24T11:48:20-05:00
 draft: false
 weight: 50
 ---
+
+There are two ways to listen for events on Reef elements.
+
+{{<toc>}}
+
+
+## Event delegation
 
 The preferred way to listen for user interaction events in a Reef template is _event delegation_.
 
@@ -33,6 +40,9 @@ app.addEventListener('click', increase);
 ```
 
 **[Try event delegation on CodePen &rarr;](https://codepen.io/cferdinandi/pen/bGOyjvm)**
+
+
+## Event binding
 
 By default, `on*` events on elements are removed when rendering to reduce the risk of XSS attacks.
 

@@ -7,7 +7,12 @@ weight: 40
 
 Unique IDs can help Reef more effectively handle UI updates.
 
-For example, imagine you have a list of items, and you're rendering them into the UI as an unordered list.
+{{<toc>}}
+
+
+## Overview
+
+Imagine you have a list of items, and you're rendering them into the UI as an unordered list.
 
 ```js
 // Reactive store
@@ -77,7 +82,8 @@ Now, the starting HTML looks like this.
 
 If you remove `Climb` from the `todos` array, Reef will now remove the `#climb` element rather than updating all of the other list items (and any content within them).
 
-## Using a key instead of an ID
+
+## The key attribute
 
 Sometimes generating valid IDs is difficult. 
 
@@ -109,7 +115,8 @@ function template () {
 
 Reef will use the `[key]` attribute as a unique identified within the parent element when diffing.
 
-## Don't use an `index` as the ID or key value
+
+## Don't use `index`
 
 One common pitfall developers encounter with IDs and keys is using an array `index` as the value.
 

@@ -1,5 +1,5 @@
 ---
-title: "About"
+title: About Reef
 date: 2018-01-24T11:48:20-05:00
 draft: false
 noTitle: false
@@ -7,7 +7,7 @@ noIndex: false
 anchors: true
 ---
 
-<div id="table-of-contents"></div>
+{{<toc>}}
 
 
 ## Browser Compatibility
