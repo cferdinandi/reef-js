@@ -1,6 +1,6 @@
-/*! GMT Service Worker v2.8.0 | (c) 2022 Chris Ferdinandi | MIT License | http://github.com/cferdinandi/gmt-theme */
+/*! GMT Service Worker v2.10.0 | (c) 2024 Chris Ferdinandi | MIT License | http://github.com/cferdinandi/gmt-theme */
 
-var version = 'gmt_2.8.0';
+var version = 'gmt_2.10.0';
 // Cache IDs
 var coreID = version + '_core';
 var pageID = version + '_pages';
@@ -15,22 +15,14 @@ var limits = {
 
 // Font files
 var fontFiles = [
-	'https://gomakethings.com/fonts/pt-sans-v12-latin-regular.woff',
-	'https://gomakethings.com/fonts/pt-sans-v12-latin-regular.woff2',
-	'https://gomakethings.com/fonts/pt-sans-v12-latin-italic.woff',
-	'https://gomakethings.com/fonts/pt-sans-v12-latin-italic.woff2',
-	'https://gomakethings.com/fonts/pt-sans-v12-latin-700.woff',
-	'https://gomakethings.com/fonts/pt-sans-v12-latin-700.woff2',
-	'https://gomakethings.com/fonts/pt-sans-v12-latin-700italic.woff',
-	'https://gomakethings.com/fonts/pt-sans-v12-latin-700italic.woff2',
-	'https://gomakethings.com/fonts/pt-serif-v11-latin-regular.woff',
-	'https://gomakethings.com/fonts/pt-serif-v11-latin-regular.woff2',
-	'https://gomakethings.com/fonts/pt-serif-v11-latin-italic.woff',
-	'https://gomakethings.com/fonts/pt-serif-v11-latin-italic.woff2',
-	'https://gomakethings.com/fonts/pt-serif-v11-latin-700.woff',
-	'https://gomakethings.com/fonts/pt-serif-v11-latin-700.woff2',
-	'https://gomakethings.com/fonts/pt-serif-v11-latin-700italic.woff',
-	'https://gomakethings.com/fonts/pt-serif-v11-latin-700italic.woff2'
+	'https://gomakethings.com/fonts/pt-sans-v17-latin-regular.woff2',
+	'https://gomakethings.com/fonts/pt-sans-v17-latin-italic.woff2',
+	'https://gomakethings.com/fonts/pt-sans-v17-latin-700.woff2',
+	'https://gomakethings.com/fonts/pt-sans-v17-latin-700italic.woff2',
+	'https://gomakethings.com/fonts/pt-serif-v18-latin-regular.woff2',
+	'https://gomakethings.com/fonts/pt-serif-v18-latin-italic.woff2',
+	'https://gomakethings.com/fonts/pt-serif-v18-latin-700.woff2',
+	'https://gomakethings.com/fonts/pt-serif-v18-latin-700italic.woff2'
 ];
 
 
