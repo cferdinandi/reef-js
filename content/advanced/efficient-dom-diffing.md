@@ -15,8 +15,8 @@ Unique IDs can help Reef more effectively handle UI updates.
 Imagine you have a list of items, and you're rendering them into the UI as an unordered list.
 
 ```js
-// Reactive store
-let todos = store(['Swim', 'Climb', 'Jump', 'Play']);
+// Reactive signal
+let todos = signal(['Swim', 'Climb', 'Jump', 'Play']);
 
 // The template
 function template () {
@@ -90,7 +90,7 @@ Sometimes generating valid IDs is difficult.
 For example, imagine that some of the `todos` contain multiple words.
 
 ```js
-let todos = store(['Swim', 'Climb', 'Jump', 'Play', 'Go to the store']);
+let todos = signal(['Swim', 'Climb', 'Jump', 'Play', 'Go to the store']);
 ```
 
 The last item would generate a list item that looks like this...
