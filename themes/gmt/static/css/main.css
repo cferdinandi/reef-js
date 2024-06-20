@@ -1,4 +1,4 @@
-/*! gmt-theme v2.9.0 | (c) 2023 Chris Ferdinandi | MIT License | http://github.com/cferdinandi/gmt-theme */
+/*! gmt-theme v2.10.0 | (c) 2024 Chris Ferdinandi | MIT License | http://github.com/cferdinandi/gmt-theme */
 @charset "UTF-8";
 /**
  * @section CSS Reset
@@ -79,6 +79,11 @@ iframe,
 object,
 embed {
 	max-width: 100%;
+}
+
+iframe,
+img {
+	border-radius: 0.5em;
 }
 
 audio {
@@ -216,24 +221,6 @@ summary {
 @media (min-width: 38em) {
 	.list-columns {
 		column-count: 2;
-	}
-}
-/**
- * Flexbox
- */
-@media (min-width: 38em) {
-	.row-flex {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-
-	.row-flex-top {
-		align-items: start;
-	}
-
-	.row-flex-gap {
-		column-gap: 2em;
 	}
 }
 /**
@@ -380,57 +367,28 @@ dt {
 }
 
 /**
- * @bugfix Prevent webkit from removing list semantics
- * 1. Add a non-breaking space
- * 2. Make sure it doesn't mess up the DOM flow
+ * Remove list styles but preserve semantics
  */
-.list-inline, .nav-sub, .nav, .list-unstyled, .list-checked {
-	list-style: none;
+.nav, .list-checked, .list-inline, .nav-sub, .list-unstyled {
+	list-style-type: "";
 	margin-left: 0;
-}
-.list-inline > li::before, .nav-sub > li::before, .nav > li::before, .list-unstyled > li::before, .list-checked > li::before {
-	content: "​";
-	/* 1 */
-	position: absolute;
-	/* 2 */
 }
 
 /**
  * Removes list styling.
  * For semantic reasons, should only be used on unordered lists.
  */
-.list-unstyled, .list-checked {
-	margin-left: 0;
-}
-
-/**
- * Checkmark lists
- */
-.list-checked li {
-	padding-left: 1em;
-}
-.list-checked li:before {
-	content: "✓";
-	color: #f7272f;
-	margin-left: -1em;
-}
-@media (prefers-color-scheme: dark) {
-	.list-checked li:before {
-		color: #fdd4d5;
-	}
-}
-
 /**
  * Display lists on a single line.
  */
-.list-inline, .nav-sub, .nav {
+.list-inline, .nav-sub {
 	display: flex;
 	align-items: center;
 	column-gap: 1em;
 	flex-wrap: wrap;
 }
 @media (max-width: 38em) {
-	.list-inline.list-inline-responsive, .nav-sub, .list-inline-responsive.nav {
+	.list-inline.list-inline-responsive, .nav-sub {
 		display: block;
 	}
 }
@@ -445,6 +403,24 @@ dt {
 
 .list-inline-center {
 	justify-content: center;
+}
+
+/**
+ * Checkmark lists
+ */
+.list-checked li {
+	padding-left: 1em;
+}
+.list-checked li:before {
+	content: "✓";
+	color: #f7272f;
+	margin-left: -1em;
+	margin-right: 0.25em;
+}
+@media (prefers-color-scheme: dark) {
+	.list-checked li:before {
+		color: #fdd4d5;
+	}
 }
 
 /**
@@ -1211,11 +1187,6 @@ figcaption {
 	}
 }
 
-iframe,
-img {
-	border-radius: 0.5em;
-}
-
 /**
  * Adds a border
  */
@@ -1271,8 +1242,7 @@ img {
 		fill: #1f252f;
 	}
 
-	.company-logo path,
-path.company-logo {
+	.company-logo path {
 		fill: #ffffff;
 	}
 
@@ -1322,9 +1292,6 @@ iframe {
 		background-color: #1f252f;
 	}
 }
-.callout-cta del {
-	color: #b2b2b2;
-}
 
 /**
  * @section Honeypot
@@ -1366,13 +1333,20 @@ td {
 /**
  * Adds zebra striping
  */
-.table-striped tbody tr:nth-child(odd) {
+.table-striped tbody tr:nth-child(odd of :not([hidden])) {
 	background-color: #f7f7f7;
 }
 @media (prefers-color-scheme: dark) {
-	.table-striped tbody tr:nth-child(odd) {
+	.table-striped tbody tr:nth-child(odd of :not([hidden])) {
 		background-color: #171b22;
 	}
+}
+
+/**
+ * Make a table responsive
+ */
+.table-responsive {
+	overflow-x: auto;
 }
 
 /**
@@ -1432,12 +1406,20 @@ td {
  * The navigation menu
  */
 .nav {
-	justify-content: center;
+	text-align: center;
 	margin-bottom: 0;
+	text-wrap: balance;
 }
-@media (max-width: 38em) {
-	.nav {
-		column-gap: 0.75em;
+.nav li {
+	display: inline-block;
+	margin-left: 0.75em;
+}
+.nav li:first-child {
+	margin-left: 0;
+}
+@media (min-width: 38em) {
+	.nav li {
+		margin-left: 1em;
 	}
 }
 .nav a:not(.btn) {
@@ -1545,6 +1527,10 @@ td {
 
 .text-capitalize {
 	text-transform: capitalize;
+}
+
+.text-pretty {
+	text-wrap: pretty;
 }
 
 .text-sans {
