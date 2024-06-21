@@ -1343,13 +1343,6 @@ td {
 }
 
 /**
- * Make a table responsive
- */
-.table-responsive {
-	overflow-x: auto;
-}
-
-/**
  * @section Main Nav
  * Styling for the main navigation area
  */
@@ -1577,6 +1570,13 @@ td {
 .border {
 	border: 1px solid #e5e5e5;
 	border-radius: 0.5em;
+}
+
+/**
+ * Allow horizontal scroll
+ */
+.scroll-horizontal {
+	overflow-x: auto;
 }
 
 /**
