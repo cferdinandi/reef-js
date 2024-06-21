@@ -1576,6 +1576,7 @@ td {
  * Allow horizontal scroll
  */
 .scroll-horizontal {
+	display: block;
 	overflow-x: auto;
 }
 
