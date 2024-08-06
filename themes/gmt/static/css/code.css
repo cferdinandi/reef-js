@@ -16,7 +16,8 @@ code {
 }
 
 pre {
-	background-color: var(--color-tertiary);
+	background-color: var(--color-tertiary-dark);
+	border: 0.0625rem solid var(--color-white);
 	border-radius: 0.5em;
 	color: var(--color-white);
 	display: block;
