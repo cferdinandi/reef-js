@@ -9,7 +9,7 @@
 
 button,
 .btn {
-	--bg-color: var(--color-secondary);
+	--bg-color: var(--color-secondary-dm-dark);
 	--border-radius: 0.25em;
 	--font-size: 0.9375em;
 	--padding: 0.5625em 0.6875em;
@@ -30,7 +30,7 @@ button,
 
 button:hover,
 .btn:hover {
-	--bg-color: var(--color-secondary-dark);
+	--bg-color: var(--color-secondary-dark-dm-regular);
 	color: var(--color-white);
 }
 
