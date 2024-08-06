@@ -1,81 +1,78 @@
-/*! gmt-theme v2.9.1 | (c) 2024 Chris Ferdinandi | MIT License | http://github.com/cferdinandi/gmt-theme */
+/**
+ * @section Fonts: PT Serif & PT Sans
+ */
+
+/**
+ * PT Serif
+ */
+
 /* pt-serif-regular - latin */
 @font-face {
-	font-display: swap;
-	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-	font-family: "PT Serif";
-	font-style: normal;
-	font-weight: 400;
-	src: url("https://gomakethings.com/fonts/pt-serif-v18-latin-regular.woff2") format("woff2");
-	/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  font-display: swap;
+  font-family: 'PT Serif';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://gomakethings.com/fonts/pt-serif-v11-latin-regular.woff2') format('woff2'), url('https://gomakethings.com/fonts/pt-serif-v11-latin-regular.woff') format('woff');
 }
 /* pt-serif-italic - latin */
 @font-face {
-	font-display: swap;
-	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-	font-family: "PT Serif";
-	font-style: italic;
-	font-weight: 400;
-	src: url("https://gomakethings.com/fonts/pt-serif-v18-latin-italic.woff2") format("woff2");
-	/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  font-display: swap;
+  font-family: 'PT Serif';
+  font-style: italic;
+  font-weight: 400;
+  src: url('https://gomakethings.com/fonts/pt-serif-v11-latin-italic.woff2') format('woff2'), url('https://gomakethings.com/fonts/pt-serif-v11-latin-italic.woff') format('woff');
 }
 /* pt-serif-700 - latin */
 @font-face {
-	font-display: swap;
-	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-	font-family: "PT Serif";
-	font-style: normal;
-	font-weight: 700;
-	src: url("https://gomakethings.com/fonts/pt-serif-v18-latin-700.woff2") format("woff2");
-	/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  font-display: swap;
+  font-family: 'PT Serif';
+  font-style: normal;
+  font-weight: 700;
+  src: url('https://gomakethings.com/fonts/pt-serif-v11-latin-700.woff2') format('woff2'), url('https://gomakethings.com/fonts/pt-serif-v11-latin-700.woff') format('woff');
 }
 /* pt-serif-700italic - latin */
 @font-face {
-	font-display: swap;
-	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-	font-family: "PT Serif";
-	font-style: italic;
-	font-weight: 700;
-	src: url("https://gomakethings.com/fonts/pt-serif-v18-latin-700italic.woff2") format("woff2");
-	/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  font-display: swap;
+  font-family: 'PT Serif';
+  font-style: italic;
+  font-weight: 700;
+  src: url('https://gomakethings.com/fonts/pt-serif-v11-latin-700italic.woff2') format('woff2'), url('https://gomakethings.com/fonts/pt-serif-v11-latin-700italic.woff') format('woff');
 }
+
+
+/**
+ * PT Sans
+ */
+
 /* pt-sans-regular - latin */
 @font-face {
-	font-display: swap;
-	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-	font-family: "PT Sans";
-	font-style: normal;
-	font-weight: 400;
-	src: url("https://gomakethings.com/fonts/pt-sans-v17-latin-regular.woff2") format("woff2");
-	/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  font-display: swap;
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://gomakethings.com/fonts/pt-sans-v12-latin-regular.woff2') format('woff2'), url('https://gomakethings.com/fonts/pt-sans-v12-latin-regular.woff') format('woff');
 }
 /* pt-sans-italic - latin */
 @font-face {
-	font-display: swap;
-	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-	font-family: "PT Sans";
-	font-style: italic;
-	font-weight: 400;
-	src: url("https://gomakethings.com/fonts/pt-sans-v17-latin-italic.woff2") format("woff2");
-	/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  font-display: swap;
+  font-family: 'PT Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: url('https://gomakethings.com/fonts/pt-sans-v12-latin-italic.woff2') format('woff2'), url('https://gomakethings.com/fonts/pt-sans-v12-latin-italic.woff') format('woff');
 }
 /* pt-sans-700 - latin */
 @font-face {
-	font-display: swap;
-	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-	font-family: "PT Sans";
-	font-style: normal;
-	font-weight: 700;
-	src: url("https://gomakethings.com/fonts/pt-sans-v17-latin-700.woff2") format("woff2");
-	/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  font-display: swap;
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: url('https://gomakethings.com/fonts/pt-sans-v12-latin-700.woff2') format('woff2'), url('https://gomakethings.com/fonts/pt-sans-v12-latin-700.woff') format('woff');
 }
 /* pt-sans-700italic - latin */
 @font-face {
-	font-display: swap;
-	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-	font-family: "PT Sans";
-	font-style: italic;
-	font-weight: 700;
-	src: url("https://gomakethings.com/fonts/pt-sans-v17-latin-700italic.woff2") format("woff2");
-	/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  font-display: swap;
+  font-family: 'PT Sans';
+  font-style: italic;
+  font-weight: 700;
+  src: url('https://gomakethings.com/fonts/pt-sans-v12-latin-700italic.woff2') format('woff2'), url('https://gomakethings.com/fonts/pt-sans-v12-latin-700italic.woff') format('woff');
 }

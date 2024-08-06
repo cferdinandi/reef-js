@@ -23,10 +23,13 @@
 		<link rel="shortcut icon" href="{{ "/img/favicon.ico" | absURL }}">
 		<link rel="icon" sizes="16x16 24x24 32x32 64x64" href="{{ "/img/favicon.ico" | absURL }}">
 
-		<!-- Stylesheet -->
+		<!-- Modular CSS -->
 		<style type="text/css">
-			{{ readFile "/themes/gmt/static/css/fonts.css" | safeCSS }}
-			{{ if eq $.Site.Params.minify true }}{{ readFile "/themes/gmt/static/css/main.min.css" | safeCSS }}{{ else }}{{ readFile "/themes/gmt/static/css/main.css" | safeCSS }}{{ end }}
+			{{- range $css := $.Site.Params.css }}
+			{{- if fileExists (printf "/themes/gmt/static/css/%s" $css) -}}
+				{{ readFile (printf "/themes/gmt/static/css/%s" $css) | safeCSS }}
+			{{- end -}}
+			{{ end -}}
 		</style>
 	</head>
 

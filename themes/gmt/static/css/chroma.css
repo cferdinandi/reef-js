@@ -1,0 +1,111 @@
+/**
+ * @section Chroma syntax highlighting (Monokai)
+ */
+
+@media screen {
+
+	.chroma .err {
+		color: #cc80c3;
+	}
+
+	.chroma .lntd {
+		vertical-align: top;
+		padding: 0;
+		margin: 0;
+		border: 0;
+	}
+
+	.chroma .lntable {
+		display: block;
+		border-spacing: 0;
+		margin: 0;
+		padding: 0;
+		overflow: auto;
+		border: 0;
+		width: auto;
+	}
+
+	.chroma .hl {
+		background-color: #ffffcc;
+		display: block;
+		width: 100%;
+	}
+
+	.chroma .lnt,
+	.chroma .ln {
+		margin-right: 0.4em;
+		padding: 0 0.4em 0 0.4em;
+	}
+
+	.chroma .k,
+	.chroma .kc,
+	.chroma .kd,
+	.chroma .kp,
+	.chroma .kr,
+	.chroma .kt,
+	.chroma .no {
+		color: #66d9ef;
+	}
+
+	.chroma .na,
+	.chroma .nc,
+	.chroma .nd,
+	.chroma .ne,
+	.chroma .nf,
+	.chroma .nx,
+	.chroma .gi {
+		color: #a6e22e;
+	}
+
+	.chroma .ld,
+	.chroma .s,
+	.chroma .sa,
+	.chroma .sb,
+	.chroma .sc,
+	.chroma .dl,
+	.chroma .sd,
+	.chroma .s2,
+	.chroma .sh,
+	.chroma .si,
+	.chroma .sx,
+	.chroma .sr,
+	.chroma .s1,
+	.chroma .ss {
+		color: #e6db74;
+	}
+
+	.chroma .l,
+	.chroma .se,
+	.chroma .m,
+	.chroma .mb,
+	.chroma .mf,
+	.chroma .mh,
+	.chroma .mi,
+	.chroma .il,
+	.chroma .mo {
+		color: #b994ff;
+	}
+
+	.chroma .kn,
+	.chroma .nt,
+	.chroma .o,
+	.chroma .ow,
+	.chroma .gd {
+		color: #fc7db4;
+	}
+
+	.chroma .c,
+	.chroma .ch,
+	.chroma .cm,
+	.chroma .c1,
+	.chroma .cs,
+	.chroma .cp,
+	.chroma .cpf,
+	.chroma .gu {
+		color: var(--color-gray-medium-dark);
+	}
+
+	.chroma .ge { font-style: italic }
+	.chroma .gs { font-weight: bold }
+
+}

@@ -7,8 +7,28 @@ params:
   api: "https://gomakethings.com/api/data.json"
   rssURL: ""
   rssLimit: 7
-  minify: true
   version: 13
+  minify: true
+  css:
+    - fonts.css
+    - _config.css
+    - reset.css
+    - grid.css
+    - typography.css
+    - code.css
+    - chroma.css
+    - buttons.css
+    - forms.css
+    - form-validation.css
+    - images.css
+    - icons.css
+    - fluidvids.css
+    - callouts.css
+    - tables.css
+    - nav-main.css
+    - nav-secondary.css
+    - utilities.css
+    - print.css
 
 # Caches
 caches:
