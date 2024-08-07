@@ -78,9 +78,6 @@
 }
 
 .nav a:not(.btn):hover,
-.nav a:not(.btn):active,
-.nav a:not(.btn):focus,
-.nav .active a:not(.btn),
 .nav [aria-current="page"] {
 	border-bottom: 0.125em solid var(--color-secondary-dm-light);
 	color: var(--color-black-dm-white);
