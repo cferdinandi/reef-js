@@ -36,7 +36,7 @@ button:hover,
 
 button del,
 .btn del {
-	color: var(--color-gray-medium);
+	color: var(--color-gray-medium-dark);
 }
 
 a.btn {
