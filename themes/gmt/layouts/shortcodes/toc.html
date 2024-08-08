@@ -1,8 +1,8 @@
 {{- if .Get "collapse" -}}
 <details>
 	<summary class="margin-bottom-small"><strong>On this page</strong></summary>
-	<div data-toc></div>
+	<simple-toc></simple-toc>
 </details>
 {{- else -}}
-<div data-toc="{{ if .Get "heading" }}On this page:{{ end }}"></div>
+<simple-toc {{ if .Get "heading" }}heading="On this page:"{{ end }}></simple-toc>
 {{- end -}}

@@ -1,18 +1,19 @@
-<form action="https://gomakethings.com/api/subscribe.php" method="post" data-form="convertkit">
-	<div class="tarpit">
-		<label for="first_name">If you're human, leave this blank</label>
-		<input name="first_name" id="first_name" type="text" autocomplete="off">
-	</div>
-	<div class="row">
-		<div class="grid-two-thirds">
-			<label class="screen-reader" for="email" hidden>Enter your email address to get Daily Developer Tips emails</label>
-			<input name="email" id="email" placeholder="Your email address..." type="email">
+<newsletter-form msg-submitting="Signing Up...">
+	<form action="https://gomakethings.com/api/subscribe.php" method="post">
+		<div class="tarpit">
+			<label for="first_name">If you're human, leave this blank</label>
+			<input name="first_name" id="first_name" type="text" autocomplete="off">
 		</div>
-		<input type="hidden" name="form" value="newsletter">
-		<input type="hidden" name="PDy8T8RBRG6ZzvqMdWCe6dhG" value="LC8fAYaM3bnmj3sevYFr37eDcQ6q9sZcc9UtiahTTfXyi4sNXzENmrZJaruDmjNy">
-		<div class="grid-third">
-			<button data-processing="Signing Up..." class="btn btn-block">Get Daily Developer Tips</button>
+		<div class="row">
+			<div class="grid-two-thirds">
+				<label class="screen-reader" for="email" hidden>Enter your email address to get Daily Developer Tips emails</label>
+				<input name="email" id="email" placeholder="Your email address..." type="email" required>
+			</div>
+			<input type="hidden" name="form" value="newsletter">
+			<input type="hidden" name="PDy8T8RBRG6ZzvqMdWCe6dhG" value="LC8fAYaM3bnmj3sevYFr37eDcQ6q9sZcc9UtiahTTfXyi4sNXzENmrZJaruDmjNy">
+			<div class="grid-third">
+				<button class="btn btn-block">Get Daily Developer Tips</button>
+			</div>
 		</div>
-	</div>
-	<div data-status role="status"></div>
-</form>
+	</form>
+</newsletter-form>

@@ -10,10 +10,10 @@
 		</footer>
 
 		<script>
-			{{- if .HasShortcode "mailchimp" -}}{{ if eq $.Site.Params.minify true }}{{ readFile "/themes/gmt/static/js/newsletter.min.js" | safeJS }}{{ else }}{{ readFile "/themes/gmt/static/js/newsletter.js" | safeJS }}{{ end }}{{- end -}}
-			{{- if .HasShortcode "toc" -}}{{ if eq $.Site.Params.minify true }}{{ readFile "/themes/gmt/static/js/toc.min.js" | safeJS }}{{ else }}{{ readFile "/themes/gmt/static/js/toc.js" | safeJS }}{{ end }}{{- end -}}
-			{{- if isset .Params "anchors" -}}{{ if eq $.Site.Params.minify true }}{{ readFile "/themes/gmt/static/js/anchors.min.js" | safeJS }}{{ else }}{{ readFile "/themes/gmt/static/js/anchors.js" | safeJS }}{{ end }}{{- end -}}
-			{{ if eq $.Site.Params.minify true }}{{ readFile "/themes/gmt/static/js/swInit.min.js" | safeJS }}{{ else }}{{ readFile "/themes/gmt/static/js/swInit.js" | safeJS }}{{ end }}
+			{{- if .HasShortcode "mailchimp" -}}{{ readFile "/themes/gmt/static/js/wc-newsletter-form.js" | safeJS }}{{- end -}}
+			{{- if .HasShortcode "toc" -}}{{ readFile "/themes/gmt/static/js/wc-simple-toc.js" | safeJS }}{{- end -}}
+			{{- if isset .Params "anchors" -}}{{ readFile "/themes/gmt/static/js/heading-links.js" | safeJS }}{{- end -}}
+			{{ readFile "/themes/gmt/static/js/swInit.js" | safeJS }}
 		</script>
 	</body>
 </html>
