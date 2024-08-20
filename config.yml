@@ -17,9 +17,9 @@ params:
     - typography.css
     - code.css
     - chroma.css
-    - buttons.css
     - forms.css
     - form-validation.css
+    - buttons.css
     - images.css
     - icons.css
     - fluidvids.css
