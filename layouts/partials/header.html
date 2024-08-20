@@ -26,8 +26,8 @@
 		<!-- Modular CSS -->
 		<style type="text/css">
 			{{- range $css := $.Site.Params.css }}
-			{{- if fileExists (printf "/themes/gmt/static/css/%s" $css) -}}
-				{{ readFile (printf "/themes/gmt/static/css/%s" $css) | safeCSS }}
+			{{- if fileExists (printf "/static/css/%s" $css) -}}
+				{{ readFile (printf "/static/css/%s" $css) | safeCSS }}
 			{{- end -}}
 			{{ end -}}
 		</style>

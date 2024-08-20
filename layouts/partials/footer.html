@@ -10,10 +10,10 @@
 		</footer>
 
 		<script>
-			{{- if .HasShortcode "mailchimp" -}}{{ readFile "/themes/gmt/static/js/wc-newsletter-form.js" | safeJS }}{{- end -}}
-			{{- if .HasShortcode "toc" -}}{{ readFile "/themes/gmt/static/js/wc-simple-toc.js" | safeJS }}{{- end -}}
-			{{- if isset .Params "anchors" -}}{{ readFile "/themes/gmt/static/js/heading-links.js" | safeJS }}{{- end -}}
-			{{ readFile "/themes/gmt/static/js/swInit.js" | safeJS }}
+			{{- if .HasShortcode "mailchimp" -}}{{ readFile "/static/js/wc-newsletter-form.js" | safeJS }}{{- end -}}
+			{{- if .HasShortcode "toc" -}}{{ readFile "/static/js/wc-simple-toc.js" | safeJS }}{{- end -}}
+			{{- if isset .Params "anchors" -}}{{ readFile "/static/js/heading-links.js" | safeJS }}{{- end -}}
+			{{ readFile "/static/js/swInit.js" | safeJS }}
 		</script>
 	</body>
 </html>

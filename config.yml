@@ -8,7 +8,6 @@ params:
   rssURL: ""
   rssLimit: 7
   version: 13
-  minify: true
   css:
     - fonts.css
     - _config.css
@@ -40,9 +39,6 @@ languageCode: "en-us"
 
 # Site title
 title: "Reef"
-
-# theme to use (located by default in /themes/THEMENAME/)
-theme: "gmt"
 
 # Permalinks
 # See "content-management/permalinks"
