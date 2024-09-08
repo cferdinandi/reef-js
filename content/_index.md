@@ -13,8 +13,6 @@ Reef is a simpler alternative to React, Vue, and other UI libraries. No build st
 
 <a class="btn btn-large" href="/getting-started">Get started with Reef &rarr;</a>
 
-{{<cta for="funnel">}}
-
 
 
 ## Features

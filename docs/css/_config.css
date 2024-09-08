@@ -1,0 +1,114 @@
+/**
+ * @section Configuration Settings
+ * Typographic Scale: 1px, 4px, 5px, 8px, 9px, 11px, 12px, 13px, 15px, 16px, 19px, 21px, 24px, 28px, 32px, 48px, 64px, 80px, 96px
+ */
+
+
+:root {
+
+	/* Colors */
+	--color-primary: #007ab8;
+	--color-primary-dark: #00476c;
+	--color-primary-light: #73cffa;
+	--color-primary-lighter: #9fdeff;
+	--color-secondary: #f7272f;
+	--color-secondary-dark: #cb070e;
+	--color-secondary-light: #fdbbbd;
+	--color-secondary-lighter: #fdd4d5;
+	--color-tertiary: #343d4d;
+	--color-tertiary-light: #c3cad6;
+	--color-tertiary-lighter: #d2d7e1;
+	--color-tertiary-dark: #1f252f;
+	--color-tertiary-darker: #15191f;
+	--color-accent-1: #800080;
+	--color-accent-1-light: #debfde;
+	--color-accent-2: #2cad4e;
+	--color-accent-2-light: #a6e8b9;
+	--color-black: #272727;
+	--color-black-dark: #000000;
+	--color-white: #ffffff;
+
+	--color-gray-darker: #4f4f4f;
+	--color-gray-dark: #757575;
+	--color-gray-medium-dark: #b2b2b2;
+	--color-gray-medium-light: #d3d3d3;
+	--color-gray-light: #e5e5e5;
+	--color-gray-lighter: #f7f7f7;
+
+	/* Automatic Dark Mode - Light Variants */
+	--color-black-dm-white: var(--color-black);
+	--color-white-dm-black: var(--color-white);
+
+	--color-gray-dark-dm-light: var(--color-gray-dark);
+	--color-gray-light-dm-dark: var(--color-gray-light);
+	--color-gray-lighter-dm-darker: var(--color-gray-lighter);
+	--color-gray-medium-dark-dm-dark: var(--color-gray-medium-dark);
+
+	--color-primary-dm-light: var(--color-primary);
+	--color-primary-dm-lighter: var(--color-primary);
+	--color-primary-dark-dm-light: var(--color-primary-dark);
+
+	--color-secondary-dm-light: var(--color-secondary);
+	--color-secondary-dm-lighter: var(--color-secondary);
+	--color-secondary-dm-dark: var(--color-secondary);
+	--color-secondary-dark-dm-light: var(--color-secondary-dark);
+	--color-secondary-dark-dm-regular: var(--color-secondary-dark);
+
+	--color-accent-1-dm-light: var(--color-accent-1);
+	--color-accent-2-dm-light: var(--color-accent-2);
+
+	--color-code: #dd1144;
+	--color-code-light: #fc7db4;
+	--color-mark: #fbf9c9;
+
+	/* Automatic Dark Mode - Dark Variants */
+	@media (prefers-color-scheme: dark) {
+		--color-black-dm-white: var(--color-white);
+		--color-white-dm-black: var(--color-tertiary-dark);
+
+		--color-gray-dark-dm-light: var(--color-gray-light);
+		--color-gray-light-dm-dark: var(--color-gray-dark);
+		--color-gray-lighter-dm-darker: var(--color-tertiary-darker);
+		--color-gray-medium-dark-dm-dark: var(--color-gray-dark);
+
+		--color-primary-dm-light: var(--color-primary-light);
+		--color-primary-dm-lighter: var(--color-primary-lighter);
+		--color-primary-dark-dm-light: var(--color-primary-light);
+
+		--color-secondary-dm-light: var(--color-secondary-light);
+		--color-secondary-dm-lighter: var(--color-secondary-lighter);
+		--color-secondary-dm-dark: var(--color-secondary-dark);
+		--color-secondary-dark-dm-light: var(--color-secondary-light);
+		--color-secondary-dark-dm-regular: var(--color-secondary);
+
+		--color-accent-1-dm-light: var(--color-accent-1-light);
+		--color-accent-2-dm-light: var(--color-accent-2-light);
+
+		--color-code: var(--color-code-light);
+		--color-mark: transparent;
+	}
+
+
+	/* Font Stacks */
+	--font-primary: "PT Sans", sans-serif;
+	--font-secondary: "PT Serif", sans-serif;
+	--font-monospace: Menlo, Monaco, "Courier New", monospace;
+
+
+	/* Breakpoints */
+	/* Can't use in media queries */
+	--bp-xsmall: 19em;
+	--bp-small: 28em;
+	--bp-medium: 38em;
+	--bp-large: 60em;
+	--bp-xlarge: 80em;
+
+
+	/* Sizing */
+	--font-size: 112.5%;
+	--spacing: 1.5625em;
+	--container-width: 88%;
+	--container-max-width: var(--bp-medium);
+	--container-large-max-width: var(--bp-large);
+
+}

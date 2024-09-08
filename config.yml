@@ -29,6 +29,9 @@ params:
     - utilities.css
     - print.css
 
+# Change published dir
+publishDir: docs
+
 # Caches
 caches:
   getjson:

@@ -1,0 +1,23 @@
+/**
+ * @section Callouts
+ */
+
+.callout {
+	background-color: var(--color-gray-lighter-dm-darker);
+	border: 1px solid var(--color-gray-light-dm-dark);
+	border-radius: 0.5em;
+	margin-bottom: var(--spacing);
+	padding: 1em 1.5em;
+}
+
+.callout-cta {
+	background-color: var(--color-white-dm-black);
+	border: 1px solid var(--color-gray-medium-dark);
+	border-radius: 0.5em;
+	margin-bottom: var(--spacing);
+	padding: 1em;
+}
+
+.callout-cta del {
+	color: var(--color-gray-medium-dark);
+}
