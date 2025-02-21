@@ -1,0 +1,25 @@
+/**
+ * @section Alerts
+ */
+
+wc-alert {
+	display: block;
+}
+
+wc-alert form {
+	margin: 0 0 1em 1em;
+}
+
+wc-alert form button {
+	--font-size: 1em;
+	--padding: 0;
+	border: 0;
+	background-color: transparent;
+	color: inherit;
+	margin: 0;
+}
+
+wc-alert form button:hover {
+	color: inherit;
+	opacity: 0.5;
+}
