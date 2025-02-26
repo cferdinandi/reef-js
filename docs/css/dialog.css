@@ -1,0 +1,14 @@
+/**
+ * @section Dialog
+ */
+
+dialog {
+	background: var(--color-white-dm-black);
+	border: none;
+	border-radius: 0.25em;
+	color: var(--color-black-dm-white);
+}
+
+dialog::backdrop {
+	background-color: rgba(0, 0, 0, 0.7);
+}

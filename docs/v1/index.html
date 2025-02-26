@@ -24,8 +24,8 @@
 
 		
 		
-		<link rel="shortcut icon" href="https://reefjs.com/img/favicon.ico">
-		<link rel="icon" sizes="16x16 24x24 32x32 64x64" href="https://reefjs.com/img/favicon.ico">
+		<link rel="shortcut icon" href="https://reef.gomakethings.com/img/favicon.ico">
+		<link rel="icon" sizes="16x16 24x24 32x32 64x64" href="https://reef.gomakethings.com/img/favicon.ico">
 
 		
 		<style type="text/css">/**
@@ -471,6 +471,11 @@ body {
 	overflow-x: hidden;
 }
 
+body.border-fun {
+	--border-color: linear-gradient(to right, var(--color-primary), var(--color-accent-2), var(--color-secondary), var(--color-tertiary));
+	border-image: var(--border-color) 1;
+}
+
 @media (min-width: 38em) {
 	body {
 		line-height: var(--spacing);
@@ -608,8 +613,12 @@ dt {
 }
 
 @media (max-width: 38em) {
-	.list-inline-responsive {
-		display: block;
+	.list-inline-responsive li {
+		min-width: 100%;
+	}
+
+	.list-inline-responsive .list-item-inline {
+		min-width: auto;
 	}
 }
 
@@ -678,7 +687,7 @@ h2,
 
 h3,
 .h3 {
-	font-size: 1.1875em;
+	font-size: 1.0625em;
 }
 
 h4, h5, h6,
@@ -1419,26 +1428,14 @@ td {
  * The navigation menu
  */
 .nav {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	column-gap: 1em;
+	flex-wrap: wrap;
 	list-style-type: "";
 	margin-left: 0;
 	margin-bottom: 0;
-	text-align: center;
-	text-wrap: balance;
-}
-
-.nav li {
-	display: inline-block;
-	margin-left: 0.75em;
-}
-
-.nav li:first-child {
-	margin-left: 0;
-}
-
-@media (min-width: var(--bp-medium)) {
-	.nav li {
-		margin-left: 1em;
-	}
 }
 
 .nav a:not(.btn) {
@@ -1461,6 +1458,16 @@ td {
 
 .nav-secondary a:hover {
 	text-decoration: underline;
+}
+
+.nav-secondary .logo-secondary,
+.nav-secondary .logo-secondary:visited {
+	color: var(--color-black-dm-white);
+}
+
+.nav-secondary .logo-secondary:hover {
+	color: var(--color-primary-dm-light);
+	text-decoration: none;
 }/**
  * @section Utility classes
  */
@@ -1871,13 +1878,13 @@ td {
 
 		<header class="container container-large margin-bottom-large">
 	<nav class="nav-wrap">
-		<a class="logo" href="https://reefjs.com">
+		<a class="logo" href="https://reef.gomakethings.com">
 			<svg xmlns="http://www.w3.org/2000/svg" width="0.674698795em" height="1em" style="height:.8em;width:0.539759036em;" viewBox="0 0 56 83"><title></title><path fill="currentColor" fill-rule="nonzero" d="M5.159 46.847c-.87.147-1.676.218-2.394.208a2.716 2.716 0 00-1.938.774A2.71 2.71 0 000 49.749a2.73 2.73 0 002.693 2.764c2.181.031 4.337-.326 6.589-1.09a1.508 1.508 0 011.548.35c2.174 2.126 4.632 3.68 7.012 5.185 5.553 3.517 9.938 6.291 10.286 14.545l-.006 1.038c-.02 2.131-.064 7.063.081 10.11h5.463l-.001-.104a86.437 86.437 0 01-.078-6.825l.004-.03-.004-.098c.076-5.533 4.852-8.295 9.51-10.265 4.494-1.899 8.648-5.25 9.922-7.266.01-.01.014-.02.021-.026 1.252-1.895 2.09-4.082 2.564-6.687a2.69 2.69 0 00-.443-2.041 2.707 2.707 0 00-1.756-1.133 2.713 2.713 0 00-2.043.443 2.715 2.715 0 00-1.131 1.755c-1.127 6.224-4.793 7.889-9.432 10-.787.358-1.678.763-2.561 1.206a1.523 1.523 0 01-1.662-.199 1.519 1.519 0 01-.467-1.605c1.113-3.586 2.5-6.823 3.842-9.953 3.748-8.734 7.623-17.767 6.725-35.157a2.729 2.729 0 00-2.865-2.584c-.729.036-1.4.354-1.887.897a2.716 2.716 0 00-.697 1.969c.254 4.921.121 9.304-.404 13.396a1.523 1.523 0 01-1.133 1.276 1.526 1.526 0 01-1.604-.581c-.695-.96-1.475-1.925-2.523-3.129a2.696 2.696 0 00-1.871-.93 2.705 2.705 0 00-1.98.666 2.735 2.735 0 00-.264 3.851c3.781 4.33 6.949 9.213 4.584 15.549-.014.041-.014.041-.703 1.678l-1.578 3.739a1.519 1.519 0 01-2.85-.135c-1.972-6.355-4.658-11.178-7.256-15.837-1.495-2.683-3.044-5.457-4.408-8.492a1.54 1.54 0 01-.009-1.222c1.072-2.495 2.82-4.696 4.675-7.026 1.79-2.252 3.641-4.58 5.002-7.376l.028-.067a2.724 2.724 0 00-2.443-3.92 2.737 2.737 0 00-2.456 1.548l-.004.011c-.007.014-.012.026-.02.039-1.057 2.187-2.598 4.125-4.382 6.37l-1.267 1.608a1.53 1.53 0 01-1.53.545 1.51 1.51 0 01-1.147-1.139c-.879-3.88-1.424-8.062-1.667-12.781a2.709 2.709 0 00-.9-1.887 2.7 2.7 0 00-1.968-.697A2.7 2.7 0 009.263.9a2.711 2.711 0 00-.697 1.969c.075 1.483.183 2.959.324 4.387a1.519 1.519 0 01-1.587 1.662 13.7 13.7 0 01-3.639-.667A2.737 2.737 0 00.207 9.973a2.735 2.735 0 001.723 3.455c2.095.702 4.284 1.018 6.695.966a1.512 1.512 0 011.515 1.205c1.976 9.423 5.414 15.588 8.736 21.547 2.63 4.721 5.116 9.179 6.958 15.306a1.517 1.517 0 01-2.307 1.689 98.616 98.616 0 00-2.768-1.795c-4.359-2.762-8.127-5.148-9.616-10.262a21.265 21.265 0 01-.582-1.868 2.731 2.731 0 00-3.341-1.933 2.714 2.714 0 00-1.658 1.271 2.7 2.7 0 00-.274 2.07c.352 1.316.674 2.317 1.018 3.15.175.428.147.908-.073 1.313a1.516 1.516 0 01-1.074.76z"/></svg>
 			Reef
 		</a>
 		<div class="nav-menu" id="nav-menu">
 			<ul class="nav">
-				<li><a href="https://reefjs.com/getting-started">Getting Started</a></li><li><a href="https://reefjs.com/api">API</a></li><li><a href="https://reefjs.com/advanced">Advanced</a></li></li><li><a href="https://reefjs.com/demos">Demos</a></li></li><li><a href="https://reefjs.com/about">v13</a></li><li><a href="https://github.com/cferdinandi/reef" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" style="margin-bottom:-0.125em;" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a></li>
+				<li><a href="https://reef.gomakethings.com/getting-started">Getting Started</a></li><li><a href="https://reef.gomakethings.com/api">API</a></li><li><a href="https://reef.gomakethings.com/advanced">Advanced</a></li></li><li><a href="https://reef.gomakethings.com/demos">Demos</a></li></li><li><a href="https://reef.gomakethings.com/about">v13</a></li><li><a href="https://github.com/cferdinandi/reef" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" style="margin-bottom:-0.125em;" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a></li>
 			</ul>
 		</div>
 	</nav>
@@ -1891,7 +1898,7 @@ td {
 
 	
 	
-	<strong><a class="link-no-underline" href="https://reefjs.com/versions/">Versions</a></strong>
+	<strong><a class="link-no-underline" href="https://reef.gomakethings.com/versions/">Versions</a></strong>
 	<h1 class="no-padding-top">Reef v1</h1>
 	
 	
@@ -2275,7 +2282,7 @@ td {
 
 <h2 id="license">License</h2>
 
-<p>The code is available under the <a href="https://reefjs.com/mit">MIT License</a>.</p>
+<p>The code is available under the <a href="https://reef.gomakethings.com/mit">MIT License</a>.</p>
 
 
 	
@@ -2290,10 +2297,10 @@ td {
 			<hr class="margin-bottom">
 			<nav class="tabindex nav-secondary" id="nav-secondary" tabindex="-1">
 	<ul class="list-inline list-inline-responsive">
-		<li><a href="https://reefjs.com/getting-started">Getting Started</a></li><li><a href="https://reefjs.com/api">API</a></li><li><a href="https://reefjs.com/advanced">Advanced</a></li></li><li><a href="https://reefjs.com/demos">Demos</a></li></li><li><a href="https://reefjs.com/about">v13</a></li><li><a href="https://github.com/cferdinandi/reef" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" style="margin-bottom:-0.125em;" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a></li>
+		<li><a href="https://reef.gomakethings.com/getting-started">Getting Started</a></li><li><a href="https://reef.gomakethings.com/api">API</a></li><li><a href="https://reef.gomakethings.com/advanced">Advanced</a></li></li><li><a href="https://reef.gomakethings.com/demos">Demos</a></li></li><li><a href="https://reef.gomakethings.com/about">v13</a></li><li><a href="https://github.com/cferdinandi/reef" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" style="margin-bottom:-0.125em;" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a></li>
 	</ul>
 </nav>
-			<p class="text-small">Made with ❤️ in Massachusetts by <a href="https://gomakethings.com">Chris Ferdinandi</a>. Unless otherwise noted, all code is free to use under the <a href="https://reefjs.com/mit">MIT License</a>.</p>
+			<p class="text-small">Made with ❤️ in Massachusetts by <a href="https://gomakethings.com">Chris Ferdinandi</a>. Unless otherwise noted, all code is free to use under the <a href="https://reef.gomakethings.com/mit">MIT License</a>.</p>
 			<p class="text-small">Logo by <a href="https://thenounproject.com/term/coral/862368/">Lluis Pareras from the Noun Project</a>.</p>
 		</footer>
 

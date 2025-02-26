@@ -1,5 +1,5 @@
 # hostname (and path) to the root
-baseURL: "https://reefjs.com"
+baseURL: "https://reef.gomakethings.com"
 
 # Customer parameters
 params:

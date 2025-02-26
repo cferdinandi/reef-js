@@ -50,26 +50,14 @@
  * The navigation menu
  */
 .nav {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	column-gap: 1em;
+	flex-wrap: wrap;
 	list-style-type: "";
 	margin-left: 0;
 	margin-bottom: 0;
-	text-align: center;
-	text-wrap: balance;
-}
-
-.nav li {
-	display: inline-block;
-	margin-left: 0.75em;
-}
-
-.nav li:first-child {
-	margin-left: 0;
-}
-
-@media (min-width: var(--bp-medium)) {
-	.nav li {
-		margin-left: 1em;
-	}
 }
 
 .nav a:not(.btn) {

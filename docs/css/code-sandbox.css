@@ -1,0 +1,233 @@
+/**
+ * @section Code Sandbox
+ */
+
+/**
+ * Wrapper element
+ */
+.sandbox {
+	background-color: var(--color-tertiary);
+	color: var(--color-white);
+	margin-bottom: var(--spacing);
+}
+
+.sandbox summary,
+.sandbox .sandbox-label {
+	font-weight: bold;
+	font-size: 0.8125em;
+}
+
+
+
+/**
+ * Main content area
+ */
+
+@media (min-width: 38em) {
+	.sandbox-content {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.sandbox-code {
+		grid-area: 1 / 1 / 2 / 2;
+	}
+
+	.sandbox-result,
+	.sandbox-console-result {
+		grid-area: 1 / 2 / 2 / 3;
+	}
+}
+
+.sandbox-editor {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr;
+	column-gap: 0;
+	row-gap: 0;
+}
+
+.sandbox-text,
+.sandbox-mirror {
+	grid-area: 1 / 1 / 2 / 2;
+	margin-bottom: 0;
+	min-height: 15em;
+}
+
+.sandbox-text {
+	background-color: transparent;
+	border: none;
+	color: transparent;
+	caret-color: var(--color-white);
+	font: inherit;
+	font-family: var(--font-monospace);
+	font-size: 0.875em;
+	height: unset;
+	line-height: 1.5;
+	overflow: hidden;
+	padding: 0.8125em;
+	resize: none;
+	tab-size: 2;
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+@media (min-width: 38em) {
+	.sandbox-text {
+		tab-size: 4;
+	}
+}
+
+.sandbox-mirror {
+	border-color: transparent;
+}
+
+.sandbox-iframe {
+	aspect-ratio: auto;
+	background-color: var(--color-white);
+	height: 100%;
+	width: 100%;
+	min-height: 15em;
+	margin-bottom: 0;
+}
+
+.sandbox-code details {
+	margin-left: 0;
+}
+
+.sandbox,
+.sandbox-mirror,
+.sandbox-text,
+.sandbox-iframe {
+	border-radius: 0.25em;
+}
+
+
+
+/**
+ * Header & Console
+ */
+
+.sandbox-header,
+.sandbox-console {
+	padding-top: 0.125em;
+	padding-bottom: 0.125em;
+}
+
+.sandbox-header {
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1px solid var(--color-tertiary-dark);
+	border-top-left-radius: 0.25em;
+	border-top-right-radius: 0.25em;
+}
+
+.sandbox-controls .btn {
+	font-size: 0.6875em;
+	margin-bottom: 0;
+}
+
+.sandbox-console {
+	border-bottom-left-radius: 0.25em;
+	border-bottom-right-radius: 0.25em;
+}
+
+@media (min-width: 38em) {
+	.sandbox-console-result {
+		border-bottom-left-radius: 0;
+	}
+}
+
+.sandbox-console-log {
+	font-family: var(--font-monospace);
+	font-size: 0.875em;
+	min-height: 1.2em;
+	white-space: pre-wrap;
+	tab-size: 2;
+}
+
+
+@media (min-width: 38em) {
+	.sandbox-console-log {
+		tab-size: 4;
+	}
+}
+
+.log-warn {
+	color: #f9d767;
+}
+
+.log-error {
+	color: #f9c8c8;
+}
+
+.sandbox-header,
+.sandbox-code,
+.sandbox-result,
+.sandbox-console,
+.sandbox-console-result {
+	padding: 0.5em;
+}
+
+
+
+/* PrismJS 1.29.0 - https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript */
+/**
+ * prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
+ * @author Lea Verou
+ */
+
+.sandbox-mirror .comment,
+.sandbox-mirror .prolog,
+.sandbox-mirror .doctype,
+.sandbox-mirror .cdata {
+	color: var(--color-gray-medium-dark);
+}
+
+.sandbox-mirror .tag,
+.sandbox-mirror .number,
+.sandbox-mirror .constant,
+.sandbox-mirror .symbol,
+.sandbox-mirror .deleted,
+.sandbox-mirror .operator,
+.sandbox-mirror .entity,
+.sandbox-mirror .url,
+.sandbox-mirror .language-css .string,
+.sandbox-mirror .style .string,
+.sandbox-mirror .function,
+.sandbox-mirror .class-name {
+	color: #fa4286;
+}
+
+.sandbox-mirror .selector,
+.sandbox-mirror .attr-name,
+.sandbox-mirror .string,
+.sandbox-mirror .char,
+.sandbox-mirror .builtin,
+.sandbox-mirror .inserted {
+	color: #a6e22e;
+}
+
+.sandbox-mirror .property,
+.sandbox-mirror .atrule,
+.sandbox-mirror .attr-value,
+.sandbox-mirror .keyword,
+.sandbox-mirror .boolean {
+	color: #66d9ef;
+}
+
+.sandbox-mirror .regex,
+.sandbox-mirror .important,
+.sandbox-mirror .variable {
+	color: #e6db74;
+}
+
+.sandbox-mirror .important,
+.sandbox-mirror .bold {
+	font-weight: bold;
+}
+
+.sandbox-mirror .italic {
+	font-style: italic;
+}

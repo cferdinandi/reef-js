@@ -17,6 +17,11 @@ body {
 	overflow-x: hidden;
 }
 
+body.border-fun {
+	--border-color: linear-gradient(to right, var(--color-primary), var(--color-accent-2), var(--color-secondary), var(--color-tertiary));
+	border-image: var(--border-color) 1;
+}
+
 @media (min-width: 38em) {
 	body {
 		line-height: var(--spacing);
@@ -154,8 +159,12 @@ dt {
 }
 
 @media (max-width: 38em) {
-	.list-inline-responsive {
-		display: block;
+	.list-inline-responsive li {
+		min-width: 100%;
+	}
+
+	.list-inline-responsive .list-item-inline {
+		min-width: auto;
 	}
 }
 
@@ -224,7 +233,7 @@ h2,
 
 h3,
 .h3 {
-	font-size: 1.1875em;
+	font-size: 1.0625em;
 }
 
 h4, h5, h6,
