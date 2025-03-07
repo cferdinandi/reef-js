@@ -8,16 +8,15 @@
 
 	// Create link
 	let link = document.createElement('a');
-	link.textContent = '#';
-	link.className = 'link-no-underline';
-	link.setAttribute('aria-hidden', true);
+	link.className = 'anchor-link';
 
 	// Add link to headings
 	for (let heading of headings) {
 		if (!heading.id) continue;
-		let hLink = link.cloneNode(true);
-		hLink.href = `#${heading.id}`;
-		heading.append(' ', hLink);
+		heading.innerHTML =
+			`<a class="anchor-link" href="#${heading.id}">
+				${heading.innerHTML} <span class="anchor-link-icon" aria-hidden="true">#</span>
+			</a>`;
 	}
 
 })();

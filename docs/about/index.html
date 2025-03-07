@@ -492,14 +492,26 @@ p {
  * Hyperlink styling
  */
 
-a {
+a,
+a .anchor-link-icon {
 	color: var(--color-primary-dm-lighter);
 	text-decoration-skip-ink: auto;
 	word-wrap: break-word;
 }
 
-a:hover {
+a:hover,
+a:hover .anchor-link-icon {
 	color: var(--color-primary-dark-dm-light);
+}
+
+a:hover .anchor-link-icon {
+	text-decoration: underline;
+}
+
+.anchor-link,
+.anchor-link:hover {
+	color: inherit;
+	text-decoration: none;
 }
 
 main a:not(.btn,.link-no-visited):visited {
@@ -2059,7 +2071,7 @@ td {
 
 <h2>Get Daily Developer Tips</h2>
 
-<p><strong>Hate the complexity of modern front‑end web development?</strong> I send out a short email each weekday on how to build a better web and more. Join over 9k others.</p>
+<p><strong>Hate the complexity of modern front‑end web development?</strong> I send out a short email each weekday on how to build a better web and more. Join over 10k others.</p>
 <newsletter-form msg-submitting="Signing Up...">
 	<form action="https://gomakethings.com/api/subscribe.php" method="post">
 		<div class="tarpit">
@@ -2267,16 +2279,15 @@ td {
 
 	// Create link
 	let link = document.createElement('a');
-	link.textContent = '#';
-	link.className = 'link-no-underline';
-	link.setAttribute('aria-hidden', true);
+	link.className = 'anchor-link';
 
 	// Add link to headings
 	for (let heading of headings) {
 		if (!heading.id) continue;
-		let hLink = link.cloneNode(true);
-		hLink.href = `#${heading.id}`;
-		heading.append(' ', hLink);
+		heading.innerHTML =
+			`<a class="anchor-link" href="#${heading.id}">
+				${heading.innerHTML} <span class="anchor-link-icon" aria-hidden="true">#</span>
+			</a>`;
 	}
 
 })();// Initialize the service worker

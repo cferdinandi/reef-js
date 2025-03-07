@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title>Demos | Reef</title>
 		<meta name="description" content="Want to see Reef in action? Here are some demos and examples you can play with.
- Clock Mirror Typing Pomodoro Timer Stopwatch Progress Bar Todo List Articles from an API  Get Daily Developer Tips Hate the complexity of modern front‑end web development? I send out a short email each weekday on how to build a better web and more. Join over 9k others.
+ Clock Mirror Typing Pomodoro Timer Stopwatch Progress Bar Todo List Articles from an API  Get Daily Developer Tips Hate the complexity of modern front‑end web development? I send out a short email each weekday on how to build a better web and more. Join over 10k others.
 If you&#39;re human, leave this blank  Enter your email address to get Daily Developer Tips emails  Get Daily Developer Tips     ">
 		
 
@@ -18,7 +18,7 @@ If you&#39;re human, leave this blank  Enter your email address to get Daily Dev
 		<meta property="og:url" content="/demos/">
 		<meta property="og:title" content="Demos">
 		<meta property="og:description" content="Want to see Reef in action? Here are some demos and examples you can play with.
- Clock Mirror Typing Pomodoro Timer Stopwatch Progress Bar Todo List Articles from an API  Get Daily Developer Tips Hate the complexity of modern front‑end web development? I send out a short email each weekday on how to build a better web and more. Join over 9k others.
+ Clock Mirror Typing Pomodoro Timer Stopwatch Progress Bar Todo List Articles from an API  Get Daily Developer Tips Hate the complexity of modern front‑end web development? I send out a short email each weekday on how to build a better web and more. Join over 10k others.
 If you&#39;re human, leave this blank  Enter your email address to get Daily Developer Tips emails  Get Daily Developer Tips     ">
 		
 
@@ -490,14 +490,26 @@ p {
  * Hyperlink styling
  */
 
-a {
+a,
+a .anchor-link-icon {
 	color: var(--color-primary-dm-lighter);
 	text-decoration-skip-ink: auto;
 	word-wrap: break-word;
 }
 
-a:hover {
+a:hover,
+a:hover .anchor-link-icon {
 	color: var(--color-primary-dark-dm-light);
+}
+
+a:hover .anchor-link-icon {
+	text-decoration: underline;
+}
+
+.anchor-link,
+.anchor-link:hover {
+	color: inherit;
+	text-decoration: none;
 }
 
 main a:not(.btn,.link-no-visited):visited {
@@ -1916,7 +1928,7 @@ td {
 
 <h2>Get Daily Developer Tips</h2>
 
-<p><strong>Hate the complexity of modern front‑end web development?</strong> I send out a short email each weekday on how to build a better web and more. Join over 9k others.</p>
+<p><strong>Hate the complexity of modern front‑end web development?</strong> I send out a short email each weekday on how to build a better web and more. Join over 10k others.</p>
 <newsletter-form msg-submitting="Signing Up...">
 	<form action="https://gomakethings.com/api/subscribe.php" method="post">
 		<div class="tarpit">
@@ -2097,16 +2109,15 @@ td {
 
 	// Create link
 	let link = document.createElement('a');
-	link.textContent = '#';
-	link.className = 'link-no-underline';
-	link.setAttribute('aria-hidden', true);
+	link.className = 'anchor-link';
 
 	// Add link to headings
 	for (let heading of headings) {
 		if (!heading.id) continue;
-		let hLink = link.cloneNode(true);
-		hLink.href = `#${heading.id}`;
-		heading.append(' ', hLink);
+		heading.innerHTML =
+			`<a class="anchor-link" href="#${heading.id}">
+				${heading.innerHTML} <span class="anchor-link-icon" aria-hidden="true">#</span>
+			</a>`;
 	}
 
 })();// Initialize the service worker
